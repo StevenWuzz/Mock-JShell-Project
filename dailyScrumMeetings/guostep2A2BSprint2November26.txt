@@ -1,0 +1,17 @@
+What did I work on in the last three days?
+    - Started JUnit tests for History
+    - Fixed a variety of bugs
+    - Added comments and java docs to commands I've worked on
+    - Cleaned up code for Copy.java
+    - Updated Error.java for more commands
+
+What do I plan to work in the next three days?
+    - Do general bug testing
+    - Revamp CRC cards
+    - Make sure other files are formatted correctly
+    - Find and fix bugs
+    - Make JUnit testing for cp, cat, pushd, popd
+    - Finish JUnit testing for history
+
+Am I blocked on anything?
+    - No

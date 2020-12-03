@@ -1,0 +1,17 @@
+What did I work on in the last three days?
+	- Started and finished CRC cards for LoadJShell, SaveJShell, Search, and Curl
+	- Updated A2A CRC cards to accounted for new additions
+	- Added StandardOutput as collaborator to some CRC cards so that errors get redirected
+	- Changed Mkdir to send error messages to perror in StandardOutput
+	- Fixed method of deleting files and directories in Remove command
+	
+What do I plan to work in the next three days?
+    - Make JUnit tests for rm
+    - Make JUnit tests for mkdir
+    - Make JUnit tests for pwd
+    - Make JUnit tests for tree
+    - Fixed method of path detection in Remove command
+    - Implement Move using Copy and Remove
+
+Am I blocked on anything?
+    - No

@@ -1,0 +1,12 @@
+Class name: Search
+Parent class (if any): Command
+Subclasses (if any): None
+
+Responsibilities:
+* Search a directory for files matching a certain name and display its contents
+
+Collaborators:
+* Directory
+* File
+* FileTree
+* StandardOutput

@@ -1,0 +1,151 @@
+// **********************************************************
+// Assignment2:
+// Student1: Stephen Guo
+// UTORID user_name: guostep2
+// UT Student #: 1006313231
+// Author: Stephen Guo
+//
+// Student2: Steven Hans Limantoro
+// UTORID user_name: limantor
+// UT Student #: 1005780861
+// Author: Steven Hans Limantoro
+//
+// Student3: Vignesh Nanthakumar
+// UTORID user_name: nantha33
+// UT Student #: 1006278948
+// Author: Vignesh Nanthakumar
+//
+// Student4: Krutik Shah
+// UTORID user_name: shahkr10
+// UT Student #: 10062135626
+// Author: Krutik Shah
+//
+//
+// Honor Code: I pledge that this program represents my own
+// program code and that I have coded on my own. I received
+// help from no one in designing and debugging my program.
+// I have also read the plagiarism section in the course info
+// sheet of CSC B07 and understand the consequences.
+// *********************************************************
+package commands;
+
+import fileSystem.*;
+import inputOutput.Error;
+
+public class Mkdir extends Command {
+
+  /**
+   * Creates a child directory with specified parent and name then returns created directory
+   *
+   * @param parent directory of new directory
+   * @param name of new directory as a string
+   * @return newly created directory
+   */
+  public Directory makeDirectory(Directory parent, String name) {
+
+    // check if new directory already exists
+    Directory dir = parent.findSubDir(name);
+
+    // directory does not exist
+    if (dir == null) {
+      
+      // create new directory
+      dir = new Directory(parent, name);
+
+      // add directory as child to parent directory
+      parent.addDirectoryChild(dir);
+
+    } else {
+      // return duplicate directory
+      return null;
+    }
+
+    return dir;
+  }
+
+  @Override
+  protected String execute(String[] args) {
+    FileTree fileTree=FileTree.getFileTree();
+    // TODO Auto-generated method stub
+
+    // seperate dir
+    String dir1 = args[1].substring(args[1].lastIndexOf("/") + 1);
+    String dir2 = args[2].substring(args[2].lastIndexOf("/") + 1);
+    Directory p;
+
+    if (!Error.isValidPath(args[1])) {
+      return args[1] + " Invalid Path";
+    }
+
+    // get current directory as parent for dir1
+    if (args[1].lastIndexOf("/") == -1) {
+      p = fileTree.getCurrent();
+
+    } else if (args[1].lastIndexOf("/") == 0) {
+      p = fileTree.getRoot();
+      
+    } else {
+      p = (Directory) fileTree.traverseToEnd(args[1].substring(0, args[1].lastIndexOf("/")));
+
+      if (p == null) {
+        return args[1] + " Invalid Path";
+      }
+
+    }
+
+    // create first directory
+    Directory newDir = makeDirectory(p, dir1);
+
+    // dir1 creation unsuccesful
+    if (newDir == null) {
+      return args[1] + " Already Exists";
+    }
+
+    if (!Error.isValidPath(args[2])) {
+      return args[2] + " Invalid Path";
+    }
+
+    // get current directory as parent for dir2
+    if (args[2].lastIndexOf("/") == -1) {
+      p = fileTree.getCurrent();
+
+    } else if (args[2].lastIndexOf("/") == 0) {
+      p = fileTree.getRoot();
+      
+    } else {
+      p = (Directory) fileTree.traverseToEnd(args[2].substring(0, args[2].lastIndexOf("/")));
+      
+      if (p == null) {
+        return args[2] + " Invalid Path";
+      }
+
+    }
+
+    // create second directory
+    newDir = makeDirectory(p, dir2);
+
+    // dir2 creation unsuccesful
+    if (newDir == null) {
+      return args[2] + " Already Exists";
+    }
+
+    return "";
+
+  }
+
+  @Override
+  public String toString() {
+    // TODO Auto-generated method stub
+
+    // create man page for mkdir command
+    String info = "mkdir DIR1 DIR2\n\n"
+        + "\tThis command takes in two arguments only. Create directories, each of which\n"
+        + "\tmay be relative to the current directory or may be a full path. If creating DIR1\n"
+        + "\tresults in any kind of error, do not proceed with creating DIR 2. However, if DIR1\n"
+        + "\twas created successfully, and DIR2 creation results in an error, then give back an\n"
+        + "\terror specific to DIR2.\n";
+
+    return info;
+  }
+
+}

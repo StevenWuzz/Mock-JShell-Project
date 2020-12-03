@@ -1,0 +1,11 @@
+Class name: PrintWorkingDirectory
+Parent class (if any): Command
+Subclasses (if any): None
+
+Responsibilities:
+* Prints the full directory the shell is currently in
+
+Collaborators:
+* Directory
+* FileTree
+

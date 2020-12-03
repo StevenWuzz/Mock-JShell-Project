@@ -1,0 +1,66 @@
+package test;
+
+import static org.junit.Assert.*;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import org.junit.Before;
+import org.junit.Test;
+import commands.Curl;
+
+public class CurlTest {
+
+  Curl curl;
+  int numOfRootChildrenBefore;
+  private ByteArrayOutputStream outContent;
+  
+  private String invalidURL1;
+  private String invalidURL2;
+  private String validURLTXT;
+  private String validURLHTML;
+  
+  @Before
+  public void setUp(){
+    curl = new Curl();
+    invalidURL1 = "abcdef";
+    invalidURL2 = "htt://stackoverflow.com/";
+    validURLTXT = "https://www.w3.org/TR/PNG/iso_8859-1.txt";
+    validURLHTML = "https://www.le.ac.uk/oerresources/bdra/html/page_09.htm";
+  }
+  
+
+  @Test
+  public void testInvalidURL() {
+    outContent = new ByteArrayOutputStream();
+    System.setOut(new PrintStream(outContent));
+    curl.execute(new String[]{"curl", invalidURL1});
+    assertEquals("The URL " + invalidURL1 + " is malformed", outContent.toString().trim());
+    
+    outContent = new ByteArrayOutputStream();
+    System.setOut(new PrintStream(outContent));
+    curl.execute(new String[]{"curl", invalidURL2});
+    assertEquals("The URL " + invalidURL2 + " is malformed", outContent.toString().trim());
+  }
+  
+  @Test
+  public void testValidURL() {
+    outContent = new ByteArrayOutputStream();
+    System.setOut(new PrintStream(outContent));
+    curl.execute(new String[]{"curl", validURLTXT});
+    assertEquals("", outContent.toString().trim());
+    
+    outContent = new ByteArrayOutputStream();
+    System.setOut(new PrintStream(outContent));
+    curl.execute(new String[]{"curl", validURLHTML});
+    assertEquals("", outContent.toString().trim());
+  }
+  
+  @Test
+  public void testRetrieveHTMLFile() {
+    
+  }
+  
+  @Test
+  public void testRetrieveTXTFile() {
+    
+  }
+}

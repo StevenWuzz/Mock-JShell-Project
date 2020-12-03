@@ -1,0 +1,16 @@
+What did I work on in the last three days?
+    - Finished comments for Pwd
+
+What do I plan to work in the next three days?
+    - Reformatting code to make to cleaner
+    - Add proper comments fro Mkdir and Echo
+    - Go through marking scheme and make changes as need be
+    - Revamp old methods if needed
+    - General testing and fixing bugs
+	- Generate javadoc for every method and every class
+	- Remove unnecessary or unused class instances
+	- Reduce method length to below 30 lines
+	- Make helper functions
+
+Am I blocked on anything?
+    - Nod

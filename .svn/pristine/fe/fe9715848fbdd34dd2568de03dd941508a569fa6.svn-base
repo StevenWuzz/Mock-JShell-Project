@@ -1,0 +1,97 @@
+package commands;
+
+import java.util.LinkedList;
+import fileSystem.*;
+
+public class List extends Command{
+  
+    protected static Directory root;
+    protected static Directory current;
+
+	/**
+	 * Execute the Ls command
+	 * 
+	 * @param parameter
+	 */
+	public void execute(String[] argument)
+	{
+	    String path = argument[0];
+		String type = checkDirOrFile(path);
+		if(type == "Directory") {
+		  printContentsInDirectory(path, (Directory) traverseToEnd(path));
+		}
+	}
+	
+	/**
+	 * Check whether a path leads to a directory or a file
+	 * 
+	 * @param path
+	 * @return a string containing either "Directory" or "File"
+	 */
+	public String checkDirOrFile(String path) {
+	  Object dirOrFile = traverseToEnd(path);
+	  if(dirOrFile instanceof Directory) {
+	    return "Directory";
+	  }
+	  else {
+	    return "File";
+	  }
+	}
+	
+	/**
+	 * Iteratively traverse the given path and return the directory or file
+	 * 
+	 * @param path
+	 * @param root
+	 * @param current
+	 * @return the file or directory object
+	 */
+	public static File traverseToEnd(String path) {
+	    String[] p = path.split("/");
+	    Directory dir = (p[0].equals("")) ? root : current;
+	    int i = (p[0].equals("")) ? 1 : 0;
+	    for(; i < p.length; i++) {
+	      Directory dirChild = dir.findSubDir(p[i]);
+	      if(dirChild == null) {
+	        if(i < p.length - 1) {
+	          return null;
+	        }
+	        else {
+	          File fileChild = dir.findFile(p[i]);
+	          if(fileChild != null) {
+	            return fileChild;
+	          }
+	          
+	        }
+	      }
+	      else {
+	        dir = dirChild;
+	      }
+	  }
+      return dir;
+	}
+	
+	/**
+	 * Print all the contents in a given directory
+	 * @param path
+	 * @param currentDir
+	 */
+	public void printContentsInDirectory(String path, Directory currentDir) {
+
+	  System.out.println(path + ":");
+	  int numOfChildren = currentDir.getNumOfDirectoryChildren();
+	  LinkedList<Directory> dirChildren = currentDir.getDirectoryChildren();
+	  for(int i = 0; i < numOfChildren; i++) {
+	    System.out.print(dirChildren.get(i).getName());
+	    if(i < numOfChildren - 1) {
+	      System.out.println();
+	    }
+	  }
+	}
+
+  @Override
+  public String toString() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+}

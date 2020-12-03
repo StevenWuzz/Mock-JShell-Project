@@ -1,0 +1,14 @@
+package commands;
+
+public class Manuel extends Command{
+
+  @Override
+  protected String execute(String[] args) {
+    return null;
+  }
+
+  @Override
+  public String toString() {
+    return "outputs the manuel of the given command";
+  }
+}

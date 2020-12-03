@@ -1,0 +1,10 @@
+Class name: Echo
+Parent class (if any): None
+Subclasses (if any): None
+Responsibilities: 
+* append a string to an outfile
+* overwrite a string to an outfile
+
+Collaborators:
+* None
+

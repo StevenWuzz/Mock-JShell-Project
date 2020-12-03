@@ -1,0 +1,125 @@
+// **********************************************************
+// Assignment2:
+// Student1: Stephen Guo
+// UTORID user_name: guostep2
+// UT Student #: 1006313231
+// Author: Stephen Guo
+//
+// Student2: Steven Hans Limantoro
+// UTORID user_name: limantor
+// UT Student #: 1005780861
+// Author: Steven Hans Limantoro
+//
+// Student3: Vignesh Nanthakumar
+// UTORID user_name: nantha33
+// UT Student #: 1006278948
+// Author: Vignesh Nanthakumar
+//
+// Student4: Krutik Shah
+// UTORID user_name: shahkr10
+// UT Student #: 10062135626
+// Author: Krutik Shah
+//
+//
+// Honor Code: I pledge that this program represents my own
+// program code and that I have coded on my own. I received
+// help from no one in designing and debugging my program.
+// I have also read the plagiarism section in the course info
+// sheet of CSC B07 and understand the consequences.
+// *********************************************************
+package inputOutput;
+
+import commands.Command;
+import commands.History;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+/**
+ * This class has methods that parses an input from the JShell
+ */
+public class StandardInput {
+
+  // Debugging variable ////////////////////////////////////////////////////////////////////////////
+  public static boolean initalized = false;
+  // Debugging variable ////////////////////////////////////////////////////////////////////////////
+
+
+  private static String[] redirectParsing(String[] args) {
+
+    if (args[0].equals("echo") && args.length == 2) {
+      String[] args1 = Arrays.copyOfRange(args, 0, args.length - 1);
+      String[] args2 = Arrays.copyOfRange(args, args.length - 1, args.length);
+      ArrayList<String> temp = new ArrayList<>(Arrays.asList(args1));
+      String[] template = new String[args.length + 1];
+      if (args2[0].contains(">")) {
+        temp.add(args2[0].substring(0, args2[0].indexOf(">")));
+        temp.add(args2[0].substring(args2[0].indexOf(">"),args2[0].lastIndexOf(">")+1));
+        temp.add(args2[0].substring(args2[0].lastIndexOf(">")+1));
+        return temp.toArray(template);
+      }
+    }
+    if (args[0].equals("echo") && args.length >= 3) {
+      String[] args1 = Arrays.copyOfRange(args, 0, args.length - 2);
+      String[] args2 = Arrays.copyOfRange(args, args.length - 2, args.length);
+      ArrayList<String> temp = new ArrayList<>(Arrays.asList(args1));
+      if (args2[0].equals(">") || args2[0].equals(">>")) {
+        return args;
+      }
+      String[] template = new String[args.length + 1];
+      if (args2[0].contains(">")) {
+        temp.add(args2[0].substring(0, args2[0].indexOf(">")));
+        temp.add(args2[0].substring(args2[0].indexOf(">")));
+        temp.add(args2[1]);
+        return temp.toArray(template);
+      } else if (args2[1].contains(">")) {
+        temp.add(args2[0]);
+        temp.add(args2[1].substring(0, args2[1].lastIndexOf(">") + 1));
+        temp.add(args2[1].substring(args2[1].lastIndexOf(">") + 1));
+        return temp.toArray(template);
+      }
+    }
+    return args;
+  }
+
+  /**
+   * This method will split up an input by whitespaces, and will run command if the input is
+   * validated by Error.java
+   *
+   * @param input from the JShell
+   */
+  public static void parse(String input) {
+
+    // Adds input to history
+    History.addInputHistory(input);
+
+    // Splits input into commands and arguments
+    String arguments[] = input.trim().split("\\s+");
+    arguments = redirectParsing(arguments);
+    // For testing and debugging ///////////////////////////////////////////////////////////////////
+    if (input.contentEquals("init") && !initalized) {
+      Command.runCommand(new String[]{"mkdir", "folder1", "folder2"});
+      Command.runCommand(new String[]{"echo", "\"apple orange\"", ">", "file1"});
+      Command.runCommand(new String[]{"echo", "\"iPhone 12 Max\"", ">", "file2"});
+      Command.runCommand(new String[]{"cd", "folder1"});
+      Command.runCommand(new String[]{"mkdir", "folder3", "folder4"});
+      Command.runCommand(new String[]{"echo", "\"I love anime!\"", ">", "file3"});
+      Command.runCommand(new String[]{"echo", "\"4th file...\"", ">", "file4"});
+      Command.runCommand(new String[]{"cd", "folder3"});
+      Command.runCommand(new String[]{"echo", "\"This shell is amazin!\"", ">", "file5"});
+      Command.runCommand(new String[]{"cd", "/"});
+      Command.runCommand(new String[]{"cd", "folder2"});
+      Command.runCommand(new String[]{"echo", "\"ayaya!\"", ">", "animeFile"});
+      Command.runCommand(new String[]{"cd", "/"});
+      System.out.println("Created new file system!");
+      initalized = true;
+      return;
+    }
+    // For testing and debugging ///////////////////////////////////////////////////////////////////
+
+    // Executes command if validated
+    if (Error.checkSyntax(arguments)) {
+      Command.runCommand(arguments);
+    }
+  }
+}

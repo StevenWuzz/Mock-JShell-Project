@@ -1,0 +1,10 @@
+Class name: MakeDirectory
+Parent class (if any): None
+Subclasses (if any): None
+Responsibilities:
+* creates directory at the current directory 
+* creates directory at a specified path
+
+Collaborators:
+* Move
+

@@ -1,0 +1,17 @@
+What did I work on in the last three days?
+	- I modified Ls class to enable recursive mode
+	- I redesigned Ls class since recursive slightly changed the overall structure
+	- I completed all the comments and javadocs for Ls
+	- I completely implemented all the methods in Curl
+	- I completed all the ccomments and javadocs for Curl
+
+What do I plan to work in the next three days?
+    - Do more bug test for Ls and Curl
+    - Write JUnit test for exit
+    - Write JUnit test for cd
+    - Write JUnit test for ls
+    - Write JUnit test for mv
+    - Write JUnit test for curl
+
+Am I blocked on anything?
+    - No

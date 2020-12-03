@@ -1,0 +1,33 @@
+package commands;
+
+import fileSystem.Directory;
+
+public class PopDirectory extends Command {
+  @Override
+  /**
+   * executes the main function of the command
+   * 
+   * @param args
+   * @return output of the command
+   */
+  public String execute(String[] args) {
+    // Check if stack is empty
+    if (PushDirectory.dirStack.empty()) {
+      return "Stack is empty";
+    }
+
+    // Check if directory exists
+    if (PushDirectory.dirStack.peek() != null) {
+
+    }
+
+    // Change Directory! PushDirectory.dirStack.pop();
+
+    return "";
+  }
+
+  @Override
+  public String toString() {
+    return null;
+  }
+}

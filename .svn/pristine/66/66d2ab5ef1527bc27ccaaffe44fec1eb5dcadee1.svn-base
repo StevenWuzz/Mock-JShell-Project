@@ -1,0 +1,12 @@
+Class name: Pushd
+Parent class (if any): Commands
+Subclasses (if any): None 
+
+Responsibilities:
+* Saves current directory and pushes it onto a stack of directories
+* Changes directory to specified directory
+
+Collaborators:
+* ChangeDirectory
+* PrintWorkingDirectory
+* Directory

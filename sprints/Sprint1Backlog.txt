@@ -1,0 +1,70 @@
+//Sprint 1 Backlog.
+October 21 to October 27
+
+User Stories from Product Backlog that we will address in this sprint:
+
+As a user, I want to be able to make directories                          
+As a user, I want to print all the contents of my current directory       
+As a user, I want to be able to make directories                         
+As a user, I want to be able quit the shell                                               
+As a user, I want to remove the top directory from the stack, and change into that directory from my current directory                 
+As a user, I can change my current directory to a new directory          
+As a user, I want to be able to push directories to a stack              
+As a user, I want to receive error messages if i have invalid syntax        
+As a user, I would like to print the current working directory  
+As a user, I want to be able to run commands on a command-line interface         
+
+
+General Tasks to be accomplished:
+
+- Argue which CRC cards created in A1 among group members should be used for A2
+- Create CRC cards for this project
+- Generate error messages if user inputs invalid syntax
+
+
+Specific tasks to be accomplished:
+
+a - 1. Initialize Directory class constructors and data fields to store parent and child array
+a - 2. Create get and set directory/file name
+
+b - 1. Initialize File class constructor and data fields to store name and parent
+b - 2. Implement getters and setters for name and parent
+b - 3. Implement method to get content from file and initialize content field
+b - 4. Implement method for appending content
+
+c - 1. Create Ls class to print Directory class child array
+c - 2. Have Ls traverse to given directory path
+
+d - 1. Create Exit class to quit the shell
+
+e - 1. Create Pwd class to print full directory 
+
+f - 1. Finish the JShell class
+f - 2. Make an stack of directories for pushd and popd
+f - 3. Make a stack of prior input for history
+
+g - 1. Create Mkdir Class to create new directory in Directory class
+
+h - 1. Create stdin class to take in user input into shell
+h - 2. Create stdout class to output shell to user
+
+j - 1. Create commands class to add common implementations together
+j - 2. Link each command separately to commands class
+
+
+
+These tasks are assigned as follows:
+
+User: Stephen Guo
+Tasks: f - 1, f - 2, f - 3, h - 1
+
+User: Steven Hans Limantoro  
+Tasks: c - 1, c - 2, d - 1, j - 2
+
+User: Vignesh Nanthakumar
+Tasks: a - 1, a - 2, b - 1, b - 2, e - 1, g - 1
+
+User: Krutik Tejalkumar Shah
+Tasks: b - 3, b - 4, j - 1, h - 2
+
+

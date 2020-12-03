@@ -1,0 +1,13 @@
+package commands;
+
+import Exceptions.FileNotFoundException;
+import Exceptions.InvalidCommandException;
+import Exceptions.InvalidPathException;
+
+public interface Cmd {
+
+  String execute(String args[]) throws InvalidPathException, InvalidCommandException, FileNotFoundException;
+
+  String toString();
+
+}

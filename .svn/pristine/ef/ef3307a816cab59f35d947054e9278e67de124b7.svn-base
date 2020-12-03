@@ -1,0 +1,14 @@
+package commands;
+
+public class Exit{
+	
+	/**
+	 * Execute the Exit command to quit the shell 
+	 * 
+	 */
+	public void execute() {
+		System.out.println("Quitting the shell...");
+		System.out.print("Process completed");
+		System.exit(0);
+	}
+}

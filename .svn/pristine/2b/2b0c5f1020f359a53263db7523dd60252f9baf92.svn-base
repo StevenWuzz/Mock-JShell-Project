@@ -1,0 +1,92 @@
+package commands;
+
+import fileSystem.Directory;
+import fileSystem.File;
+import fileSystem.FileTree;
+import inputOutput.StandardOutput;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Stack;
+
+/**
+ * this class handles all the code for the command to save the jshell state
+ */
+public class SaveJShell extends Command {
+
+  private String saveFile(File f) {
+    String output = "";
+    output = "<File>\n" + f.getPath() + "\n<Content>\n"
+        + f.getContent() + "\n</Content>\n</File>\n";
+    return output;
+  }
+
+  private String saveDir(Directory dir) {
+    String output = "";
+    output = "<Directory>\n" + PrintWorkingDirectory.printFullPath(dir) + "\n</Directory>\n";
+    for (Directory d : dir.getDirectoryChildren()) {
+      output += this.saveDir(d);
+    }
+    for (File f : dir.getFileChildren()) {
+      output += this.saveFile(f);
+    }
+    return output;
+  }
+
+  private String saveHist(ArrayList<String> h) {
+    String output = "";
+    output += "<History>\n";
+    for (int i = 0; i < h.size(); i++) {
+      output += h.get(i) + "\n";
+    }
+    output += "</History>\n";
+    return output;
+  }
+
+  private String saveDirStack(Stack<Directory> ds) {
+    String output = "";
+    Directory[] h = new Directory[ds.size()];
+    h = ds.toArray(h);
+    output += "<DirectoryStack>\n";
+    for (int i = h.length - 1; i >= 0; i--) {
+      output += PrintWorkingDirectory.printFullPath(h[i]) + "\n";
+    }
+    output += "</DirectoryStack>\n";
+    return output;
+  }
+
+  @Override
+  public String execute(String[] args) {
+    FileTree f = FileTree.getFileTree();
+    String output = "";
+    output += "<FileSystem>\n";
+    for (Directory d : f.getRoot().getDirectoryChildren()) {
+      output += this.saveDir(d);
+    }
+    for (File file : f.getRoot().getFileChildren()) {
+      output += this.saveFile(file);
+    }
+    output += "</FileSystem>\n";
+    output += this.saveHist(History.getHistory());
+    output += this.saveDirStack(PushDirectory.dirStack);
+    try {
+      java.io.File file = new java.io.File(args[1]);
+      if (!file.exists()) {
+        file.createNewFile();
+      }
+      BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+      bw.write(output);
+      bw.close();
+    } catch (Exception e) {
+      //e.printStackTrace();
+      StandardOutput.perror("trouble writing to file");
+    }
+    return "";
+  }
+
+  @Override
+  public String toString() {
+    return null;
+  }
+}

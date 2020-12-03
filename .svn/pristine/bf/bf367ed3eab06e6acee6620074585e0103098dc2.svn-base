@@ -1,0 +1,39 @@
+package test;
+
+import fileSystem.Directory;
+
+public class MockSingleDirectoryBranch extends Directory{
+
+  private MockSingleDirectoryBranch(Directory p, String n) {
+    super(p, n);
+  }
+
+  public static MockSingleDirectoryBranch newMockDir(Directory root) {
+    
+    Directory p = createDirTree(root);
+    
+    MockSingleDirectoryBranch mock = new MockSingleDirectoryBranch(p,"c");
+    
+    p.addDirectoryChild(mock);
+    
+    return mock;
+  }
+  
+  private static Directory createDirTree(Directory root) {
+    
+    Directory a = new Directory(root, "a");
+    root.addDirectoryChild(a);
+
+    Directory b1 = new Directory(a, "b");
+    a.addDirectoryChild(b1);
+
+    Directory b2 = new Directory(b1, "b");
+    b1.addDirectoryChild(b2);
+
+    Directory c = new Directory(b2, "c");
+    b2.addDirectoryChild(c);
+    
+    return c;
+  }
+  
+}

@@ -1,0 +1,64 @@
+package commands;
+
+import java.util.ArrayList;
+
+public class History extends Command {
+  private static ArrayList<String> inputHistory = new ArrayList<String>();
+
+  /**
+   * Adds a user input to inputHistory
+   * 
+   * @param user input
+   */
+  public static void addInputHistory(String input) {
+    // Checks if command is just whitespace
+    if (input.replaceAll("\\s+", "").equals("")) {
+      return;
+    }
+    inputHistory.add(input);
+  }
+
+  @Override
+  /**
+   * executes the main function of the command
+   * 
+   * @param args
+   * @return output of the command
+   */
+  protected String execute(String[] args) {
+    String result = "";
+    int i = 0;
+
+    // If user only wants to print a few commands
+    if (args.length > 1) {
+      i = inputHistory.size() - Integer.parseInt(args[1]);
+      // Checks if user wants to print more than all possible history
+      if (i < 0) {
+        i = 0;
+      }
+    }
+
+    // Adds all recent commands to result
+    for (; i < inputHistory.size(); i++) {
+      result += (i + 1) + ". " + inputHistory.get(i) + "\n";
+    }
+    
+    if (result.contentEquals("")) {
+      return "";
+    }
+
+    // Removes last newline character
+    return result.substring(0, result.length() - 1);
+  }
+
+
+  @Override
+  public String toString() {
+    String info = "history [NUM]\n"
+        + "\tThis command will print out recent commands, numbered by one command per line.\n" + 
+        "\tNUM specifies the number of recent commands to be printed.\n"
+        +"\tThrows an error if NUM is not an integer >= 0";
+    return info;
+  }
+
+}

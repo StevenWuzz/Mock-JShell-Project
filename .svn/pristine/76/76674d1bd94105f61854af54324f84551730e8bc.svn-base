@@ -1,0 +1,87 @@
+package commands;
+
+import java.util.Iterator;
+import java.util.LinkedList;
+import fileSystem.*;
+
+/** This class has all of the methods needed to run Tree */
+public class Tree extends Command {
+  
+  // spacing for each depth
+  private String INDENT = "  ";
+
+  /**
+   * Traverse the current directory using DFS and add its contents to the tree.
+   * 
+   * @param the current directory
+   * @param an integer for the depth of the current directory
+   * @return a string containing the contents of the directory in levels
+   */
+  public String treeTraversal(Directory currentDir, int depth) {
+
+    // base case
+    if (currentDir == null) {
+      return "";
+    }
+
+    // add current root to tree
+    String branch = this.INDENT.repeat(depth) + currentDir.getName() + "\n";
+
+    // get all the directory children in the current directory
+    Iterator<Directory> dirChildren = currentDir.getDirectoryChildren();
+
+    // traverse through directory children of root using DFS and add them to tree
+    while (dirChildren.hasNext()) {
+      branch = branch.concat(treeTraversal(dirChildren.next(), depth + 1));
+    }
+
+    // get all the file children in the current directory
+    Iterator<File> fileChildren = currentDir.getFileChildren();
+
+    // add all file children in root to tree
+    while (fileChildren.hasNext()) {
+      branch = branch.concat(this.INDENT.repeat(depth + 1) + fileChildren.next().getName() + "\n");
+    }
+
+    return branch;
+  }
+
+  @Override
+  /**
+   * Execute the tree command
+   * 
+   * @param a string array of arguments for the tree command
+   * @return a string containing the output of tree command
+   */
+  public String execute(String[] args) {
+
+    // get root of file tree
+    FileTree fileTree = FileTree.getFileTree();
+    Directory treeRoot = fileTree.getRoot();
+
+    // root directory to string
+    String tree = "\\";
+
+    // call DFS to traverse tree
+    tree = tree.concat(treeTraversal(treeRoot, 0));
+
+    return tree;
+  }
+
+  @Override
+  /**
+   * returns the manual entry for tree
+   * 
+   * @return manual entry for tree
+   */
+  public String toString() {
+
+    // create man page for tree command
+    String info = "tree\n\n"
+        + "\tStarting from the root directory (‘\\’) display the entire file system as a tree.\n"
+        + "\tEvery level of the tree is indented by a tab character.\n";
+
+    return info;
+  }
+
+}

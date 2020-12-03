@@ -1,0 +1,26 @@
+package test;
+
+import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
+import commands.List;
+
+public class ListTest {
+
+  List list;
+  MockFileTree mockFileTree;
+  
+  @Before
+  public void setUp() {
+    list = new List();
+    mockFileTree = MockFileTree.newMockFT();
+  }
+
+  @Test
+  public void testNonRecursiveNoPath() {
+    mockFileTree.path = "";
+    String output = list.execute(new String[]{"ls"}, mockFileTree);
+    assertEquals("", output);
+  }
+
+}

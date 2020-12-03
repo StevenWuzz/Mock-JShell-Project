@@ -1,0 +1,66 @@
+package commands;
+
+import fileSystem.*;
+
+public class Mkdir extends Command {
+
+  /**
+   * Creates a child directory with specified parent and name then returns created directory
+   * 
+   * @param parent directory of new directory
+   * @param name of new directory as a string
+   * @return newly created directory
+   */
+  public Directory makeDirectory(Directory parent, String name) {
+
+    // check if new directory already exists
+    Directory dir = parent.findSubDir(name);
+
+    // directory does not exist
+    if (dir == null) {
+      // create new directory
+      dir = new Directory(parent, name);
+
+      // add directory as child to parent directory
+      parent.addDirectoryChild(dir);
+
+    } else {
+      // return duplicate directory
+      return null;
+    }
+
+    return dir;
+  }
+
+  @Override
+  protected String execute(String[] args) {
+    // TODO Auto-generated method stub
+
+    // seperate dir
+    String dir1 = args[1];
+    String dir2 = args[2];
+
+    // get current directory as parent
+    Directory p = FileTree.getCurrent();
+
+    // create first directory
+    Directory newDir1 = makeDirectory(p, dir1);
+
+    // dir1 creation unsuccesful
+    if (newDir1 == null) {
+      return "";
+    }
+
+    // create second directory
+    makeDirectory(p, dir2);
+
+    return "";
+
+  }
+
+  @Override
+  public String toString() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+}

@@ -1,0 +1,20 @@
+package commands;
+
+import fileSystem.Directory;
+
+public class Mkdir {
+
+  /**
+   * Creates a child directory with specified parent and name then returns created directory.
+   * @param parent
+   * @param name
+   * @return dir
+   */
+  public Directory makeDirectory(Directory parent, String name) {
+    Directory dir = new Directory(parent, name);
+    
+    parent.addDirectoryChild(dir);
+    
+    return dir;
+  }
+}

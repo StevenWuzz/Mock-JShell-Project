@@ -1,0 +1,160 @@
+package inputOutput;
+
+public class Error {
+  private static boolean checkCharacters(String argument) {
+    String illegalCharacters = "/.!@#$%^&*(){}~|<>?";
+
+    for (int i = 0; i < illegalCharacters.length(); i++) {
+      if (argument.indexOf(illegalCharacters.charAt(i)) != -1) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  private static boolean isInteger(String argument) {
+    try {
+      Integer.parseInt(argument);
+    } catch (NumberFormatException e) {
+      return false;
+    } catch (NullPointerException e) {
+      return false;
+    }
+    // Check if integer is non-negative
+    return Integer.parseInt(argument) >= 0;
+  }
+
+  private static boolean isValidString(String argument) {
+    // Checks if string starts and ends with double quotes
+    if (!(argument.charAt(0) == '"' && argument.charAt(argument.length() - 1) == '"')) {
+      return false;
+    }
+    // Checks if string has double quotes in it
+    argument = argument.substring(1, argument.length() - 1);
+    if (argument.indexOf('"') != -1) {
+      return false;
+    }
+    return true;
+  }
+
+
+  private static boolean isCommand(String argument) {
+    String commands[] =
+        {"exit", "mkdir", "cd", "ls", "pwd", "pushd", "popd", "history", "cat", "echo", "man"};
+    for (int i = 0; i < commands.length; i++) {
+      if (argument.contentEquals(commands[i])) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public static boolean checkSyntax(String[] arguments) {
+    switch (arguments[0]) {
+      case ("exit"):
+        if (arguments.length == 1) {
+          return true;
+        } else {
+          System.out.println("Too many arguments");
+          return false;
+        }
+      case ("mkdir"):
+        if (arguments.length == 3 && checkCharacters(arguments[1])
+            && checkCharacters(arguments[2])) {
+          return true;
+        } else {
+          System.out.println("Too many arguments or illegal characters");
+          return false;
+        }
+      case ("cd"):
+        if (arguments.length == 2 && checkCharacters(arguments[1])) {
+          return true;
+        } else {
+          System.out.println("Too many arguments or illegal characters");
+          return false;
+        }
+      case ("ls"):
+        for (int i = 1; i < arguments.length; i++) {
+          if (!checkCharacters(arguments[i])) {
+            System.out.println("Illegal characters");
+            return false;
+          }
+        }
+        return true;
+      case ("pwd"):
+        if (arguments.length == 1) {
+          return true;
+        } else {
+          System.out.println("Too many arguments");
+          return false;
+        }
+      case ("pushd"):
+        if (arguments.length == 2 && checkCharacters(arguments[1])) {
+          return true;
+        } else {
+          System.out.println("Too many arguments or illegal characters");
+          return false;
+        }
+      case ("popd"):
+        if (arguments.length == 1) {
+          return true;
+        } else {
+          System.out.println("Too many arguments");
+          return false;
+        }
+      case ("history"):
+        if (arguments.length == 1) {
+          return true;
+        } else if (arguments.length == 2 && isInteger(arguments[1])) {
+          return true;
+        } else {
+          System.out.println("Too many arguments or not a valid integer");
+          return false;
+        }
+      case ("cat"):
+        for (int i = 1; i < arguments.length; i++) {
+          if (!checkCharacters(arguments[i])) {
+            System.out.println("Illegal characters");
+            return false;
+          }
+          return true;
+        }
+      case ("echo"):
+        if (arguments.length == 4) {
+          if (!isValidString(arguments[1])) {
+            System.out.println("1st argument is not a valid string");
+            return false;
+          }
+          if (!(arguments[2].contentEquals(">") || arguments[2].contentEquals(">>"))) {
+            System.out.println("2nd argument must be '>' or '>>'");
+            return false;
+          }
+          if (!checkCharacters(arguments[3])) {
+            System.out.println("Illegal characters");
+            return false;
+          }
+          return true;
+        } else {
+          System.out.println("Too many or not enough arguments");
+          return false;
+        }
+
+      case ("man"):
+        if (arguments.length == 1) {
+          System.out.println("Not enough arguments");
+          return false;
+        } else {
+          for (int i = 1; i < arguments.length; i++) {
+            if (!isCommand(arguments[i])) {
+              System.out.println("Not a valid command in argument");
+              return false;
+            }
+          }
+        }
+        return true;
+    }
+
+    System.out.println("Not a valid command");
+    return false;
+  }
+}

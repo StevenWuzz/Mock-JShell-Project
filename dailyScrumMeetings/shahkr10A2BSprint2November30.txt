@@ -1,0 +1,9 @@
+What did I work on in the last three days?
+	- bjunit tests
+	- bug fixing and bug testing
+
+What do I plan to work in the next three days?
+    - nothing
+
+Am I blocked on anything?
+    - no

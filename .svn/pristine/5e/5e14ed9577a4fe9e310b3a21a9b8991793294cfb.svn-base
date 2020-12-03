@@ -1,0 +1,16 @@
+//Sprint 3 Backlog.
+November 4 to November 10
+
+User Stories from Product Backlog that we will address in this sprint:  	
+- As a user, I want to receive error messages if i have invalid syntax 	
+
+General Task: 
+- Revamp CRC cards
+- General testing and fixing bugs
+- Generate javadoc for every method and every class
+- Add proper comments
+- Reduce method lengths below 30 lines
+- Going through the marking scheme
+- Revamp old methods if needed
+- Reformatting code to make it cleaner
+- Make helper functions

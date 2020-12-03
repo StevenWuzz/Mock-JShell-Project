@@ -1,0 +1,35 @@
+package commands;
+
+/** This class has all of the methods needed to run Move */
+public class Move extends Command {
+
+  @Override
+  /**
+   * Execute the mv command
+   * 
+   * @param a string array of arguments for the mv command
+   * @return a string containing the output of mv command
+   */
+  protected String execute(String[] args) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  /**
+   * returns the manual entry for mv
+   * 
+   * @return manual entry for mv
+   */
+  public String toString() {
+    
+    // create man page for mv command
+    String info = "mv OLDPATH NEWPATHn\n"
+        + "\tMove item OLDPATH to NEWPATH. Both OLD- PATH and NEWPATH may be relative to the\n"
+        + "\tcurrent directory or may be full paths. If NEWPATH is a directory, move the item\n"
+        + "\tinto the directory.\n";
+
+    return info;
+  }
+
+}

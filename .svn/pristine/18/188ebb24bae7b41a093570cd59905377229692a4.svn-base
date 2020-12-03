@@ -1,0 +1,12 @@
+package commands;
+import fileSystem.*;
+
+public class Concatenate{ //TODO: extends Command
+  
+  public static String displayContents(File firstFile, File secondFile) {
+    String contentFirstFile = firstFile.getContent();
+    String contentSecondFile = secondFile.getContent();
+    String result = contentFirstFile + contentSecondFile;
+    return result;
+  }
+}

@@ -1,0 +1,12 @@
+Class name: MakeFile
+Parent class (if any): None
+Subclasses (if any): None 
+
+Responsibilities:
+* Creates a new file in the file tree
+* Adds content to a file
+
+Collaborators:
+* Directory
+* File
+* FileTree

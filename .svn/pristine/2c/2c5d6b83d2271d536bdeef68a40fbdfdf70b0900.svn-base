@@ -1,0 +1,47 @@
+package FileSystem;
+
+import java.util.LinkedList;
+
+public class Directory extends File {
+
+  private int numOfDirectories;
+  private int numOfFiles;
+
+  LinkedList<Directory> dirChildren = new LinkedList<Directory>();
+  LinkedList<File> fileChildren = new LinkedList<File>();
+
+  public Directory(int numD, int numF, Directory p, String n) {
+    super(p, n);
+    numOfDirectories = numD;
+    numOfFiles = numF;
+  }
+
+  public int getNumOfDirectoryChildren() {
+    return this.numOfDirectories;
+  }
+
+  public void setNumOfDirectoryChildren(int num) {
+    numOfDirectories = num;
+  }
+
+  public int getNumOfFileChildren() {
+    return this.numOfFiles;
+  }
+
+  public void setNumOfFileChildren(int num) {
+    numOfFiles = num;
+  }
+
+  public void addDirectoryChild(Directory c) {
+    dirChildren.add(c);
+    numOfDirectories += 1;
+  }
+
+  public void addFileChild(File c) {
+    fileChildren.add(c);
+    numOfFiles += 1;
+  }
+
+
+
+}

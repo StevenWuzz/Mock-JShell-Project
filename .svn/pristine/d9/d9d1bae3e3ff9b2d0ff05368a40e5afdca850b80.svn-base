@@ -1,0 +1,25 @@
+package fileSystem;
+ 
+ 
+public class FileDatabase {
+ 
+  private static Directory root;
+  private static Directory current;
+ 
+  public static Directory getRoot() {
+    return root;
+  }
+ 
+  public static void setRoot(Directory root) {
+    FileDatabase.root = root;
+  }
+ 
+  public static Directory getCurrent() {
+    return current;
+  }
+ 
+  public static void setCurrent(Directory current) {
+    FileDatabase.current = current;
+  }
+ 
+}

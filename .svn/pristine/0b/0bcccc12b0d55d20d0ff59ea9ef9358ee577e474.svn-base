@@ -1,0 +1,12 @@
+Class name: Curl
+Parent class (if any): Command
+Subclasses (if any): None
+
+Responsibilities:
+* Retrieve a file at a URL and add it to the current working directory
+
+Collaborators:
+* MakeFile
+* StandardOutput
+* PrintWorkingDirectory
+* File

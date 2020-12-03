@@ -1,0 +1,34 @@
+package commands;
+
+public class Exit extends Command{
+<<<<<<< .mine
+=======
+	
+	/**
+	 * Execute the Exit command to quit the shell 
+	 * 
+	 */
+	public static void execute() {
+		System.out.println("Quitting the shell...");
+		System.out.print("Process completed");
+		System.exit(0);
+	}
+>>>>>>> .r80
+
+  /**
+   * Execute the Exit command to quit the shell 
+   * 
+   */
+  @Override
+  protected void execute(String[] args) {
+    System.out.println("Quitting the shell...");
+    System.out.print("Process completed");
+    System.exit(0);
+  }
+
+  @Override
+  public String toString() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+}

@@ -1,0 +1,14 @@
+Class name: FileTree
+Parent class (if any): None
+Subclasses (if any): None 
+
+Responsibilities:
+* Creates a new file system
+* Gives root of the file system
+* Gets current working directory
+* Traverses and gets file or directory
+* Gets current path as a string
+* Sets current path
+
+Collaborators:
+* PrintWorkingDirectory

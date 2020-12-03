@@ -1,0 +1,10 @@
+What did I work on in the last three days?
+	- Java docs headers, param, and return for Directory class, Mkdir class, and Pwd class
+	- Added comments to Directory class, Mkdir class, and Pwd class
+
+What do I plan to work in the next three days?
+	- Implememnt File System into Mkdir
+	- Brainstorm test cases
+
+Am I blocked on anything?
+	- Waiting on FileSystem to be implemented so that I can implement it into Mkdir and Pwd

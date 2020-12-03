@@ -1,0 +1,262 @@
+// **********************************************************
+// Assignment2:
+// Student1: Stephen Guo
+// UTORID user_name: guostep2
+// UT Student #: 1006313231
+// Author: Stephen Guo
+//
+// Student2: Steven Hans Limantoro
+// UTORID user_name: limantor
+// UT Student #: 1005780861
+// Author: Steven Hans Limantoro
+//
+// Student3: Vignesh Nanthakumar
+// UTORID user_name: nantha33
+// UT Student #: 1006278948
+// Author: Vignesh Nanthakumar
+//
+// Student4: Krutik Shah
+// UTORID user_name: shahkr10
+// UT Student #: 10062135626
+// Author: Krutik Shah
+//
+//
+// Honor Code: I pledge that this program represents my own
+// program code and that I have coded on my own. I received
+// help from no one in designing and debugging my program.
+// I have also read the plagiarism section in the course info
+// sheet of CSC B07 and understand the consequences.
+// *********************************************************
+package inputOutput;
+
+public class Error {
+  private static boolean checkIllegalCharacters(String argument) {
+    String illegalCharacters = "!@#$%^&*(){}~|<>?"; // Removed '/' and "."
+
+    for (int i = 0; i < illegalCharacters.length(); i++) {
+      if (argument.indexOf(illegalCharacters.charAt(i)) != -1) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  public static boolean isValidPath(String path) {
+    String splitPath[] = path.split("/");
+
+    for (int i = 0; i < splitPath.length; i++) {
+      // Checks if path has either '..' or '.'
+      if (splitPath[i].indexOf(".") != -1 && !splitPath[i].contentEquals(".")
+          && !splitPath[i].contentEquals("..")) {
+        return false;
+      }
+      if (!checkIllegalCharacters(splitPath[i])) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  private static boolean isValidInteger(String argument) {
+    try {
+      Integer.parseInt(argument);
+    } catch (Exception e) {
+      return false;
+    }
+    // Check if integer is non-negative
+    return Integer.parseInt(argument) >= 0;
+  }
+
+  private static boolean isValidString(String argument) {
+    // Checks if string starts and ends with double quotes
+    if (!(argument.charAt(0) == '"' && argument.charAt(argument.length() - 1) == '"')) {
+      return false;
+    }
+    
+    // Checks if string is just '"'
+    if (argument.length() == 1) {
+      return false;
+    }
+
+    // Checks if string has double quotes in it
+    argument = argument.substring(1, argument.length() - 1);
+    if (argument.indexOf('"') != -1) {
+      return false;
+    }
+    return true;
+  }
+
+  public static boolean isCommand(String argument) {
+    String commands[] =
+        {"exit", "mkdir", "cd", "ls", "pwd", "pushd", "popd", "history", "cat", "echo", "man"};
+    for (int i = 0; i < commands.length; i++) {
+      if (argument.contentEquals(commands[i])) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  private static boolean checkEcho(String[] arguments) {
+    String fullString = "";
+    int argumentLength = arguments.length + 1;
+
+    if (arguments.length == 1) {
+      System.out.println("Error: Not enough arguments");
+      return false;
+    }
+
+    // Gets full string from arguments
+    for (int i = 1; i < arguments.length; i++) {
+      fullString += arguments[i] + " ";
+      argumentLength--;
+      if (fullString.length() > 2 && fullString.charAt(fullString.length() - 2) == '"') {
+        break;
+      }
+    }
+    fullString = fullString.substring(0, fullString.length() - 1);
+
+    // Checks if the string is valid
+    if (!isValidString(fullString)) {
+      System.out.println("Error: 1st argument is not a valid string");
+      return false;
+    }
+    // If user doesn't want to write to a file
+    if (argumentLength == 2) {
+      return true;
+    }
+
+    // If user wants to write to a file
+    if (argumentLength == 4) {
+      if (!(arguments[arguments.length - 2].contentEquals(">")
+          || arguments[arguments.length - 2].contentEquals(">>"))) {
+        System.out.println("Error: 2nd argument must be '>' or '>>'");
+        return false;
+      }
+      if (!isValidPath(arguments[arguments.length - 1])) {
+        System.out.println("Error: Illegal characters in filename/path");
+        return false;
+      }
+      return true;
+    }
+    System.out.println("Error: Too many arguments");
+    return false;
+  }
+
+  public static boolean checkSyntax(String[] arguments) {
+    switch (arguments[0]) {
+      case ("exit"): // Can combine with popd
+        if (arguments.length == 1) {
+          return true;
+        }
+        System.out.println("Error: Too many arguments");
+        return false;
+
+
+      case ("mkdir"):
+        if (arguments.length <= 2) {
+          System.out.println("Error: Not enough arguments");
+          return false;
+        }
+        if (arguments.length == 3) {
+          return true;
+        }
+        System.out.println("Error: Too many arguments");
+        return false;
+
+
+      case ("cd"):
+        if (arguments.length == 1) {
+          System.out.println("Error: Not enough arguments");
+          return false;
+        }
+        if (arguments.length == 2 && isValidPath(arguments[1])) {
+          return true;
+        }
+        if (arguments.length == 2 && !isValidPath(arguments[1])) {
+          System.out.println("Error: Illegal characters in path");
+          return false;
+        }
+        System.out.println("Error: Too many arguments");
+        return false;
+
+
+      case ("ls"):
+        return true;
+
+
+      case ("pwd"):
+        if (arguments.length == 1) {
+          return true;
+        }
+        System.out.println("Error: Too many arguments");
+        return false;
+
+
+      case ("pushd"):
+        if (arguments.length == 1) {
+          System.out.println("Error: Not enough arguments");
+          return false;
+        }
+        if (arguments.length == 2 && isValidPath(arguments[1])) {
+          return true;
+        }
+        if (arguments.length == 2 && !isValidPath(arguments[1])) {
+          System.out.println("Error: Illegal characters in filename/path");
+          return false;
+        }
+        System.out.println("Error: Too many arguments");
+        return false;
+
+
+      case ("popd"):
+        if (arguments.length == 1) {
+          return true;
+        }
+        System.out.println("Error: Too many arguments");
+        return false;
+
+
+      case ("history"):
+        if (arguments.length == 1) {
+          return true;
+        }
+        if (arguments.length == 2 && isValidInteger(arguments[1])) {
+          return true;
+        }
+        if (arguments.length == 2 && !isValidInteger(arguments[1])) {
+          System.out.println("Error: Not a valid integer provided");
+          return false;
+        }
+        System.out.println("Error: Too many arguments");
+        return false;
+
+
+      case ("cat"):
+        if (arguments.length == 1) {
+          System.out.println("Error: Not enough arguments");
+          return false;
+        }
+        return true;
+
+
+      case ("echo"):
+        return checkEcho(arguments);
+
+
+      case ("man"):
+        if (arguments.length == 1) {
+          System.out.println("Error: Not enough arguments");
+          return false;
+        }
+        return true;
+
+
+      case (""):
+        return false;
+    }
+
+    System.out.println("Error: Not a valid command");
+    return false;
+  }
+}

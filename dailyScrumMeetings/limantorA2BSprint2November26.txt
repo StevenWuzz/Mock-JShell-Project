@@ -1,0 +1,14 @@
+What did I work on in the last three days?
+	- I wrote some unit testing for curl
+	- I came up with necessary test cases for testing ls
+	- I did further bugtesting for ls and curl
+	- I modified ls and curl to incorporate pError from StandardOutput
+	- I modified ls to incorporate iterator design pattern and fixed all emerging bugs
+
+What do I plan to work in the next three days?
+    - I plan to write JUnit test for ls, mv, exit, and cd
+    - I plan to update comments in ls
+    - I plan to shorten the methods in ls so that they are within 30 lines
+
+Am I blocked on anything?
+    - No

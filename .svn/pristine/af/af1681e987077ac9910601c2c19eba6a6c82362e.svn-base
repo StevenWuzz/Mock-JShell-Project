@@ -1,0 +1,14 @@
+package Exceptions;
+
+public class FileNotFoundException extends Exception{
+  private String path;
+  public FileNotFoundException(String p) {
+    this.path = p;
+  }
+
+  @Override
+  public String toString() {
+    return path + " could not be found";
+  }
+
+}

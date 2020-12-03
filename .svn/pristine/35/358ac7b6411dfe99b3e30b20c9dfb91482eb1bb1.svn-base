@@ -1,0 +1,28 @@
+package commands;
+
+/** This class has all of the methods needed to run Remove */
+public class Remove extends Command{
+
+  @Override
+  protected String execute(String[] args) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  /**
+   * returns the manual entry for rm
+   * 
+   * @return manual entry for rm
+   */
+  public String toString() {
+
+    // create man page for rm command
+    String info = "rm DIR\n\n"
+        + "\tRemoves the DIR from the file system. This also recursively removes all the\n"
+        + "\tchildren of DIR.\n";
+
+    return info;
+  }
+
+}

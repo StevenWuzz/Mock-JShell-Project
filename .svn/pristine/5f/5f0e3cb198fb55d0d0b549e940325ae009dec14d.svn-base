@@ -1,0 +1,51 @@
+package fileSystem;
+
+public class File {
+
+  protected Directory parent;
+  protected String name;
+  private String content;
+
+
+  public File(Directory p, String n) {
+    this.parent = p;
+    this.name = n;
+  }
+
+  public Directory getParent() {
+    return this.parent;
+  }
+
+  public void setParent(Directory p) {
+    this.parent = p;
+  }
+
+  public String getName() {
+    return this.name;
+  }
+
+  public void setName(String n) {
+    this.name = n;
+  }
+
+  public String getContent() {
+    return content;
+  }
+
+  public void setContent(String content) {
+    this.content = content;
+  }
+
+  /**
+   * Appends given content to the file
+   * @param content
+   */
+  public void appendContent(String content) {
+    this.content += content;
+  }
+
+  @Override
+  public String toString() {
+    return content;
+  }
+}

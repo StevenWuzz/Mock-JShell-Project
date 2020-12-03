@@ -1,0 +1,39 @@
+package inputOutput;
+
+import fileSystem.File;
+
+public class StandardOutput {
+
+  /**
+   * Prints given msg to shell
+   * @param msg
+   */
+  public static void output(String msg) {
+    System.out.println(msg);
+  }
+
+  /**
+   * if append is true, appends msg to file, else sets file content to msg
+   * @param msg
+   * @param file
+   * @param append
+   */
+  public static void output(String msg, File file, boolean append) {
+    if(append){
+      file.appendContent(msg);
+    }
+    else
+    {
+      file.setContent(msg);
+    }
+  }
+
+  /**
+   * logs the following error msg to shell
+   * @param msg
+   */
+  public static void perror(String msg){
+    System.out.println(msg);
+  }
+
+}

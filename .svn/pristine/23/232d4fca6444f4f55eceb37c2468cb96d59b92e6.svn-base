@@ -1,0 +1,10 @@
+Class name: ErrorMessage
+Parent class (if any): None
+Subclasses (if any): None 
+
+Responsibilities:
+* Checks if input for a command has valid syntax
+* Generate error message if it's not valid
+
+Collaborators:
+* None

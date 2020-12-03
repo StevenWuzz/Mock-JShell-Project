@@ -1,0 +1,11 @@
+What did I work on in the last three days?
+    - Further testing on Ls class
+    - Put comments and javadoc for Ls class
+
+What do I plan to work in the next three days?
+    - Complete javadoc and commenting for my methods and classes
+    - Create helper functions to shorten my implementation
+    - Going through the marking scheme and make necessary adjustments
+
+Am I blocked on anything?
+    - No

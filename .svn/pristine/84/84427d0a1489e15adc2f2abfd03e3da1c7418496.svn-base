@@ -1,0 +1,14 @@
+package commands;
+
+public class Manual extends Command{
+
+  @Override
+  protected String execute(String[] args) {
+    return "";
+  }
+
+  @Override
+  public String toString() {
+    return "Outputs the documentation of the given command";
+  }
+}

@@ -1,0 +1,14 @@
+package Commands;
+
+import FileSystem.Directory;
+
+public class Mkdir {
+  
+  public Directory makeDirectory(Directory parent, String name) {
+    Directory dir = new Directory(parent, name);
+    
+    parent.addDirectoryChild(dir);
+    
+    return dir;
+  }
+}

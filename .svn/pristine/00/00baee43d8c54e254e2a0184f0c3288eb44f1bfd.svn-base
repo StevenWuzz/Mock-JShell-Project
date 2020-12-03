@@ -1,0 +1,67 @@
+//Sprint 1 Backlog.
+October 28 to November 3
+
+User Stories from Product Backlog that we will address in this sprint:
+
+As a user, I want to be able to make directories                          
+As a user, I want to print all the contents of my current directory       
+As a user, I would like to view the documentation for a certain command  
+As a user, I want to be able to make directories                                                
+As a user, I want to remove the top directory from the stack, and change into that directory from my current directory                 
+As a user, I can change my current directory to a new directory          
+As a user, I want to be able to push directories to a stack              
+As a user, I want to receive error messages if i have invalid syntax     
+As n user, I want to be print the contents of 1 or more  files       
+As a user, I would like to print the current working directory           
+As a user, I would like to print a string to the shell or to a file, and create the file if it does not exist
+
+
+General tasks to be accomplished:
+
+- Make documentation for the commands you’ve made.
+- Check for errors
+- Modify/improve previous implementation of commands
+- Revamp CRC cards if needed
+
+
+Specific tasks to be accomplished:
+
+a - 1 Implement change directory
+a - 2 Incorporate traversal from the fileSystem
+a - 3 Set currentDir  to the traversed dir
+
+b - 1 Implement concatenate
+b - 2 Incorporate traversal from the fileSystem 
+b - 3 Display the concatenated files to the shell
+
+c - 1 finish popd
+c - 2 finish pushd
+
+d - 1 start and finish echo overwriting command
+d - 2 start and finish echo appending command
+
+e - 1 syntax checking
+
+f - 1 finish list
+f - 2 finish mkdir
+
+g - 1 implement manual
+
+h - 1 implement fileTree 
+h - 2 Implement traversing in fileTree
+ 
+ 
+These tasks are assigned as follows:
+
+User: Stephen Guo
+Tasks: e - 1, c - 1, c - 2, b - 1, b - 2
+
+User: Steven Hans Limantoro  
+Tasks: f - 1, b - 3, a - 1, a - 2
+
+User: Vignesh Nanthakumar
+Tasks: d - 1, d - 2, f - 2
+
+User: Krutik Tejalkumar Shah
+Tasks: h - 1, h - 2, g - 1
+

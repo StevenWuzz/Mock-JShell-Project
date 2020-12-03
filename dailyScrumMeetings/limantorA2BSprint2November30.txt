@@ -1,0 +1,11 @@
+What did I work on in the last three days?
+	- I wrote Junit tests for all ls, mv, cd
+	- I modified Junit tests for curl
+	- I fixed bugs in some classes
+	- I modified javadocs and comments in some classes
+
+What do I plan to work in the next three days?
+    -
+
+Am I blocked on anything?
+    - No

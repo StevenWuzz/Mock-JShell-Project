@@ -1,0 +1,75 @@
+// **********************************************************
+// Assignment2:
+// Student1: Stephen Guo
+// UTORID user_name: guostep2
+// UT Student #: 1006313231
+// Author: Stephen Guo
+//
+// Student2: Steven Hans Limantoro
+// UTORID user_name: limantor
+// UT Student #: 1005780861
+// Author: Steven Hans Limantoro
+//
+// Student3: Vignesh Nanthakumar
+// UTORID user_name: nantha33
+// UT Student #: 1006278948
+// Author: Vignesh Nanthakumar
+//
+// Student4: Krutik Shah
+// UTORID user_name: shahkr10
+// UT Student #: 10062135626
+// Author: Krutik Shah
+//
+//
+// Honor Code: I pledge that this program represents my own
+// program code and that I have coded on my own. I received
+// help from no one in designing and debugging my program.
+// I have also read the plagiarism section in the course info
+// sheet of CSC B07 and understand the consequences.
+// *********************************************************
+package inputOutput;
+
+import commands.Command;
+import commands.History;
+
+public class StandardInput {
+  
+  // Debugging variable
+  public static boolean initalized = false;
+  
+  public static void parse(String input) {
+    
+    // Adds input to history
+    History.addInputHistory(input);
+
+    // Splits input into commands and arguments
+    String arguments[] = input.trim().split("\\s+");
+
+    // For testing and debugging
+    if (input.contentEquals("init") && !initalized) {
+      Command.runCommand(new String[] {"mkdir","folder1","folder2"});
+      Command.runCommand(new String[] {"echo","\"apple orange\"",">", "file1"});
+      Command.runCommand(new String[] {"echo","\"iPhone 12 Max\"",">", "file2"});
+      Command.runCommand(new String[] {"cd","folder1"});
+      Command.runCommand(new String[] {"mkdir","folder3","folder4"});
+      Command.runCommand(new String[] {"echo","\"I love anime!\"",">", "file3"});
+      Command.runCommand(new String[] {"echo","\"4th file...\"",">", "file4"});
+      Command.runCommand(new String[] {"cd","folder3"});
+      Command.runCommand(new String[] {"echo","\"This shell is amazin!\"",">", "file5"});
+      Command.runCommand(new String[] {"cd","/"});
+      Command.runCommand(new String[] {"cd","folder2"});
+      Command.runCommand(new String[] {"echo","\"ayaya!\"",">", "animeFile"});
+      Command.runCommand(new String[] {"cd","/"});
+      System.out.println("Created new file system!");
+      initalized = true;
+      return;
+    }
+    
+    // Executes command if validated
+    if (Error.checkSyntax(arguments)) {
+      Command.runCommand(arguments);
+    }
+    
+  }
+  
+}

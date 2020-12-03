@@ -1,0 +1,112 @@
+package commands;
+
+import fileSystem.Directory;
+import fileSystem.FileTree;
+import fileSystem.MakeFile;
+import inputOutput.StandardOutput;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class LoadJShell extends Command {
+
+  private void loadDir(BufferedReader br, FileTree f) throws IOException {
+    MakeDirectory mkdir = new MakeDirectory();
+    String line, path = "";
+    while (!(line = br.readLine()).equals("</Directory>")) {
+      path += line;
+    }
+    mkdir.execute(new String[] {"mkdir", path}, f);
+  }
+
+  private void loadFile(BufferedReader br, FileTree f) throws IOException {
+    String line, path = "", content = "";
+    path = br.readLine();
+    br.readLine();
+    while (!(line = br.readLine()).equals("</Content>")) {
+      content += line;
+    }
+    br.readLine();
+    MakeFile.makeFile(path, content, f);
+  }
+
+  private void loadFileSys(BufferedReader br, FileTree f) throws IOException {
+    String line;
+    while (!(line = br.readLine()).equals("</FileSystem>")) {
+      switch (line) {
+        case ("<Directory>"):
+          loadDir(br, f);
+          break;
+        case ("<File>"):
+          loadFile(br, f);
+          break;
+        default:
+          break;
+      }
+    }
+
+  }
+
+  private void loadDirStack(BufferedReader br, FileTree f) throws IOException {
+    String line;
+    while (!(line = br.readLine()).equals("</DirectoryStack>")) {
+      PushDirectory.dirStack.push((Directory) f.traverseToEnd(line));
+    }
+  }
+
+  private void loadHist(BufferedReader br, FileTree f) throws IOException {
+    String line;
+    while (!(line = br.readLine()).equals("</History>")) {
+      History.addInputHistory(line);
+    }
+  }
+
+  @Override
+  /**
+   * Execute the loadJShell command
+   * 
+   * @param a string array of arguments for the loadJShell command
+   * @param shell file tree
+   * @return a string containing the output of loadJShell command
+   */
+  public String execute(String[] args, FileTree f) {
+    String line;
+    try {
+      BufferedReader br = new BufferedReader(new FileReader(args[1]));
+      try {
+        while ((line = br.readLine()) != null) {
+          switch (line) {
+            case ("<FileSystem>"):
+              loadFileSys(br, f);
+              break;
+            case ("<History>"):
+              loadHist(br, f);
+              break;
+            case ("<DirectoryStack>"):
+              loadDirStack(br, f);
+              break;
+            default:
+              break;
+          }
+        }
+      } finally {
+        br.close();
+      }
+    } catch (Exception e) {
+      // e.printStackTrace();
+      StandardOutput.perror("trouble reading file");
+    }
+
+    return "";
+  }
+
+  @Override
+  /**
+   * returns the manual entry for loadJShell
+   * 
+   * @return manual entry for loadJShell
+   */
+  public String toString() {
+    return "Loads Shell from file";
+  }
+}

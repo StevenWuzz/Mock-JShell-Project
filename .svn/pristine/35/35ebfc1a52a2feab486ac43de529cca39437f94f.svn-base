@@ -1,0 +1,46 @@
+package test;
+
+import static org.junit.Assert.assertEquals;
+
+import Exceptions.InvalidPathException;
+import commands.List;
+import commands.Manual;
+import fileSystem.Directory;
+import fileSystem.File;
+import fileSystem.FileTree;
+import java.lang.reflect.Field;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+public class Manualtest {
+
+  private Manual man;
+  private String expectedOutput;
+  private String actualOutput;
+
+  @Before
+  public void setUp() {
+    man = new Manual();
+    expectedOutput = "";
+    actualOutput = "";
+  }
+
+  @Test
+  public void testOneCommand() {
+    actualOutput = man.execute(new String[] {"man", "ls"}, null);
+    expectedOutput = "ls [PATH ...]\n\n"
+        + "\tIf no paths are given, print the contents of the current"
+        + " directory, with a new line following each of the content.\n" + "\tContents can be file"
+        + " or directory.\n\n" + "\tOtherwise, for each path p, the order listed:\n\n"
+        + "\tIf p specifies a file, print p.\n" + "\tIf p specifies a directory, print p, a colon"
+        + ", then the contents of that directory, then an extra new line.\n"
+        + "\tIf p does not exist, print a suitable error message.";
+    assertEquals(expectedOutput, actualOutput);
+  }
+
+
+  @After
+  public void tearDown() throws Exception {}
+
+}

@@ -1,0 +1,9 @@
+package commands;
+
+public interface Cmd {
+
+  String execute(String args[]);
+
+  String toString();
+
+}

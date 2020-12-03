@@ -1,0 +1,10 @@
+What did I work on in the last three days?
+    - Finished implementation for the Exit class
+    - Made very high-level skeleton code for Ls class
+
+What do I plan to work in the next three days?
+    - Finish the Ls class
+    - Start working on linking each command separately to commands class (j-2 task)
+
+Am I blocked on anything?
+    - No

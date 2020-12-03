@@ -1,0 +1,11 @@
+What did I work on in the last three days?
+	- Finished and cleaned List class
+	- Worked on Concatenate class to create a method for displaying concatenated contents
+	- Worked on some implementation of ChangeDirectory class
+
+What do I plan to work in the next three days?
+	- Work on comments and javadoc for the classes/methods I made
+	- Polish the implementation if necessary
+
+Am I blocked on anything?
+	- No

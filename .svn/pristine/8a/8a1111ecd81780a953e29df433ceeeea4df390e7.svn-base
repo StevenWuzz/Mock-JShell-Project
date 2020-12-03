@@ -1,0 +1,16 @@
+What did I work on in the last three days?
+    - Reformatted code to make functions cleaner
+    - Added proper comments fro Mkdir and Echo
+    - Went through marking scheme and made changes as need be
+    - Revamped old methods if needed
+    - General testing and fixed bugs
+	- Generated javadoc for methods
+	- Removed unnecessary or unused class instances
+	- Reduced method length to below 30 lines
+	- Made helper functions
+
+What do I plan to work in the next three days?
+    - Project is complete
+
+Am I blocked on anything?
+    - No

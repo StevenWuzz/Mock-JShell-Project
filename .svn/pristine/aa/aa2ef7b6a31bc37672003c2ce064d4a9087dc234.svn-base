@@ -1,0 +1,22 @@
+Class name: Shell
+Parent class (if any): None
+Subclasses (if any): None 
+Responsibilities:
+* get user input
+* execute commands
+* prints output
+* close shell
+
+Collaborators:
+* Copy
+* Move
+* Exit
+* Get
+* PrintWorkingDirectory
+* Concatenate
+* ChangeDirectory
+* Echo
+* List
+* MakeDirectory
+* Print
+

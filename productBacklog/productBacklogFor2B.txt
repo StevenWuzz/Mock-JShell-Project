@@ -1,0 +1,32 @@
+User Stories                                                             |  Time (Hours)
+----------------------------------------------------------------------------------------
+As a user, I would like to remove a directory from the shell and all     |      1
+its children                                                             |
+----------------------------------------------------------------------------------------
+As a user, I want to be able to make an infinite amount of directories   |     0.5
+----------------------------------------------------------------------------------------		
+As a user, I want to print all the contents of my current directory and  |      3
+recursively list all subdirectories if needed                            |
+----------------------------------------------------------------------------------------
+As a user, I would like to move and rename a file or folder              |      2
+----------------------------------------------------------------------------------------
+As a user, I would like to copy and rename a file or folder              |      1
+----------------------------------------------------------------------------------------
+As a user, I would like to retrieve a file from a URL and add it to the  |      2
+current working directory                                                |
+----------------------------------------------------------------------------------------
+As a user, I would only like to print the manual for one command         |     0.5
+----------------------------------------------------------------------------------------
+As a user, I would like to save the state of the JShell to a file on my  |      3
+computer                                                                 |     
+----------------------------------------------------------------------------------------
+As a user, I would like to load the state of the JShell from a file on   |      3
+my computer                                                              |  
+----------------------------------------------------------------------------------------
+As a user, I would like to search for an exact string for files or       |      4
+directories in my computer.                                              |
+----------------------------------------------------------------------------------------
+As a user, I would like to print the entire filesystem as a tree diagram |      3
+----------------------------------------------------------------------------------------
+As a user, I would like to redirect the output of any command to a file  |      2
+----------------------------------------------------------------------------------------

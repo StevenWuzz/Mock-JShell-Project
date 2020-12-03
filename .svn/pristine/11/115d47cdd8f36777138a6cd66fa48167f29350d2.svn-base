@@ -1,0 +1,36 @@
+package test;
+
+import static org.junit.Assert.*;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import org.junit.Before;
+import org.junit.Test;
+import commands.Curl;
+import fileSystem.*;
+
+public class CurlTest {
+
+  Curl curl;
+  int numOfRootChildrenBefore;
+  private ByteArrayOutputStream outContent;
+  
+  @Before
+  public void setUp(){
+    curl = new Curl();
+  }
+  
+
+  @Test
+  public void testInvalidURL() {
+    outContent = new ByteArrayOutputStream();
+    System.setOut(new PrintStream(outContent));
+    curl.execute(new String[]{"curl", "abcdef"});
+    assertEquals("The URL abcdef is malformed", outContent.toString().trim());
+    
+    outContent = new ByteArrayOutputStream();
+    System.setOut(new PrintStream(outContent));
+    curl.execute(new String[]{"curl", "htt://stackoverflow.com/"});
+    assertEquals("The URL htt://stackoverflow.com/ is malformed", outContent.toString().trim());
+  }
+
+}

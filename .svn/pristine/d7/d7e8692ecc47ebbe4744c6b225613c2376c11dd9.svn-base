@@ -1,0 +1,15 @@
+package Exceptions;
+
+public class InvalidPathException extends Exception {
+
+  private String path;
+
+  public InvalidPathException(String p) {
+    this.path = p;
+  }
+
+  @Override
+  public String toString() {
+    return path + "is an invalid path";
+  }
+}

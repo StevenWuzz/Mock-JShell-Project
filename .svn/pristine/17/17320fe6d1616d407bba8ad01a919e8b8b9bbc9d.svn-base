@@ -1,0 +1,11 @@
+Class name: Command
+Parent class (if any): None
+Subclasses (if any): Exit, PrintWorkingDirectory, Concatenate, ChangeDirectory, Echo, List, MakeDirectory, Pushd, Popd, History, Manual
+
+Responsibilities:
+* Execute specified command
+* Redirects output to a file if specified
+
+Collaborators:
+* StandardOutput
+* File

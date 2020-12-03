@@ -1,0 +1,96 @@
+package commands;
+
+import java.util.LinkedList;
+import fileSystem.*;
+
+/** This class has all of the methods needed to run Remove */
+public class Remove extends Command {
+
+  /**
+   * Deletes a directory from the file system and recursively deletes it's contents
+   * 
+   * @param the directory to be deleted
+   */
+  private void deleteDir(Directory currentDir) {
+
+    // base case
+    if (currentDir == null) {
+      return;
+    }
+
+    // get all the directory children in the current directory
+    LinkedList<Directory> dirChildren = currentDir.getDirectoryChildren();
+
+    // traverse through directory children and delete them recursively
+    for (Directory item : dirChildren) {
+      deleteDir(item);
+    }
+
+    // get all the file children in the current directory
+    LinkedList<File> fileChildren = currentDir.getFileChildren();
+
+    // delete all file children
+    for (File item : fileChildren) {
+      item = null;
+      System.gc();
+    }
+
+    // delete current dir
+    currentDir = null;
+    System.gc();
+  }
+
+  @Override
+  /**
+   * Execute the rm command
+   * 
+   * @param a string array of arguments for the rm command
+   * @return a string containing the output of rm command
+   */ public String execute(String[] args) {
+
+    FileTree fileTree = FileTree.getFileTree();
+
+    Directory parentDir;
+
+    // get current directory as parent for dir1
+    if (args[1].lastIndexOf("/") == -1) {
+      parentDir = fileTree.getCurrent();
+
+      // get parent of current directory as parent for dir1
+    } else if (args[1].lastIndexOf("/") == 0) {
+      parentDir = fileTree.getRoot();
+
+      // traverse to start of path and get parent for dir2
+    } else {
+      parentDir =
+          (Directory) fileTree.traverseToEnd(args[1].substring(0, args[1].lastIndexOf("/")));
+
+      // path cannot be traversed
+      if (parentDir == null) {
+        return "Invalid Path";
+      }
+    }
+
+    // delete unused memory
+    System.gc();
+
+    return "";
+  }
+
+  @Override
+  /**
+   * returns the manual entry for rm
+   * 
+   * @return manual entry for rm
+   */
+  public String toString() {
+
+    // create man page for rm command
+    String info = "rm DIR\n\n"
+        + "\tRemoves the DIR from the file system. This also recursively removes all the\n"
+        + "\tchildren of DIR.\n";
+
+    return info;
+  }
+
+}

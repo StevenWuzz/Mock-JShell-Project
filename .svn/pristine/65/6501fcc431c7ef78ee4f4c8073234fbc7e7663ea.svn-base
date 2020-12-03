@@ -1,0 +1,20 @@
+What did I work on in the last three days?
+    - Finished CRC cards
+    - Discussed design ideas with the team
+    - Completed Pushd, and Popd until the roadblock
+    - Finished History
+    - Revamped Stdin and JShell
+    - Discussed tasks for Sprint 2
+    
+
+What do I plan to work in the next three days?
+    - Finish Error class
+    - Finish Concatenate
+    - Finish Popd and Pushd if possible
+    - Implement traversal for Concatenate
+    - Make documentation for commands I've worked on
+    - Check for errors
+
+Am I blocked on anything?
+    - Need Pwd and Cd for Popd and Pushd
+    - Also need Pwd and Cd for concatenate traversal

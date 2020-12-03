@@ -1,0 +1,30 @@
+import java.util.LinkedList;
+
+public class Directory {
+
+  private int numOfChildren;
+  private Directory parent;
+  LinkedList<Directory> children = new LinkedList<Directory>();
+
+  public Directory(int num, Directory p) {
+    numOfChildren = num;
+    parent = p;
+  }
+
+  public int getNumOfChildren() {
+    return this.numOfChildren;
+  }
+  
+  public int setNumOfChildren(int num) {
+    numOfChildren = num;
+  }
+
+  public int getParent() {
+    return this.parent;
+  }
+
+  public void setParent(Directory p) {
+    parent = p;
+  }
+
+}

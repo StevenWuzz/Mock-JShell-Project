@@ -1,0 +1,14 @@
+Class name: Directory
+Parent class (if any): None
+Subclasses (if any): None 
+
+Responsibilities:
+* Create mock directory
+* Stores name of directory
+* Gets list of children directories
+* Create and stores children directories
+* Finds files in directory
+* Returns number of files and children directories
+
+Collaborators:
+* None

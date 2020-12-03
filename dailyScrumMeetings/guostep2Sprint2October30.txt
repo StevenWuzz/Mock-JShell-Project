@@ -1,0 +1,17 @@
+What did I work on in the last three days?
+    - Finished error class 
+    - Worked on Concatenate
+    - Fixed up history
+    - Added comments for some classes
+    
+
+What do I plan to work in the next three days?
+    - Finish Concatenate
+    - Finish Popd and Pushd once Pwd and Cd are finished
+    - Implement traversal for Concatenate
+    - Make documentation for commands I've worked on
+    - Work on Error if any changes need to be made
+
+Am I blocked on anything?
+    - Need Pwd and Cd for Popd and Pushd
+    - Also need Pwd and Cd for concatenate traversal

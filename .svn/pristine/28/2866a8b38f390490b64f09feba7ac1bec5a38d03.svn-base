@@ -1,0 +1,29 @@
+package commands;
+
+import fileSystem.Directory;
+
+public class Pwd {
+
+  /**
+   * returns the absolute path of the given directory as a string
+   * @param d
+   * @return path
+   */
+  public String printWorkingDirectory(Directory d) {
+    if (d == null) {
+      return null;
+    }
+
+    String path = "/";
+
+    Directory parent = d.getParent();
+
+    while (parent != null) {
+      path = parent.getName() + path;
+
+      parent = parent.getParent();
+    }
+
+    return path;
+  }
+}

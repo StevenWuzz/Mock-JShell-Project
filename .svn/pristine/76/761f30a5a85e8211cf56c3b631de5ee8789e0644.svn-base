@@ -1,0 +1,13 @@
+Class name: File
+Parent class (if any): None
+Subclasses (if any): None 
+
+Responsibilities:
+* Creates file object
+* Stores text 
+* Stores name of file
+* Gets, sets, and appends text
+* Stores directory the file is in
+
+Collaborators:
+* None

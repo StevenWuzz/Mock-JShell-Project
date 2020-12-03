@@ -1,0 +1,14 @@
+Class name: Concatenate
+Parent class (if any): Command
+Subclasses (if any): None
+
+Responsibilities:
+* Prints contents of files in order
+* Prints 3 lines of space after each file
+
+Collaborators:
+* File
+* Directory
+* FileTree
+* StandardOutput
+

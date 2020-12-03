@@ -1,0 +1,12 @@
+Class name: Remove
+Parent class (if any): Command
+Subclasses (if any): None
+
+Responsibilities:
+* Removes a directory and all of its children from the file system
+
+Collaborators:
+* Directory
+* File
+* FileTree
+* PrintWorkingDirectory

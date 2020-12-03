@@ -1,0 +1,63 @@
+package fileSystem;
+
+public class FileTree {
+
+  private static Directory root;
+  private static Directory current;
+
+  public static Directory getRoot() {
+    return root;
+  }
+
+  public static void setRoot(Directory root) {
+    FileTree.root = root;
+  }
+
+  public static Directory getCurrent() {
+    return current;
+  }
+
+  public static void setCurrent(Directory current) {
+    FileTree.current = current;
+  }
+
+
+  /**
+   * Iteratively traverse the given path and return the directory or file
+   *
+   * @param path
+   * @return the file or directory object
+   */
+  public static File traverseToEnd(String path) {
+    // Split the entire path into individual directories or files
+    String[] p = path.split("/");
+    // Decide whether the path is absolute or relative
+    Directory dir = (p[0].equals("")) ? root : current;
+    int i = (p[0].equals("")) ? 1 : 0;
+    // Iterate through all the individual directories except the last one
+    for (; i < p.length - 1; i++) {
+      // Find the corresponding sub-directory
+      if (p[i] == "..") {
+        dir = dir.getParent();
+      } else if (p[i] != ".") {
+        dir = dir.findSubDir(p[i]);
+      }
+      // If the sub-directory is not found
+      if (dir == null) {
+        return null;
+      }
+    }
+    //check if last element is a directory:
+    if (dir.findFile(p[p.length - 1]) != null) {
+      return dir.findFile(p[p.length - 1]);
+    } else {
+      if (p[i] == "..") {
+        return dir.getParent();
+      } else if (p[i] == ".") {
+        return dir;
+      } else {
+        return dir.findSubDir(p[p.length - 1]);
+      }
+    }
+  }
+}

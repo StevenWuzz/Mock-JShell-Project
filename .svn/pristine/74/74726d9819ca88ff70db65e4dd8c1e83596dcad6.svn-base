@@ -1,0 +1,12 @@
+What did I work on in the last three days?
+	- Completely modified Ls to work recursively
+	- Fully implemented Curl
+	- Updated manual for Ls
+
+What do I plan to work in the next three days?
+    - Finish javadoc and comments for Curl
+    - Modify javadoc and comments for Ls 
+    - Redesign Ls in terms of implementation 
+
+Am I blocked on anything?
+    - No

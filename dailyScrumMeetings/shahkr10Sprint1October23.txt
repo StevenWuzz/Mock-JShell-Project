@@ -1,0 +1,10 @@
+What did I work on in the last three days?
+    - worked on Command abstract class
+    - brainstormed design ideas with team, and crc cards. 
+
+What do I plan to work in the next three days?
+    - finish File class
+    - Start Stdout and error handling
+
+Am I blocked on anything?
+No

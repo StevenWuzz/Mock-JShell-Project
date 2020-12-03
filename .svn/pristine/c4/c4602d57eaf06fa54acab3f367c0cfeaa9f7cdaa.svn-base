@@ -1,0 +1,11 @@
+What did I work on in the last three days?
+    - Finished first pass on the List.java class
+    - Discussed with my co-workers on how to modify the (design) implementations for sprint2
+
+What do I plan to work in the next three days?
+    - Modify the List.java class further (working more on the design and efficiency)
+    - Implement functionality to display concatenated files to the shell
+    - Implement a class for change directory functionality 
+
+Am I blocked on anything?
+    - I need an implementation of a class to save all the files (fileTree)

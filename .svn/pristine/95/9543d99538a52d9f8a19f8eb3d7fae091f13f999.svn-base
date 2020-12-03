@@ -1,0 +1,217 @@
+package commands;
+
+import java.util.LinkedList;
+import fileSystem.*;
+import inputOutput.Error;
+import inputOutput.StandardOutput;
+
+public class Copy extends Command {
+
+  private FileTree fileTree = FileTree.getFileTree();
+
+  private Directory parentDir;
+  /**
+   * Finds the parent directory of the full path and stores it in parentDir global variable
+   *
+   * @param full path of the directory as a string
+   * @param shell file system
+   * @return specific path error or success string
+   */
+  private String getParentDirectory(String arg, FileTree fileTree) {
+
+    // check if dir2 path is valid
+    if (!Error.isValidPath(arg)) {
+      return arg + " Invalid Path";
+    }
+
+    // initialize global parent variable
+    parentDir = null;
+
+    // get current directory as parent for dir1
+    if (arg.lastIndexOf("/") == -1) {
+      parentDir = fileTree.getCurrent();
+
+      // get parent of current directory as parent for dir1
+    } else if (arg.lastIndexOf("/") == 0) {
+      parentDir = fileTree.getRoot();
+
+      // traverse to start of path and get parent for dir2
+    } else {
+      parentDir = (Directory) fileTree.traverseToEnd(arg.substring(0, arg.lastIndexOf("/")));
+
+      // path cannot be traversed
+      if (parentDir == null) {
+        return arg + " Invalid Path";
+      }
+    }
+
+    return "good";
+  }
+  
+  private Directory getParentDirectory(String argument) {
+
+    if (fileTree.traverseToEnd(argument) instanceof Directory) {
+      return (Directory)fileTree.traverseToEnd(argument);
+    }
+    if (argument.indexOf("/") == -1) {
+      return fileTree.getCurrent();
+    } else {
+      if (argument.length() == 1) {
+        return fileTree.getCurrent();
+      }
+    }
+    String newPath = argument.substring(0, argument.lastIndexOf("/"));
+    //System.out.println(newPath);
+    return (Directory) fileTree.traverseToEnd(newPath);
+  }
+
+  private String getDirectoryName(String argument) {
+    if (argument.indexOf("/") == -1) {
+      return argument;
+    }
+    // System.out.println("Directory name: "+argument.substring(argument.indexOf("/")+1));
+    return argument.substring(argument.indexOf("/") + 1);
+  }
+  
+  private String concatenatePaths (String arg1, String arg2) {
+    if (arg1.charAt(arg1.length()-1) == '/') {
+      return arg1 + arg2;
+    }
+    return arg1 + "/" + arg2;
+  }
+  
+  private boolean isParent (Directory inputDir, Directory destinationDir) {
+    String inputDirFullPath = inputDir.getPath();
+    String destinationDirFullPath = destinationDir.getPath();
+    //System.out.println("Input: " + inputDirFullPath);
+    //System.out.println("Output: " + destinationDirFullPath);
+    if (destinationDirFullPath.contentEquals("/")) {
+      return false;
+    }
+    if (inputDirFullPath.contentEquals(destinationDirFullPath)) {
+      return false;
+    }
+    if (destinationDirFullPath.contains(inputDirFullPath)) {
+      return false;
+    }
+    return true;
+  }
+
+  @Override
+  public String execute(String[] args) {
+    fileTree = FileTree.getFileTree();
+    String inputPath = args[1];
+    String outputPath = args[2];
+    Directory dir = null;
+    Directory parentInput = null;
+    Directory parentDestination = null;
+
+    File inputFile = fileTree.traverseToEnd(inputPath);
+    File outputFile = fileTree.traverseToEnd(outputPath);
+    
+    // Checks if output path is valid
+    String pathError = getParentDirectory(args[2], fileTree);
+    // path not found
+    if (pathError != "good") {
+      return pathError;
+    }
+    if (inputFile == null) {
+      StandardOutput.perror("Error: File not found");
+      return "";
+    }
+    
+    // Copying a file
+    if (inputFile instanceof File && !(inputFile instanceof Directory)) {
+      // Checks if user wants to copy to a directory
+      if (outputFile instanceof Directory) {
+        if (outputPath.charAt(outputPath.length() - 1) != '/') {
+          outputPath += "/";
+        }
+        MakeFile.makeFile(outputPath + inputFile.getName(), inputFile.getContent());
+      } else {
+        MakeFile.makeFile(outputPath, inputFile.getContent());
+      }
+      return "";
+    }
+    
+    parentDestination = getParentDirectory(args[2]);
+    String parentOfInput = "";
+    if (!args[1].contains("/")) {
+      parentOfInput = fileTree.getCurrentPath();
+      parentInput = (Directory) fileTree.traverseToEnd(parentOfInput);
+      parentOfInput = PrintWorkingDirectory.printFullPath(parentInput);
+    } else {
+      if (args[1].lastIndexOf('/') == 0)
+        parentOfInput = args[1];
+      else 
+        parentOfInput = args[1].substring(0, args[1].lastIndexOf('/'));
+      parentInput = getParentDirectory(parentOfInput);
+      parentOfInput = PrintWorkingDirectory.printFullPath(parentInput);
+    }
+    //System.out.println("Second argument: " + args[2]);
+    parentDestination = getParentDirectory(args[2]);
+    
+
+    //System.out.println("Parent path: " + parentOfInput);
+    //System.out.println("Destination path: " + PrintWorkingDirectory.printFullPath(parentDestination));
+    //System.out.println();
+    
+    if (PrintWorkingDirectory.printFullPath(parentDestination).contains(parentOfInput)) {
+      if (!PrintWorkingDirectory.printFullPath(parentDestination).contentEquals(parentOfInput)) {
+        StandardOutput.perror("Error: cannot copy a parent to a child directory");
+        return "";
+      }
+    }
+    
+    if (inputFile instanceof Directory) {
+      if (outputFile == null) {
+        Command.runCommand(new String[] {"mkdir",outputPath});
+        dir = (Directory) fileTree.traverseToEnd(outputPath);
+        if (dir == null) {
+          return "";
+        }
+      }
+      if (outputFile instanceof Directory) {
+        if (parentDestination.getPath().contentEquals(parentOfInput)) {
+          return "Error: cannot copy a parent to a child directory";
+        }
+        
+        if (outputPath.charAt(outputPath.length() - 1) != '/') {
+          outputPath += "/";
+        }
+        outputPath += getDirectoryName(args[1]);
+        MakeDirectory mkdir = new MakeDirectory();
+        if (mkdir.execute(new String[] {"mkdir",outputPath}).length() != 0) {
+          return mkdir.execute(new String[] {"mkdir",outputPath});
+        }
+        //Command.runCommand(new String[] {"mkdir",outputPath});
+        dir = (Directory) fileTree.traverseToEnd(outputPath);
+        if (dir == null)
+          return "";
+      }
+      LinkedList<File> fileList = ((Directory)inputFile).getFileChildren();
+      LinkedList<Directory>  directoryList = ((Directory)inputFile).getDirectoryChildren();
+      
+      for (int i = 0; i < directoryList.size(); i++) {
+        String newFile = concatenatePaths(PrintWorkingDirectory.printFullPath(dir),((Directory) directoryList.get(i)).getName());
+        String newPath = concatenatePaths(inputPath,((Directory) directoryList.get(i)).getName());
+        //System.out.println(newPath + "   " + newFile);
+        this.execute(new String[] {"cp",newPath,newFile});
+      }
+      for (int i = 0; i < fileList.size(); i++) {
+        String newFile = concatenatePaths(PrintWorkingDirectory.printFullPath(dir),((File) fileList.get(i)).getName());
+        String newPath = concatenatePaths(inputPath,((File) fileList.get(i)).getName());
+        //System.out.println(newPath + "   " + newFile);
+        this.execute(new String[] {"cp",newPath,newFile});
+      }
+    }
+    return "";
+  }
+
+  @Override
+  public String toString() {
+    String info = "copy OLDPATH NEWPATH" + "\n\t Copies item from OLDPATH to NEWPATH.";
+    return info;
+  }
+
+}

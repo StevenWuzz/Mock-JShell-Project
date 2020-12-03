@@ -1,0 +1,13 @@
+What did I work on in the last three days?
+    - Finished Error class for the new commands
+    - Added new commands for Command
+    - Changed parser to accept strings
+    - Changed man to only accept 1 argument
+
+What do I plan to work in the next three days?
+    - Add exceptions class
+    - Create copy class and command
+    - Add javadoc and comments to classes I've created
+
+Am I blocked on anything?
+    - No

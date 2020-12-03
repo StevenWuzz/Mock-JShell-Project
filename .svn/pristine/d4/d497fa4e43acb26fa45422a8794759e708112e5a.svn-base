@@ -1,0 +1,37 @@
+package commands;
+
+import fileSystem.*;
+import java.util.Stack;
+
+public class PushDirectory extends Command {
+  public static Stack<Directory> dirStack = new Stack<Directory>();
+
+  @Override
+  /**
+   * executes the main function of the command
+   * 
+   * @param args
+   * @return output of the command
+   */
+  public String execute(String[] args) {
+    File dir = FileTree.traverseToEnd(args[1]);
+
+    if (dir instanceof Directory) {
+      dirStack.push(FileTree.getCurrent());
+      FileTree.setCurrent((Directory) dir);
+    } else {
+      System.out.println("Error: The given path is invalid");
+    }
+
+    return "";
+  }
+
+  @Override
+  public String toString() {
+    String info =
+        "pushd DIR\n" + "\tPushes the current working directory onto the directory stack and then\n"
+            + "changes direcotry to DIR.\n\n" + "\tThrows an error if DIR doesn't exist";
+    return info;
+  }
+
+}

@@ -1,0 +1,50 @@
+package commands;
+
+import fileSystem.Directory;
+
+public class Pwd extends Command {
+
+  /**
+   * Creates the absolute path of the given directory as a string
+   * 
+   * @param a directory
+   * @return path of the given directory as a string
+   */
+  public String printWorkingDirectory(Directory d) {
+
+    // directory is empty
+    if (d == null) {
+      return null;
+    }
+
+    // initial path string
+    String path = "/";
+
+    // get parent of given directory
+    Directory parent = d.getParent();
+
+    // iterate over directory parents until head is reached
+    while (parent != null) {
+
+      // append directory to front of path
+      path = parent.getName() + path;
+
+      // get next parent
+      parent = parent.getParent();
+    }
+
+    return path;
+  }
+
+  @Override
+  protected String execute(String[] args) {
+    // TODO Auto-generated method stub
+    return "";
+  }
+
+  @Override
+  public String toString() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+}

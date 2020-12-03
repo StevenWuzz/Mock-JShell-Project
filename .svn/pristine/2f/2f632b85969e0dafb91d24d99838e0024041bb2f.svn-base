@@ -1,0 +1,12 @@
+Class name: Popd
+Parent class (if any): Commands
+Subclasses (if any): None 
+
+Responsibilities:
+* Remove top entry of the stack of directories
+* Changes directory to the removed top entry 
+
+Collaborators:
+* ChangeDirectory
+* PrintWorkingDirectory
+* Directory

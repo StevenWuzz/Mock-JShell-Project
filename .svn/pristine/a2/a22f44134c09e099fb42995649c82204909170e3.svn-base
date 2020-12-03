@@ -1,0 +1,115 @@
+package commands;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.*;
+import java.nio.charset.StandardCharsets;
+import fileSystem.File;
+import fileSystem.MakeFile;
+
+public class Curl extends Command {
+  
+  private String urlAddress;
+  private URL url;
+  private URLConnection urlConnection;
+  private String agentHeader;
+  private boolean success;
+  
+  @Override
+  protected String execute(String[] args) {
+    this.urlAddress = args[1];
+    String openURLConnection = openURLConnection();
+    if(openURLConnection != null) {
+      return openURLConnection;
+    }
+    String connectToURL = connectToURL("");
+    if(connectToURL != null) {
+      return connectToURL;
+    }
+    String content = retrieveURLFile();
+    if(this.success == true) {
+      MakeFile.makeFile(extractFileName(), content);
+      return "";
+    }
+    return content;  
+  }
+  
+  protected String openURLConnection() {
+    try {
+      this.url = new URL(this.urlAddress);
+    } catch (MalformedURLException e) {
+      return "The URL " + this.urlAddress + " is malformed";
+    }
+    try {
+      this.urlConnection = this.url.openConnection();
+    } catch (IOException e) {
+      return "Unable to create a new connection with the URL " + this.urlAddress;
+    }
+    return null;
+  }
+  
+  protected String connectToURL(String agentHeader) {
+    this.urlConnection.setConnectTimeout(1000);
+    setAgentHeader(agentHeader);
+    this.urlConnection.setRequestProperty("User-Agent", this.agentHeader);
+    try {
+      this.urlConnection.connect();
+      return null;
+    } catch (IOException e) {
+      return "Fails to connect to " + urlAddress;
+    }
+  }
+  
+  protected void setAgentHeader(String agentHeader) {
+    if(agentHeader.equals("")) {
+      this.agentHeader = "Mozilla/5.0 (Windows NT 6.1; WOW64) "
+          + "AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11";
+    }
+    else {
+      this.agentHeader = agentHeader;
+    }
+    return;
+  }
+  
+  protected String retrieveURLFile() {
+    BufferedReader reader;
+    this.urlConnection.setReadTimeout(10000);
+    try {
+      reader = new BufferedReader(new InputStreamReader(this.urlConnection.getInputStream(), 
+          StandardCharsets.UTF_8));
+    } catch (IOException e) {
+      this.success = false;
+      return "Fails to create the buffered reader";
+    }
+
+    String line;
+    String content = "";
+    try {
+      while((line = reader.readLine()) != null)
+      {
+        content += line;
+        content += "\n";
+      }
+      this.success = true;
+      return content;
+    } catch (IOException e) {
+      this.success = false;
+      return "Fails to read the desired file";
+    }
+  }
+  
+  protected String extractFileName() {
+    String path = this.url.getFile();
+    String[] splittedPath = path.split("/");
+    return splittedPath[splittedPath.length-1];
+  }
+  
+  @Override
+  public String toString() {
+    String info = "curl URL\n" + "\tRetrieve the file at the URL and add it to the current"
+        + " working directory.";
+    return info;
+  }
+
+}

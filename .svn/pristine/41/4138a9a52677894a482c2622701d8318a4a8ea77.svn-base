@@ -1,0 +1,101 @@
+// **********************************************************
+// Assignment2:
+// Student1: Stephen Guo
+// UTORID user_name: guostep2
+// UT Student #: 1006313231
+// Author: Stephen Guo
+//
+// Student2: Steven Hans Limantoro
+// UTORID user_name: limantor
+// UT Student #: 1005780861
+// Author: Steven Hans Limantoro
+//
+// Student3: Vignesh Nanthakumar
+// UTORID user_name: nantha33
+// UT Student #: 1006278948
+// Author: Vignesh Nanthakumar
+//
+// Student4: Krutik Shah
+// UTORID user_name: shahkr10
+// UT Student #: 10062135626
+// Author: Krutik Shah
+//
+//
+// Honor Code: I pledge that this program represents my own
+// program code and that I have coded on my own. I received
+// help from no one in designing and debugging my program.
+// I have also read the plagiarism section in the course info
+// sheet of CSC B07 and understand the consequences.
+// *********************************************************
+package commands;
+
+import java.util.ArrayList;
+
+public class History extends Command {
+  private static ArrayList<String> inputHistory = new ArrayList<String>();
+
+  /**
+   * Adds a user input to inputHistory
+   * 
+   * @param user input
+   */
+  public static void addInputHistory(String input) {
+    
+    // Checks if command is just whitespace
+    if (input.replaceAll("\\s+", "").equals("")) {
+      return;
+    }
+    
+    inputHistory.add(input);
+  }
+
+  @Override
+  /**
+   * executes the main function of the command
+   * 
+   * @param args
+   * @return output of the command
+   */
+  protected String execute(String[] args) {
+    
+    String result = "";
+    int i = 0;
+
+    // If user only wants to print a few commands
+    if (args.length > 1) {
+      
+      i = inputHistory.size() - Integer.parseInt(args[1]);
+      
+      // Checks if user wants to print more than all possible history
+      if (i < 0) {
+        i = 0;
+      }
+      
+    }
+
+    // Adds all recent commands to result
+    for (; i < inputHistory.size(); i++) {
+      result += (i + 1) + ". " + inputHistory.get(i) + "\n";
+    }
+    
+    if (result.contentEquals("")) {
+      return "";
+    }
+
+    // Removes last newline character
+    return result.substring(0, result.length() - 1);
+  }
+
+
+  @Override
+  public String toString() {
+    
+    String info = "history [NUM]\n"
+        + "\tThis command will print out recent commands, numbered by one command per line.\n" + 
+        "\tNUM specifies the number of recent commands to be printed.\n"
+        +"\tThrows an error if NUM is not an integer >= 0";
+    
+    return info;
+  }
+
+}

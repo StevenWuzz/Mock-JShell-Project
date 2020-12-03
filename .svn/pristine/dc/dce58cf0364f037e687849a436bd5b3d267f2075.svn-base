@@ -1,0 +1,83 @@
+package commands;
+
+import java.util.LinkedList;
+import fileSystem.*;
+
+public class List extends Command {
+
+  /**
+   * Execute the Ls command
+   *
+   * @param parameter
+   */
+  public String execute(String[] argument) {
+    // Extract the given path
+    String path = "";
+    String type = "";
+    File dir = null;
+    int argLen = argument.length;
+    if (argLen == 1) {
+      try {
+        path = FileTree.getCurrent().getName();
+        type = "Directory";
+        dir = FileTree.getCurrent();
+      } catch (NullPointerException e) {
+        return "Directory is not initialized";
+      }
+    } else if (argLen == 2) {
+      path = argument[1];
+      dir = FileTree.traverseToEnd(path);
+      if (dir instanceof Directory) {
+        type = "Directory";
+      } else if(dir instanceof File) {
+        type = "File";
+      }
+      else {
+        System.out.println("The given path is invalid");
+      }
+    }
+    return printContents(path, (Directory) dir, type);
+  }
+
+  /**
+   * Print all the contents in a given directory or file
+   *
+   * @param path
+   * @param currentDir
+   * @return a string containing all the contents in a given directory or file
+   */
+  public static String printContents(String path, Directory currentDir, String type) {
+    // Initialize an empty string called result
+    String result = "";
+    // Append the path into result (for formatting)
+    result += path;
+    if (type == "Directory") {
+      // Append a colon into result (for formatting)
+      result += ":\n";
+      // Get the number of contents in the current directory
+      int numOfDirChildren = currentDir.getNumOfDirectoryChildren();
+      int numOfFileChildren = currentDir.getNumOfFileChildren();
+      // Get all the contents in the current directory
+      LinkedList<Directory> dirChildren = currentDir.getDirectoryChildren();
+      LinkedList<File> fileChildren = currentDir.getFileChildren();
+      // Iterate through all the contents
+      for (int i = 0; i < numOfDirChildren; i++) {
+        // Append the name of each content to the string result
+        result += dirChildren.get(i).getName();
+        result += "\n";
+      }
+      for(int i = 0; i < numOfFileChildren; i++) {
+        result += fileChildren.get(i).getName();
+        result += "\n";
+      }
+    }
+    // Return the string containing all the contents
+    return result;
+  }
+
+  @Override
+  public String toString() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+}

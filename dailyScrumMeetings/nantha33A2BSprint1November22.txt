@@ -1,0 +1,11 @@
+What did I work on in the last three days?
+	- Added implementation to check if Remove path interferes with current directory path
+	- Attempted to complete Remove command and handled errors
+
+What do I plan to work in the next three days?
+    - Bug test Remove and fix directory deletion to remove from linked list
+    - Fix directory path detection in Remove and Move
+    - Make JUnit tests for mkdir, pwd
+
+Am I blocked on anything?
+    - No

@@ -1,0 +1,12 @@
+What did I work on in the last three days?
+	- Basic implememnt of File System into Mkdir
+	- Brainstormed test cases
+
+What do I plan to work in the next three days?
+	- Finish the implementation of File System into Pwd
+	- Implement full path selection into mkdir
+	- Start and Finish implementation of Echo
+	- Add man pages for Mkdir, Pwd, Echo
+
+Am I blocked on anything?
+	- No

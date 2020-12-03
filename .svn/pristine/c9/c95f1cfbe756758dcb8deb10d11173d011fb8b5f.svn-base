@@ -1,0 +1,13 @@
+Class name: List
+Parent class (if any): Command
+Subclasses (if any): None
+
+Responsibilities: 
+* Lists and prints all files and directories in the current directory
+* Lists and prints all files and directories in some specified directories
+
+Collaborators:
+* File
+* FileTree
+* Directory
+

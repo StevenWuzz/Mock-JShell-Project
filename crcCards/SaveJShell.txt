@@ -1,0 +1,12 @@
+Class name: SaveJShell
+Parent class (if any): Command
+Subclasses (if any): None
+
+Responsibilities:
+* Save the current session of JShell as a txt file and store it in a given directory
+
+Collaborators:
+* Directory
+* File
+* FileTree
+* StandardOutput

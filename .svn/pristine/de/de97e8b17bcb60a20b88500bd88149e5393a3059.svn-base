@@ -1,0 +1,12 @@
+Class name: PopDirectory
+Parent class (if any): Command
+Subclasses (if any): None 
+
+Responsibilities:
+* Remove top entry of the stack of directories
+* Changes directory to the removed top entry 
+
+Collaborators:
+* FileTree
+* PushDirectory
+* StandardOutput

@@ -1,0 +1,51 @@
+package commands;
+
+import FileSystem.*;
+import fileSystem.Directory;
+
+public class List{ //ToDo: extends Command later
+	
+	/**
+	 * Execute the Ls command
+	 * 
+	 * @param parameter
+	 */
+	public void execute(String[] parameter)
+	{
+		//need the StandardInput implemented first
+		return;
+	}
+	
+	/**
+	 * Check whether the given path is a directory or a file
+	 * 
+	 * @param path
+	 * @return a string specifying whether the path is a directory or a file
+	 */
+	public String checkDirOrFile(String path) {
+		
+		
+		return null;
+	}
+	
+	/**
+	 * Recursively traverse the given path if the path is a directory
+	 * 
+	 * @param path
+	 */
+	public void traverseDir(Directory dir, String path) {
+		String[] dirList = path.split("/",2);
+		String firstDirName = dirList[0];
+		
+		// Need a class which basically stores the whole file system
+		
+	}
+	
+	/**
+	 * Print all the contents in a given directory
+	 */
+	public void printContentsInDirectory() {
+		
+		
+	}
+}

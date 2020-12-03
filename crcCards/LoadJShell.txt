@@ -1,0 +1,13 @@
+Class name: LoadJShell
+Parent class (if any): Command
+Subclasses (if any): None
+
+Responsibilities:
+* Load a JShell session from a given file path
+
+Collaborators:
+* Directory
+* File
+* FileTree
+* MakeFile
+* StandardOutput

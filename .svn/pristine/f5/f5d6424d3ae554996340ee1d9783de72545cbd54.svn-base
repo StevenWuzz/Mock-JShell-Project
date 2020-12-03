@@ -1,0 +1,70 @@
+package commands;
+
+import java.io.IOException;
+import java.net.*;
+
+public class Curl extends Command {
+  
+  private String urlAddress;
+  private URLConnection urlConnection;
+  private String agentHeader;
+  
+  @Override
+  protected String execute(String[] args) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public String toString() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+  
+  protected URLConnection openURLConnection() {
+    URL url;
+    URLConnection urlConnection;
+    
+    try {
+      url = new URL(urlAddress);
+    } catch (MalformedURLException e) {
+      return null;
+    }
+    try {
+      urlConnection = url.openConnection();
+    } catch (IOException e) {
+      return null;
+    }
+    return urlConnection;
+  }
+  
+  protected String connectToURL(String agentHeader) {
+    urlConnection.setConnectTimeout(1000);
+    setAgentHeader(agentHeader);
+    urlConnection.setRequestProperty("User-Agent", this.agentHeader);
+    try {
+      urlConnection.connect();
+      return null;
+    } catch (IOException e) {
+      return "Fails to connect to " + urlAddress;
+    }
+  }
+  
+  protected void setAgentHeader(String agentHeader) {
+    if(agentHeader.equals("")) {
+      this.agentHeader = "Mozilla/5.0 (Windows NT 6.1; WOW64) "
+          + "AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11";
+    }
+    else {
+      this.agentHeader = agentHeader;
+    }
+    return;
+  }
+  
+  /*
+  protected retrieveURLFile() {
+    
+  }
+  */
+  
+}

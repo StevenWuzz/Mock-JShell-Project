@@ -1,0 +1,78 @@
+package test;
+
+import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
+import fileSystem.*;
+import commands.PrintWorkingDirectory;
+
+public class PrintWorkingDirectoryTest {
+
+  private PrintWorkingDirectory pwd;
+  private FileTree fileT;
+
+  @Before
+  public void setUp() {
+    fileT = FileTree.getFileTree();
+    fileT.setCurrent(fileT.getRoot());
+    
+    pwd = new PrintWorkingDirectory();
+  }
+
+  @Test
+  public void testRoot() {
+    assertEquals("/", pwd.execute(new String[] {"pwd"}, fileT));
+  }
+
+  @Test
+  public void testEmptyDirectory() {
+    Directory a = new Directory(fileT.getRoot(), "a");
+    fileT.getRoot().addDirectoryChild(a);
+
+    fileT.setCurrent(a);
+
+    assertEquals("/a", pwd.execute(new String[] {"pwd"}, fileT));
+  }
+
+  @Test
+  public void testDuplicateDirectoryNames() {
+    Directory a = new Directory(fileT.getRoot(), "a");
+    fileT.getRoot().addDirectoryChild(a);
+
+    Directory b1 = new Directory(a, "b");
+    a.addDirectoryChild(b1);
+
+    Directory b2 = new Directory(b1, "b");
+    b1.addDirectoryChild(b2);
+
+    Directory c = new Directory(b2, "c");
+    b2.addDirectoryChild(c);
+
+    fileT.setCurrent(c);
+
+    assertEquals("/a/b/b/c", pwd.execute(new String[] {"pwd"}, fileT));
+  }
+
+  @Test
+  public void testMultipleDirectoryBranches() {
+    Directory a = new Directory(fileT.getRoot(), "a");
+    fileT.getRoot().addDirectoryChild(a);
+
+    Directory b1 = new Directory(a, "b");
+    a.addDirectoryChild(b1);
+    
+    Directory c1 = new Directory(a, "c");
+    a.addDirectoryChild(c1);
+    
+    Directory b2 = new Directory(c1, "b");
+    c1.addDirectoryChild(b2);
+
+    Directory c2 = new Directory(b1, "c");
+    b1.addDirectoryChild(c2);
+
+    fileT.setCurrent(b2);
+
+    assertEquals("/a/c/b", pwd.execute(new String[] {"pwd"}, fileT));
+  }
+
+}

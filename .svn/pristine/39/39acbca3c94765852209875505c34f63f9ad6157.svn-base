@@ -1,0 +1,78 @@
+// **********************************************************
+// Assignment2:
+// Student1: Stephen Guo
+// UTORID user_name: guostep2
+// UT Student #: 1006313231
+// Author: Stephen Guo
+//
+// Student2: Steven Hans Limantoro
+// UTORID user_name: limantor
+// UT Student #: 1005780861
+// Author: Steven Hans Limantoro
+//
+// Student3: Vignesh Nanthakumar
+// UTORID user_name: nantha33
+// UT Student #: 1006278948
+// Author: Vignesh Nanthakumar
+//
+// Student4: Krutik Shah
+// UTORID user_name: shahkr10
+// UT Student #: 10062135626
+// Author: Krutik Shah
+//
+//
+// Honor Code: I pledge that this program represents my own
+// program code and that I have coded on my own. I received
+// help from no one in designing and debugging my program.
+// I have also read the plagiarism section in the course info
+// sheet of CSC B07 and understand the consequences.
+// *********************************************************
+package commands;
+
+import fileSystem.Directory;
+import fileSystem.File;
+import fileSystem.FileTree;
+import java.io.StringBufferInputStream;
+
+public class MakeFile {
+
+  private static File addFile(Directory parent, String name) {
+    File file = new File(parent, name);
+    parent.addFileChild(file);
+    return file;
+  }
+
+  public static File makeFile(String path) {
+    FileTree fileTree=FileTree.getFileTree();
+    String parentPath;
+    Directory parent;
+    File file;
+    
+    int p = path.lastIndexOf("/");
+    
+    if (p == -1) {
+      parentPath = fileTree.getCurrentPath();
+    } else if (p == 0) {
+      parentPath = "/";
+    } else {
+      parentPath = path.substring(0, p);
+    }
+    parent = (Directory) fileTree.traverseToEnd(parentPath);
+    
+    if (parent == null) {
+      return null;
+    }
+    
+    if (parent.findSubDir(path.substring(p + 1)) != null) {
+      return null;
+    }
+    
+    file = parent.findFile(path.substring(p + 1));
+    
+    if (file == null) {
+      file = addFile(parent, path.substring(p + 1));
+    }
+    
+    return file;
+  }
+}

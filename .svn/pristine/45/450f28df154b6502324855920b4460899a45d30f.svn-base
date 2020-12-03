@@ -1,0 +1,22 @@
+package commands;
+
+public abstract class Command {
+
+   /**
+   * executes the main function of the command
+   * @param args
+    * @return output of the command
+   */
+  protected abstract String execute (String[] args);
+
+  /**
+   * Using the toString to provide documentation of the command
+   * @return command documentation
+   */
+  public abstract String toString();
+
+  public static void runCommand(String[] args){
+    
+  }
+
+}

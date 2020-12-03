@@ -1,0 +1,48 @@
+package commands;
+
+import java.io.IOException;
+import java.net.*;
+
+public class Curl extends Command {
+
+  @Override
+  protected String execute(String[] args) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public String toString() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+  
+  protected URLConnection openURLConnection(String urlAddress) {
+    URL url;
+    URLConnection urlConnection;
+    
+    try {
+      url = new URL(urlAddress);
+    } catch (MalformedURLException e) {
+      return null;
+    }
+    try {
+      urlConnection = url.openConnection();
+    } catch (IOException e) {
+      return null;
+    }
+    return urlConnection;
+  }
+  
+  protected String connectToURL(URLConnection urlConnection, String urlAddress) {
+    urlConnection.setConnectTimeout(1000);
+    try {
+      urlConnection.connect();
+      return null;
+    } catch (IOException e) {
+      return "Fails to connect to " + urlAddress;
+    }
+  }
+  
+  
+}

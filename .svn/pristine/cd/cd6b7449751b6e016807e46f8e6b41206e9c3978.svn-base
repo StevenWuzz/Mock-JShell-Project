@@ -1,0 +1,124 @@
+// **********************************************************
+// Assignment2:
+// Student1: Stephen Guo
+// UTORID user_name: guostep2
+// UT Student #: 1006313231
+// Author: Stephen Guo
+//
+// Student2: Steven Hans Limantoro
+// UTORID user_name: limantor
+// UT Student #: 1005780861
+// Author: Steven Hans Limantoro
+//
+// Student3: Vignesh Nanthakumar
+// UTORID user_name: nantha33
+// UT Student #: 1006278948
+// Author: Vignesh Nanthakumar
+//
+// Student4: Krutik Shah
+// UTORID user_name: shahkr10
+// UT Student #: 10062135626
+// Author: Krutik Shah
+//
+//
+// Honor Code: I pledge that this program represents my own
+// program code and that I have coded on my own. I received
+// help from no one in designing and debugging my program.
+// I have also read the plagiarism section in the course info
+// sheet of CSC B07 and understand the consequences.
+// *********************************************************
+package fileSystem;
+
+import commands.PrintWorkingDirectory;
+
+public class FileTree {
+
+  private Directory root;
+  private Directory current;
+  private String currentPath;
+  private static FileTree filetree = null;
+
+
+  public Directory getRoot() {
+    return this.root;
+  }
+
+  public static FileTree getFileTree() {
+    if (filetree == null) {
+      filetree= new FileTree();
+    } ;
+    return filetree;
+
+  }
+
+  private FileTree() {
+    this.root = new Directory(null, "");
+    this.current = this.root;
+    this.currentPath = "/";
+  }
+
+  public void setRoot(Directory root) {
+    this.root = root;
+  }
+
+  public Directory getCurrent() {
+    return this.current;
+  }
+
+  public void setCurrent(Directory current) {
+    this.current = current;
+    this.setCurrentPath(PrintWorkingDirectory.printFullPath(current));
+  }
+
+
+  private File getLastFile(Directory dir, String file) {
+    if (dir.findFile(file) != null) {//check if last element is a File:
+      return dir.findFile(file);
+    } else {//if not check all three cases for directories
+      if (file.equals("..")) {
+        return dir.getParent();
+      } else if (file.equals(".")) {
+        return dir;
+      } else {
+        return dir.findSubDir(file);
+      }
+    }
+
+  }
+
+  /**
+   * Iteratively traverse the given path and return the directory or file
+   *
+   * @param path
+   * @return the file or directory object
+   */
+  public File traverseToEnd(String path) {
+    String[] p = path.split("/");// Split the entire path into individual directories or files
+    if (p.length == 0) {
+      return this.root;
+    }
+    Directory dir = (p[0].equals("")) ? this.root
+        : this.current;// Decide whether the path is absolute or relative
+    int i = (p[0].equals("")) ? 1 : 0;
+    for (; i < p.length - 1;
+        i++) {// Iterate through all the individual directories except the last one
+      if (p[i].equals("..")) {// Find the corresponding sub-directory
+        dir = dir.getParent();//if sub directory is .. get parent
+      } else if (!p[i].equals(".")) {
+        dir = dir.findSubDir(p[i]);// only modify if sub directory is not .
+      }
+      if (dir == null) { // If the sub-directory is not found
+        return null;
+      }
+    }
+    return this.getLastFile(dir, p[p.length - 1]);//get the last file
+  }
+
+  public String getCurrentPath() {
+    return this.currentPath;
+  }
+
+  public void setCurrentPath(String currentPath) {
+    this.currentPath = currentPath;
+  }
+}

@@ -1,0 +1,13 @@
+Class name: MakeDirectory
+Parent class (if any): Command
+Subclasses (if any): None
+
+Responsibilities:
+* Creates directories using the given paths until a given directory is unable to be created
+
+Collaborators:
+* FileTree
+* File
+* Directory
+* Error
+* StandardOutput

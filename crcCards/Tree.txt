@@ -1,0 +1,11 @@
+Class name: Tree
+Parent class (if any): Command
+Subclasses (if any): None
+
+Responsibilities:
+* Displays the entire file system in the form of a tree
+
+Collaborators:
+* Directory
+* File
+* FileTree

@@ -1,0 +1,12 @@
+Class name: ChangeDirectory
+Parent class (if any): Commands
+Subclasses (if any): None
+
+Responsibilities: 
+* Changes directory shell is in
+
+Collaborators:
+* FileTree
+* Error
+* Directory
+

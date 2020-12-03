@@ -1,0 +1,99 @@
+package commands;
+
+import fileSystem.Directory;
+import fileSystem.FileTree;
+
+/** This class has all of the methods needed to run Move */
+public class Move extends Command {
+
+  @Override
+  /**
+   * Execute the mv command
+   * 
+   * @param a string array of arguments for the mv command
+   * @return a string containing the output of mv command
+   */
+  public String execute(String[] args, FileTree fileTree) {
+    // TODO Auto-generated method stub
+    Directory removeDir;
+
+    // get current directory as parent for dir
+    if (args[1].lastIndexOf("/") == -1) {
+      removeDir = fileTree.getCurrent().findSubDir(args[1]);
+
+      // get parent of current directory as parent for dir
+    } else if (args[1].lastIndexOf("/") == 0) {
+      removeDir = fileTree.getRoot().findSubDir(args[1].substring(1));
+
+      // traverse to start of path and get parent for dir
+    } else {
+      removeDir =
+          (Directory) fileTree.traverseToEnd(args[1].substring(0, args[1].lastIndexOf("/")));
+
+      // path cannot be traversed
+      if (removeDir == null) {
+        return "r1, Invalid Path";
+      }
+
+      removeDir = removeDir.findSubDir(args[1].substring(args[1].lastIndexOf("/") + 1));
+    }
+
+    // directory does not exist
+    if (removeDir == null) {
+      return "r2, Directory does not exist";
+    }
+
+    // get path of current directory
+    String currentPath = fileTree.getCurrent().getPath();
+
+    // get path of directory to remove
+    String removePath = removeDir.getPath();
+
+    // directory to remove is in current directory path
+    if (currentPath.contains(removePath)) {
+      return "r3, Cannot move directory in current path";
+    }
+    
+    
+    try {
+      Copy move = new Copy();
+
+      // copy OLDPATH to NEWPATH
+      String copied = move.execute(args, fileTree);
+      
+    }catch(Exception e){
+      throw e;
+      //return "";
+    }
+
+    // check if OLDPATH copied succesfully
+    //if (copied != "") {
+      //return copied;
+    //}
+
+    // delete OLDPATH directory and its contents
+    Remove.deleteDir(removeDir);
+
+    return "";
+  }
+
+
+
+  @Override
+  /**
+   * returns the manual entry for mv
+   * 
+   * @return manual entry for mv
+   */
+  public String toString() {
+
+    // create man page for mv command
+    String info = "mv OLDPATH NEWPATHn\n"
+        + "\tMove item OLDPATH to NEWPATH. Both OLD- PATH and NEWPATH may be relative to the\n"
+        + "\tcurrent directory or may be full paths. If NEWPATH is a directory, move the item\n"
+        + "\tinto the directory.\n";
+
+    return info;
+  }
+
+}

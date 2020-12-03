@@ -1,0 +1,32 @@
+package commands;
+
+import fileSystem.Directory;
+import commands.Command;
+import java.util.Stack;
+
+public class PushDirectory extends Command {
+  public static Stack<String> dirStack = new Stack<String>();
+
+  @Override
+  /**
+   * executes the main function of the command
+   * 
+   * @param args
+   * @return output of the command
+   */
+  public String execute(String[] args) {
+    // Pushes current directory into stack
+    dirStack.push("");
+
+    // Change directory!
+
+    return "";
+  }
+
+  @Override
+  public String toString() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+}

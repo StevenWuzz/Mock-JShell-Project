@@ -1,0 +1,27 @@
+package commands;
+
+public class Echo extends Command {
+
+  @Override
+  protected String execute(String[] args) {
+    // TODO Auto-generated method stub
+    return args[1].substring(1, args[1].length() - 1);
+  }
+
+  @Override
+  public String toString() {
+    // TODO Auto-generated method stub
+
+    // create man page for echo command
+    String info = "echo STRING [> OUTFILE]\n\n"
+        + "\tIf OUTFILE is not provided, print STRING on the shell. Otherwise, put STRING into\n"
+        + "\tfile OUTFILE. STRING is a string of characters surrounded by double quotation marks.\n"
+        + "\tThis creates a new :ile if OUTFILE does not exists and erases the old contents if\n"
+        + "\tOUTFILE already exists. In either case, the only thing in OUTFILE should be STRING.\n"
+        + "\necho STRING >> OUTFILE\n\n"
+        + "\tLike the previous command, but appends instead of overwrites.\n";
+
+    return info;
+  }
+
+}

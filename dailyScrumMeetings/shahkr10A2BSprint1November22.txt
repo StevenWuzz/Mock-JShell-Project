@@ -1,0 +1,12 @@
+What did I work on in the last three days?
+	- implemented Search
+	- bug tested Load jshell
+	- bug tested save jshell
+	- minor bug fixes
+
+What do I plan to work in the next three days?
+    - implementing j unittests for load jshel, save jshell, man, and search commands
+    -
+
+Am I blocked on anything?
+    - no

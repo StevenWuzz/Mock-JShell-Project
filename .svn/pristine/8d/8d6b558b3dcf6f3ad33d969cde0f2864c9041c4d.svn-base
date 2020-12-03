@@ -1,0 +1,155 @@
+// **********************************************************
+// Assignment2:
+// Student1: Stephen Guo
+// UTORID user_name: guostep2
+// UT Student #: 1006313231
+// Author: Stephen Guo
+//
+// Student2: Steven Hans Limantoro
+// UTORID user_name: limantor
+// UT Student #: 1005780861
+// Author: Steven Hans Limantoro
+//
+// Student3: Vignesh Nanthakumar
+// UTORID user_name: nantha33
+// UT Student #: 1006278948
+// Author: Vignesh Nanthakumar
+//
+// Student4: Krutik Shah
+// UTORID user_name: shahkr10
+// UT Student #: 10062135626
+// Author: Krutik Shah
+//
+//
+// Honor Code: I pledge that this program represents my own
+// program code and that I have coded on my own. I received
+// help from no one in designing and debugging my program.
+// I have also read the plagiarism section in the course info
+// sheet of CSC B07 and understand the consequences.
+// *********************************************************
+package commands;
+
+import java.util.LinkedList;
+import fileSystem.*;
+
+public class List extends Command {
+  
+  private static FileTree fileTree=FileTree.getFileTree(); //Get the fileTree
+  private static String path; //Create a string for the path
+  private static String type; //Create a string to indicate directory or file
+  private static String contents; //Create a string to contain all the contents in a directory
+  private static File file; //Create a file object
+
+  /**
+   * Execute the Ls command
+   *
+   * @param argument
+   * @return a string containing contents of the current directory if there are no paths given,
+   * or a string containing the path if the path specifies a file, or a string containing 
+   * the path, colon, and contents of the directory if the path specifies a directory, or a string
+   * containing an error message if the path does not exist.
+   */
+  public String execute(String[] argument) {
+    path = ""; //Set an empty string for path
+    type = ""; //Set an empty string for the type (file or directory)
+    contents = ""; //Set an empty string for the contents (file or directory)
+    file = null; //Initialize file as null
+    int argLen = argument.length; //Get the length of the command and its arguments
+    if (argLen == 1) { //If no path is given
+        //Then try printing the content of current directory
+        contents += printContents(fileTree.getCurrent());
+        if (contents.contentEquals("")) { //If the content is empty
+          return ""; //Then return an empty string
+        }
+        //Otherwise, return all the contents without a new line afterwards
+        return contents.substring(0, contents.length() - 1);
+    } else { //If at least one path is given
+      for(int i = 1; i < argLen; i++) { //Then iterate through all the paths
+        path = argument[i]; //Get one path
+        file = fileTree.traverseToEnd(path); // Traverse the path until the end
+        if(file == null) { //If the path does not exist
+          //Then return a suitable error message, and terminate the command (early return)
+          contents += "The given path is invalid";
+          return contents; 
+        }
+        else { //If the path exists
+          //Check whether the path leads to a directory or a file
+          type = (file instanceof Directory)? "Directory":"File";
+          contents += path; //Append the path for formatting
+          if(type.equals("Directory")) { //If the path leads to a directory
+            contents += ":\n"; //Append a colon for formatting, and go to the next line
+            contents += printContents((Directory) file); //Append all the contents in the directory
+          }
+            contents += "\n"; //Append a line-break to separate the current with the next contents
+        }
+      }
+      //Return all the contents without a new line afterwards
+      return contents.substring(0, contents.length() - 1); 
+    }
+  }
+
+  /**
+   * Print all the contents in a given directory
+   *
+   * @param currentDir
+   * @return a string containing all the contents in a given directory
+   */
+  public static String printContents(Directory currentDir) {
+    String result = ""; //Initialize an empty string called result
+    //Get the number of contents (directories and files) in the current directory
+    int numOfDirChildren = currentDir.getNumOfDirectoryChildren();
+    int numOfFileChildren = currentDir.getNumOfFileChildren();
+    //Get all the contents (directories and files) in the current directory
+    LinkedList<Directory> dirChildren = currentDir.getDirectoryChildren();
+    LinkedList<File> fileChildren = currentDir.getFileChildren();
+    for (int i = 0; i < numOfDirChildren; i++) { //Iterate through all the directory contents
+      //Append the name of each directory to the string result
+      result += dirChildren.get(i).getName(); 
+      if(!(result.equals(""))){
+        result += "\n"; //Add new lines for formatting
+        }
+      }
+    for(int i = 0; i < numOfFileChildren; i++) { //Iterate through all the file contents
+      //Append the name of each file to the string result
+      result += fileChildren.get(i).getName();
+      if(!(result.equals(""))){
+        result += "\n"; //Add new lines for formatting
+        }
+      }
+    return result; //Return the string containing all the contents
+    }
+  
+  public static String executePath(int argLen, String[] argument) {
+    for(int i = 1; i < argLen; i++) { //Iterate through all the paths
+      path = argument[i]; //Get one path
+      file = fileTree.traverseToEnd(path); //Traverse the path until the end
+      if(file == null) { //If the path does not exist
+        //Then return a suitable error message, and terminate the command (early return)
+        contents += "The given path is invalid";
+        return contents; 
+      }
+      else { //If the path exists
+        //Check whether the path leads to a directory or a file
+        type = (file instanceof Directory)? "Directory":"File";
+        contents += path; //Append the path for formatting
+        if(type.equals("Directory")) { //If the path leads to a directory
+          contents += ":\n"; //Append a colon for formatting, and go to the next line
+          contents += printContents((Directory) file); //Append all the contents in the directory
+        }
+          contents += "\n"; //Append a line-break to separate the current with the next contents
+      }
+    }
+    return contents; //Return the contents
+  }
+
+  @Override
+  public String toString() {
+    String info = "ls [PATH ...]\n\n" + "\tIf no paths are given, print the contents of the current"
+        + " directory, with a new line following each of the content.\n" + "\tContents can be file"
+        + " or directory.\n\n" + "\tOtherwise, for each path p, the order listed:\n\n"
+        + "\tIf p specifies a file, print p.\n" + "\tIf p specifies a directory, print p, a colon"
+            + ", then the contents of that directory, then an extra new line.\n"
+        + "\tIf p does not exist, print a suitable error message.";
+    return info;
+  }
+}

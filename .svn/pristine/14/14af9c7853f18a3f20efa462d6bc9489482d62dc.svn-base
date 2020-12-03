@@ -1,0 +1,27 @@
+package commands;
+
+import fileSystem.FileTree;;
+
+public class PopDirectory extends Command {
+  @Override
+  /**
+   * executes the main function of the command
+   * 
+   * @param args
+   * @return output of the command
+   */
+  public String execute(String[] args) {
+    // Check if stack is empty
+    if (PushDirectory.dirStack.empty()) {
+      return "Error: Stack is empty";
+    }
+
+    FileTree.setCurrent(PushDirectory.dirStack.pop());
+    return "";
+  }
+
+  @Override
+  public String toString() {
+    return null;
+  }
+}

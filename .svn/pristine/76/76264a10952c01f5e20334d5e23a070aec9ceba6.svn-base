@@ -1,0 +1,45 @@
+package commands;
+
+import fileSystem.File;
+import fileSystem.FileTree;
+import commands.Pwd;
+
+public class Concatenate extends Command {
+
+  @Override
+  protected String execute(String[] args) {
+    String path = "";
+    String output = "";
+    File file = null;
+
+    for (int i = 1; i < args.length; i++) {
+      // Gets file from file traversal if needed
+      if (args[i].lastIndexOf('/') != -1) {
+        path = args[i].substring(0, args[i].lastIndexOf('/'));
+        file = FileTree.traverseToEnd(path);
+      } else {
+        // PWD Here!
+        // File file = FileTree.traverseToEnd()
+      }
+      if (file instanceof File) {
+        output += file.getContent();
+        if (i + 1 != args.length) {
+          output += "\n\n\n";
+        }
+      } else {
+        System.out.println("The given path is invalid");
+      }
+    }
+    return output;
+  }
+
+  @Override
+  public String toString() {
+    String info = "cat FILE1 [FILE2 ...]\n"
+        + "\tDisplay the contents of FILE1 and other files (i.e. File2 ....) concatenated in\n"
+        + "the shell. There will be 3 line breaks between each file.\n\n"
+        + "\tThrows an error if FILE doesn't exist. cat will not read the rest of the files.";
+    return info;
+  }
+
+}

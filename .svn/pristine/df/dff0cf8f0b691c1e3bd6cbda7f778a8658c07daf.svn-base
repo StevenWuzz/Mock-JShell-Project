@@ -1,0 +1,10 @@
+Class name: History
+Parent class (if any): Command
+Subclasses (if any): None 
+
+Responsibilities:
+* Prints list of all recent input
+* Stores list of all recent input
+
+Collaborators:
+* None

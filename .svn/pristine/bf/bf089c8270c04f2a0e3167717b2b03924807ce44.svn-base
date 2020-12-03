@@ -1,0 +1,12 @@
+What did I work on in the last three days?
+    - Implemented savejshell command
+    - Implemented loadjshell command
+    - Allowed redirection for all commands
+
+
+What do I plan to work in the next three days?
+    - create and implement a search command
+    - comment and add javadocs for savejshell and loadjshell
+
+Am I blocked on anything?
+    - no

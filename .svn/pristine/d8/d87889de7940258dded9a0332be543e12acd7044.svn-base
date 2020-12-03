@@ -1,0 +1,16 @@
+What did I work on in the last three days?
+	- Made JUnit tests for rm
+    - Made JUnit tests for mkdir
+    - Made JUnit tests for pwd
+    - Made JUnit tests for tree
+    - Made Directory mock objects
+    - Fixed bugs in Move and Mkdir
+    - Fixed method of path detection in Remove command
+    - Implemented Move using Copy and Remove
+	
+What do I plan to work in the next three days?
+	- Nothing
+
+
+Am I blocked on anything?
+    - No

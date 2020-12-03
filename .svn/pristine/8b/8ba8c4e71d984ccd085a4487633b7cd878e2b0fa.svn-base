@@ -1,0 +1,26 @@
+package Exceptions;
+
+import java.util.Objects;
+
+public abstract class CustomException extends RuntimeException{
+
+  private String content;
+  public abstract String getContent();
+  @Override
+  public abstract String toString();
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+
+    boolean strings = this.toString().equals(o.toString());
+    boolean contents= (this.content==null&&((CustomException) o).content==null) || this.content.equals(((CustomException) o).content);
+    return strings && contents;
+  }
+
+}

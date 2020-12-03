@@ -1,0 +1,93 @@
+package commands;
+
+import fileSystem.File;
+import inputOutput.StandardOutput;
+
+import java.util.Arrays;
+import java.util.HashMap;
+
+public abstract class Command {
+
+  private static final HashMap<String, String> syntaxToCommand = new HashMap<>();
+  private static boolean innit = false;
+
+  /**
+   * executes the main function of the command
+   *
+   * @param args
+   * @return output of the command
+   */
+  protected abstract String execute(String[] args);
+
+  private static void innit() {
+    syntaxToCommand.put("ls", "List");
+    syntaxToCommand.put("history", "History");
+    syntaxToCommand.put("exit", "Exit");
+    syntaxToCommand.put("mkdir", "Mkdir");
+    syntaxToCommand.put("popd", "PopDirectory");
+    syntaxToCommand.put("pushd", "PushDirectory");
+    syntaxToCommand.put("pwd", "PrintWorkingDirectory");
+    syntaxToCommand.put("cat", "Concatenate");
+    syntaxToCommand.put("man", "Manual");
+    syntaxToCommand.put("cd", "ChangeDirectory");
+    syntaxToCommand.put("echo", "Echo");
+    innit = true;
+  }
+
+  /**
+   * Using the toString to provide documentation of the command
+   *
+   * @return command documentation
+   */
+  public abstract String toString();
+
+  public static Command getCommand(String syntax) {
+    Class cmd;
+    try {
+      cmd = Class.forName("commands." + syntaxToCommand.get(syntax));
+      return (Command) cmd.getDeclaredConstructor().newInstance();
+    } catch (Exception e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+
+  private static void redirect(String msg, String filePath, boolean append) {
+    File file = MakeFile.makeFile(filePath);
+    if (file == null) {
+      StandardOutput.perror(filePath + "is an invalid file path");
+      return;
+    }
+    StandardOutput.ouptut(msg, file, append);
+  }
+
+  public static void runCommand(String[] args) {
+    boolean redirect = false, append = false;
+    String file="";
+    if (!innit) {
+      innit();
+    }
+    try {
+      Command command = getCommand(args[0]);
+      if (args[0].equals("echo") && args.length >= 3) {
+        if (args[args.length - 2].contains(">")) {
+          redirect = true;
+          file=args[args.length-1];
+          args = Arrays.copyOfRange(args, 0, args.length - 2);
+        }
+        if (args[args.length - 2].equals(">>")) {
+          append = true;
+        }
+      }
+      String msg = command.execute(args);
+      if (redirect) {
+        redirect(msg, file, append);
+      } else if (!msg.equals("")) {
+        StandardOutput.output(msg);
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+      StandardOutput.perror(e.toString());
+    }
+  }
+}

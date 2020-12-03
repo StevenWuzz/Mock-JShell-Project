@@ -1,0 +1,88 @@
+package commands;
+
+import fileSystem.Directory;
+import fileSystem.File;
+import fileSystem.FileTree;
+
+public class Pwd extends Command {
+
+  /**
+   * Creates the absolute path of the given directory as a string
+   * 
+   * @param a directory
+   * @return path of the given directory as a string
+   */
+  public static String printFullPath(Directory d) {
+
+    // directory is empty
+    if (d == null) {
+      return null;
+    }
+
+    // initial path string
+    String path = "/"+d.getName();
+
+    // get parent of given directory
+    Directory parent = d.getParent();
+
+    // iterate over directory parents until head is reached
+    while (parent != null && parent!= FileTree.getRoot()) {
+
+      // append directory to front of path
+      path = "/" + parent.getName() + path;
+
+      // get next parent
+      parent = parent.getParent();
+    }
+
+    return path;
+  }
+
+  @Override
+  protected String execute(String[] args) {
+    // TODO Auto-generated method stub
+
+    // get current directory from FileTree
+    Directory p = FileTree.getCurrent();
+
+    // create absolute path of current directory
+    String path = printFullPath(p);
+
+    return path;
+  }
+
+  @Override
+  public String toString() {
+    // TODO Auto-generated method stub
+
+    // create man page for pwd command
+    String info = "\n"
+        + "PWD(1)                    BSD General Commands Manual                   PWD(1)\n" + "\n"
+        + "NAME\n" + "     pwd -- return working directory name\n" + "\n" + "SYNOPSIS\n"
+        + "     pwd [-L | -P]\n" + "\n" + "DESCRIPTION\n"
+        + "     The pwd utility writes the absolute pathname of the current working\n"
+        + "     directory to the standard output.\n" + "\n"
+        + "     Some shells may provide a builtin pwd command which is similar or identi-\n"
+        + "     cal to this utility.  Consult the builtin(1) manual page.\n" + "\n"
+        + "     The options are as follows:\n" + "\n"
+        + "     -L      Display the logical current working directory.\n" + "\n"
+        + "     -P      Display the physical current working directory (all symbolic\n"
+        + "             links resolved).\n" + "\n"
+        + "     If no options are specified, the -L option is assumed.\n" + "\n" + "ENVIRONMENT\n"
+        + "     Environment variables used by pwd:\n" + "\n"
+        + "     PWD  Logical current working directory.\n" + "\n" + "EXIT STATUS\n"
+        + "     The pwd utility exits 0 on success, and >0 if an error occurs.\n" + "\n"
+        + "SEE ALSO\n" + "     builtin(1), cd(1), csh(1), sh(1), getcwd(3)\n" + "\n" + "STANDARDS\n"
+        + "     The pwd utility conforms to IEEE Std 1003.1-2001 (``POSIX.1'').\n" + "\n" + "BUGS\n"
+        + "     In csh(1) the command dirs is always faster because it is built into that\n"
+        + "     shell.  However, it can give a different answer in the rare case that the\n"
+        + "     current directory or a containing directory was moved after the shell\n"
+        + "     descended into it.\n" + "\n"
+        + "     The -L option does not work unless the PWD environment variable is\n"
+        + "     exported by the shell.\n" + "\n"
+        + "BSD                             April 12, 2003                             BSD\n"
+        + "(END)\n";
+
+    return info;
+  }
+}

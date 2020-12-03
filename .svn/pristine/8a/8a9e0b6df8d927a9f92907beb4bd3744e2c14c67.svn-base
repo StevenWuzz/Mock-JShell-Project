@@ -1,0 +1,25 @@
+package inputOutput;
+
+import fileSystem.File;
+
+public class Stdout {
+
+  public static void output(String msg) {
+    System.out.println(msg);
+  }
+
+  public static void ouptut(String msg, File file, boolean append) {
+    if(append){
+      file.appendContent(msg);
+    }
+    else
+    {
+      file.setContent(msg);
+    }
+  }
+
+  public static void perror(String msg){
+    System.out.println(msg);
+  }
+
+}

@@ -1,0 +1,22 @@
+package commands;
+
+public class Exit extends Command{
+
+  /**
+   * Execute the Exit command to quit the shell
+   */
+  @Override
+  protected String execute(String[] args) {
+    System.out.println("Quitting the shell...");
+    System.out.print("Process completed");
+    System.exit(0);
+    return "";
+  }
+
+  @Override
+  public String toString() {
+    String info = "exit\n\n" + "\tQuit the program.";
+    return info;
+  }
+  
+}

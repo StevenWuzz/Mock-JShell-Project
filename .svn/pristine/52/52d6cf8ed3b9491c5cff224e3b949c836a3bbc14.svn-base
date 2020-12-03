@@ -1,0 +1,41 @@
+package test;
+
+import fileSystem.Directory;
+import fileSystem.File;
+import fileSystem.FileTree;
+import fileSystem.MakeFile;
+
+public class MockFileTree extends FileTree {
+  
+  private Directory root;
+  private Directory current;
+  public String path;
+  
+  private MockFileTree(){
+    super();
+  }
+  
+  @Override
+  public File traverseToEnd(String path) {
+    if(this.path.equals("SOMEVALIDFILE")) {
+      File file = MakeFile.makeFile("SOMEVALIDFILE",this);
+      return file;
+    }
+    if(this.path.equals("SOMEVALIDDIR")) {
+      File file = MakeFile.makeFile("SOMEVALIDDIR",this);
+      return file;
+    }
+    return null;
+  }
+ 
+  @Override
+  public Directory getCurrent() {
+    return this.current;
+  }
+  
+  @Override
+  public Directory getRoot() {
+    return this.root;
+  }
+}
+

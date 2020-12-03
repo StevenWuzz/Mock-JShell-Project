@@ -1,0 +1,27 @@
+package Exceptions;
+
+public class InvalidCommandException extends CustomException {
+
+  private String path;
+  private String content;
+
+  public InvalidCommandException(String p) {
+    this.path = p;
+    this.content = null;
+  }
+
+  public InvalidCommandException(String p, String content) {
+    this.path= p;
+    this.content = content;
+  }
+
+  public String getContent() {
+    return content;
+  }
+
+  @Override
+  public String toString() {
+    return path + " is an invalid command";
+  }
+
+}

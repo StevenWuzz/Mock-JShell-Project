@@ -1,0 +1,22 @@
+package Exceptions;
+
+public class InvalidPathException extends CustomException {
+
+  private String path;
+  private String content;
+
+  public InvalidPathException(String p) {
+    this.path = p;
+    this.content = null ;
+  }
+
+  public InvalidPathException(String p, String content) {
+    this.path = p;
+    this.content=content;
+  }
+
+  @Override
+  public String toString() {
+    return path + " is an invalid path";
+  }
+}

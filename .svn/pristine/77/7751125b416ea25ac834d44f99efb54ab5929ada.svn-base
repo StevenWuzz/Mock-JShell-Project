@@ -1,0 +1,11 @@
+Class name: Move
+Parent class (if any): None
+Subclasses (if any): None
+Responsibilities:
+* copies file to specified directory
+* renames file
+* deletes original copy of the file 
+
+Collaborators:
+* Copy
+

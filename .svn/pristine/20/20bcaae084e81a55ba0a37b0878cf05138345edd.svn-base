@@ -1,0 +1,83 @@
+package fileSystem;
+
+import commands.Pwd;
+
+public class FileTree {
+
+  private static Directory root;
+  private static Directory current;
+  private static String currentPath;
+
+  public static Directory getRoot() {
+    return root;
+  }
+
+  public static void init() {
+    root = new Directory(null, "");
+    current = root;
+    currentPath="/";
+  }
+
+  public static void setRoot(Directory root) {
+    FileTree.root = root;
+  }
+
+  public static Directory getCurrent() {
+    return current;
+  }
+
+  public static void setCurrent(Directory current) {
+    FileTree.current = current;
+    setCurrentPath(Pwd.printFullPath(current));
+  }
+
+
+  private static File getLastFile(Directory dir, String file){
+    if (dir.findFile(file) != null) {//check if last element is a File:
+      return dir.findFile(file);
+    } else {//if not check all three cases for directorires
+      if (file.equals("..")) {
+        return dir.getParent();
+      } else if (file.equals(".")) {
+        return dir;
+      } else {
+        return dir.findSubDir(file);
+      }
+    }
+
+  }
+
+  /**
+   * Iteratively traverse the given path and return the directory or file
+   *
+   * @param path
+   * @return the file or directory object
+   */
+  public static File traverseToEnd(String path) {
+    String[] p = path.split("/");// Split the entire path into individual directories or files
+    if (p.length == 0) {
+      return root;
+    }
+    Directory dir = (p[0].equals("")) ? root : current;// Decide whether the path is absolute or relative
+    int i = (p[0].equals("")) ? 1 : 0;
+    for (; i < p.length - 1; i++) {// Iterate through all the individual directories except the last one
+      if (p[i].equals("..")) {// Find the corresponding sub-directory adjust i for special cases of . and ..
+        dir = dir.getParent();//if .. get parent
+      } else if (!p[i].equals(".")) {
+        dir = dir.findSubDir(p[i]);// only modify if its not .
+      }
+      if (dir == null) { // If the sub-directory is not found
+        return null;
+      }
+    }
+    return FileTree.getLastFile(dir,p[p.length-1]);
+  }
+
+  public static String getCurrentPath() {
+    return currentPath;
+  }
+
+  public static void setCurrentPath(String currentPath) {
+    FileTree.currentPath = currentPath;
+  }
+}

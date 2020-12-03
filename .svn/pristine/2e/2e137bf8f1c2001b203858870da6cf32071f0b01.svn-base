@@ -1,0 +1,27 @@
+package Exceptions;
+
+public class FileNotFoundException extends CustomException {
+
+  private String path;
+  private String content;
+
+  public FileNotFoundException(String p) {
+    this.path = p;
+    this.content = null;
+  }
+
+  public String getContent() {
+    return content;
+  }
+
+  public FileNotFoundException(String p, String c) {
+    this.path = p;
+    this.content = c;
+  }
+
+  @Override
+  public String toString() {
+    return path + " could not be found";
+  }
+
+}

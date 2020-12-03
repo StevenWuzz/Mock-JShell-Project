@@ -1,0 +1,26 @@
+package commands;
+
+import fileSystem.*;
+
+public class ChangeDirectory extends Command {
+
+  @Override
+  protected String execute(String[] args) {
+    String path = args[1];
+    File type = FileTree.traverseToEnd(path);
+    if (type instanceof Directory) {
+      FileTree.setCurrent((Directory) type);
+    } else {
+      System.out.println("The given path is invalid");
+    }
+    return "";
+  }
+
+  @Override
+  public String toString() {
+    String info = "cd DIR\n\n" + "\tChange directory to DIR, which may be relative to the current"
+        + " directory or may be a full path.";
+    return info;
+  }
+
+}

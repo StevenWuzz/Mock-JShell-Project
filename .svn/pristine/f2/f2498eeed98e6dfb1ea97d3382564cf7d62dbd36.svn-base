@@ -1,0 +1,13 @@
+package Exceptions;
+
+public abstract class CustomException extends RuntimeException{
+
+  private String content;
+
+  public String getContent() {
+    return content;
+  }
+  @Override
+  public abstract String toString() ;
+
+}

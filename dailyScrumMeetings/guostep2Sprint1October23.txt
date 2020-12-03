@@ -1,0 +1,12 @@
+What did I work on in the last three days?
+    - Finished 70% of the CRC cards
+    - Discussed design ideas and CRC cards with the team
+
+What do I plan to work in the next three days?
+    - Finish JShell
+    - Make an stack of directories for pushd and popd
+    - Make a stack of prior input for history
+    - Create stdin class to take in user input into shell
+
+Am I blocked on anything?
+    - No

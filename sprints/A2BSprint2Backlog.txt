@@ -1,0 +1,66 @@
+//Sprint 2 Backlog.
+November 23 to November 30
+
+User Stories from Product Backlog that we will address in this sprint:
+- As a user, I would like to remove a directory from the shell and all its children
+- As a user, I would like to move and rename a file or folder
+- As a user, I would like to search for an exact string for files or directories in my computer.
+
+
+General Task: 
+- Revamp CRC cards
+- Change commands to send error messages to perror in StandardOutput
+- Bugtest previously implemented commands
+- Make documentation for the commands you’ve made
+- Add proper comments
+- Reformat code
+- Generate Javadoc
+
+
+Specific tasks to be accomplished:
+a - 1 Make JUnit tests for rm
+a - 2 Make JUnit tests for exit
+a - 3 Make JUnit tests for mkdir
+a - 4 Make JUnit tests for cd
+a - 5 Make JUnit tests for ls
+a - 6 Make JUnit tests for pwd
+a - 7 Make JUnit tests for mv
+a - 8 Make JUnit tests for cp
+a - 9 Make JUnit tests for cat
+a - 10 Make JUnit tests for curl
+a - 11 Make JUnit tests for echo
+a - 12 Make JUnit tests for man
+a - 13 Make JUnit tests for pushd
+a - 14 Make JUnit tests for popd
+a - 15 Make JUnit tests for history
+a - 16 Make JUnit tests for saveJShell
+a - 17 Make JUnit tests for loadJShell
+a - 18 Make JUnit tests for search
+a - 19 Make JUnit tests for tree
+
+b - 1 Fix path traversal in Remove to properly get directory to delete
+b - 2 Fix directory and file deletion to remove file from directory children instead of set as null
+
+c - 1 Fix path traversal in Move to properly get directory to move
+
+d - 1 Implement Exceptions
+
+
+These tasks are assigned as follows:
+User: Stephen Guo
+Tasks: a - 8, a - 9, a - 13, a - 14, a - 15, d - 1
+
+User: Steven Hans Limantoro  
+Tasks: a - 2, a - 4, a - 5, a - 7, a - 10
+
+User: Vignesh Nanthakumar
+Tasks: a - 1, a - 3, a - 6, a - 19, b - 1, b - 2, c - 1
+
+User: Krutik Tejalkumar Shah
+Tasks: a - 11, a - 12, a - 16, a - 17, a - 18
+
+
+
+
+
+

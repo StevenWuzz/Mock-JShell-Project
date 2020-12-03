@@ -1,0 +1,17 @@
+What did I work on in the last three days?
+    - Presented a demo for our shell
+    - Recieved feedback for our shell
+    - Discussed bugs and features to work on with the team
+    
+What do I plan to work in the next three days?
+    - Find and fix bugs
+    - Add comments for classes I've worked on
+    - Add Javadoc for classes I've worked on
+    - Make sure other files are formatted correctly
+    - Make sure the output of the shell is formatted correctly
+    - Revamp CRC cards
+    - Clean up code, add helper functions if needed.
+    - Fix echo in the error class
+
+Am I blocked on anything?
+    - No

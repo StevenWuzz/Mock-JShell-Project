@@ -1,0 +1,27 @@
+package FileSystem;
+
+public class File {
+  private Directory parent;
+  private String name;
+
+  public File(Directory p, String n) {
+    this.parent = p;
+    this.name = n;
+  }
+
+  public Directory getParent() {
+    return this.parent;
+  }
+
+  public void setParent(Directory p) {
+    this.parent = p;
+  }
+
+  public String getName() {
+    return this.name;
+  }
+
+  public void setName(String n) {
+    this.name = n;
+  }
+}

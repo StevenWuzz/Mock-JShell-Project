@@ -1,0 +1,113 @@
+// **********************************************************
+// Assignment2:
+// Student1: Stephen Guo
+// UTORID user_name: guostep2
+// UT Student #: 1006313231
+// Author: Stephen Guo
+//
+// Student2: Steven Hans Limantoro
+// UTORID user_name: limantor
+// UT Student #: 1005780861
+// Author: Steven Hans Limantoro
+//
+// Student3: Vignesh Nanthakumar
+// UTORID user_name: nantha33
+// UT Student #: 1006278948
+// Author: Vignesh Nanthakumar
+//
+// Student4: Krutik Shah
+// UTORID user_name: shahkr10
+// UT Student #: 10062135626
+// Author: Krutik Shah
+//
+//
+// Honor Code: I pledge that this program represents my own
+// program code and that I have coded on my own. I received
+// help from no one in designing and debugging my program.
+// I have also read the plagiarism section in the course info
+// sheet of CSC B07 and understand the consequences.
+// *********************************************************
+package commands;
+
+/** This class handles displaying documentation for commands */
+public class Manual extends Command {
+
+  /**
+   * Checks if an argument is a name of a command
+   * 
+   * @param command
+   * @return true if the argument is a valid command. Return false otherwise
+   */
+  private static boolean isCommand(String command) {
+
+    String commands[] =
+        // list all the valid commands
+        {"exit", "mkdir", "cd", "ls", "pwd", "pushd", "popd", "history", "cat", "echo", "man",
+            "tree"};
+
+    // go through the list and see if the command is valid
+    for (int i = 0; i < commands.length; i++) {
+      if (command.contentEquals(commands[i])) {
+        return true;
+      }
+    }
+
+    // if it is not in the list of valid commands, it is invalid, so return false
+    return false;
+  }
+
+  @Override
+  public String execute(String[] args) {
+
+    Command cmd;
+    String output = "";
+
+    // if only 1 given command
+    if (args.length == 2) {
+
+      // check if its a command
+      if (isCommand(args[1])) {
+
+        // get command object and return documentation
+        cmd = Command.getCommand(args[1]);
+        return cmd.toString();
+      }
+
+      return "Invalid Command";// else return error
+    }
+
+    for (int i = 1; i < args.length; i++) {
+
+      if (!isCommand(args[i])) {
+        output += args[i] + "is an invalid Command";
+        return output;
+      }
+
+      // get command object
+      cmd = Command.getCommand(args[i]);
+
+      // add name of command and documentaiton
+      output += args[i] + ":\n";
+      output += cmd.toString() + "\n";
+
+    }
+
+    // if output is empty, then don't modify output
+    if (output.equals("")) {
+      return output;
+    }
+
+    // if output isn't empty remove trailing newline
+    return output.substring(0, output.length() - 1);
+  }
+
+  /**
+   * documentation of man
+   * 
+   * @return documentation for manual
+   */
+  @Override
+  public String toString() {
+    return "man CMD [CMD2 ...]\n\n\tPrint documentation for CMD (s)";
+  }
+}

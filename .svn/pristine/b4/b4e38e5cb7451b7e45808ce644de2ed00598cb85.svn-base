@@ -1,0 +1,16 @@
+package Exceptions;
+
+public class InvalidCommandException extends Exception{
+
+  private String cmd;
+
+  public InvalidCommandException(String p) {
+    this.cmd= p;
+  }
+
+  @Override
+  public String toString() {
+    return cmd + "is an invalid path";
+  }
+
+}

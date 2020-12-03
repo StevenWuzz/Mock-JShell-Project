@@ -1,0 +1,25 @@
+package commands;
+import fileSystem.*;
+public class ChangeDirectory extends Command {
+
+  @Override
+  protected String execute(String[] args) {
+    String path = args[1];
+    Object type = FileTree.traverseToEnd(path);
+    if(type instanceof File) {
+      System.out.println("The given path leads to a file");
+    }
+    else {
+      System.out.println("The given path is invalid");
+    }
+    //TODO: set currentDirectory to the traversed directory
+    return "";
+  }
+  
+  @Override
+  public String toString() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+}

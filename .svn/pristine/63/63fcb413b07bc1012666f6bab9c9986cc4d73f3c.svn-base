@@ -1,0 +1,13 @@
+Class name: Echo
+Parent class (if any): Commands
+Subclasses (if any): None
+
+Responsibilities: 
+* Append a string to an outfile
+* Overwrite a string to an outfile
+
+Collaborators:
+* ChangeDirectory
+* PrintWorkingDirectory
+* Directory
+

@@ -1,0 +1,94 @@
+package commands;
+
+import fileSystem.Directory;
+import fileSystem.File;
+import fileSystem.FileTree;
+import inputOutput.StandardOutput;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Stack;
+
+/**
+ * this class handles all the code for the command to save the jshell state
+ */
+public class SaveJShell extends Command{
+
+  private static String saveFile(File f){
+    String output ="";
+    output ="<File>\n" + f.getName() + "\n<Content>\n"
+        + f.getContent() +"\n</Content>\n</File>\n";
+
+    return output;
+  }
+
+
+
+
+  private static String saveDir(Directory dir){
+    String output="";
+    output ="<Directory>\n" + PrintWorkingDirectory.printFullPath(dir) + "\n</Directory>\n";
+    for(Directory d: dir.getDirectoryChildren()){
+      output+=saveDir(d);
+    }
+    for(File f: dir.getFileChildren()){
+      output+=saveFile(f);
+    }
+    return output;
+  }
+
+  private static String saveHist(ArrayList<String> h){
+    String output="";
+    output+="<History>\n";
+    for (int i=0; i < h.size(); i++) {
+      output += h.get(i) + "\n";
+    }
+    output+="</History>\n";
+    return  output;
+
+  }
+
+  private static String saveDirStack(Stack<Directory> ds){
+    String output="";
+    Directory[] h=new Directory[ds.size()];
+    h=ds.toArray(h);
+    output+="<DirectoryStack>\n";
+    for (int i=h.length-1; i>=0; i--) {
+      output += PrintWorkingDirectory.printFullPath(h[i]) + "\n";
+    }
+    output+="</DirectoryStack>";
+    return  output;
+
+  }
+
+
+  @Override
+  public String execute(String[] args) {
+    FileTree f= FileTree.getFileTree();
+    String output="";
+    output +="<FileSystem>\n";
+    for(Directory d: f.getRoot().getDirectoryChildren()){
+      output+=saveDir(d);
+    }
+    output +="</FileSystem>\n";
+    output += saveHist(History.getHistory());
+    output += saveDirStack(PushDirectory.dirStack);
+    try {
+      java.io.File file = new java.io.File(args[1]);
+      if (!file.exists()) {
+        file.createNewFile();
+      }
+      BufferedWriter bw = new BufferedWriter( new FileWriter(file));
+      bw.write(output);
+    } catch (Exception e) {
+      StandardOutput.perror("trouble writing to file");
+    }
+    return "";
+  }
+
+  @Override
+  public String toString() {
+    return null;
+  }
+}

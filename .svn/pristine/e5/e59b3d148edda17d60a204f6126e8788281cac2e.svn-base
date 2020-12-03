@@ -1,0 +1,14 @@
+Class name: MakeDirectory
+Parent class (if any): Command
+Subclasses (if any): None
+
+Responsibilities:
+* Creates 1 directory if 2nd argument results in an error
+* Creates 1 or 2 directories at the current directory 
+* Creates 1 or 2 directories at a specified path
+
+Collaborators:
+* FileTree
+* File
+* Directory
+* Error

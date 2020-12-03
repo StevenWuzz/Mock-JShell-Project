@@ -1,0 +1,13 @@
+Class name: List
+Parent class (if any): Commands
+Subclasses (if any): None
+
+Responsibilities: 
+* Lists and prints all files and directories in the current directory
+* Lists and prints all files and directories in a specified directory
+
+Collaborators:
+* ChangeDirectory
+* PrintWorkingDirectory
+* Directory
+

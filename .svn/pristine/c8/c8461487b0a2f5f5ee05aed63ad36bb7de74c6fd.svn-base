@@ -1,0 +1,68 @@
+package test;
+
+import static org.junit.Assert.*;
+import java.lang.reflect.Field;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import fileSystem.*;
+
+public class DirectoryTest {
+  
+  /*
+   * instance of FileTree to print paths
+   */
+  private FileTree fileT;
+  
+  @Before
+  public void setUp() {
+    fileT = FileTree.getFileTree();
+    fileT.setCurrent(fileT.getRoot());
+  }
+
+  @Test
+  /*
+   * Test finding a sub directory in a given directory
+   */
+  public void testFindSubDir() {
+    MockMultipleDirectoryBranch.getMockDir(fileT.getRoot());
+    assertEquals("a", fileT.getRoot().findSubDir("a").getName());
+  }
+  
+  @Test
+  /*
+   * Test finding a sub directory in a given directory
+   */
+  public void testAddDeleteSubDir() {
+    MockMultipleDirectoryBranch.getMockDir(fileT.getRoot());
+    assertEquals("a", fileT.getRoot().findSubDir("a").getName());
+  }
+  
+  @Test
+  /*
+   * Test adding a file to a sub directory and finding the file
+   */
+  public void testAddFindFile() {
+    MockMultipleDirectoryBranch.getMockDir(fileT.getRoot());
+    
+    File f1 = new File(fileT.getRoot(), "f1");
+    fileT.getRoot().addFileChild(f1);
+
+    File f2 = new File(fileT.getRoot(), "f2");
+    fileT.getRoot().addFileChild(f2);
+    
+    assertEquals("f1", fileT.getRoot().findFile("f1").getName());
+    assertEquals("f2", fileT.getRoot().findFile("f2").getName());
+  }
+  
+  
+  @After
+  public void tearDown() throws Exception {
+    Field field = (fileT.getClass()).getDeclaredField("filetree");
+    field.setAccessible(true);
+
+    // setting the filetree parameter to null to create new instance next construction
+    field.set(null, null);
+  }
+
+}

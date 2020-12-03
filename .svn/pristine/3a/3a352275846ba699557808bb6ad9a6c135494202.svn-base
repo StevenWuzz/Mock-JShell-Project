@@ -1,0 +1,90 @@
+package commands;
+
+import java.util.LinkedList;
+import fileSystem.*;
+
+public class List extends Command {
+
+  /**
+   * Execute the Ls command
+   *
+   * @param parameter
+   */
+  public String execute(String[] argument) {
+    String path = "";
+    String type = "";
+    String contents = "";
+    File dir = null;
+    int argLen = argument.length;
+    if (argLen == 1) {
+      try {
+        path = FileTree.getCurrent().getName();
+        type = "Directory";
+        dir = FileTree.getCurrent();
+        contents += printContents(path, (Directory) dir, type);
+        return contents;
+      } catch (NullPointerException e) {
+        return "Directory is not initialized";
+      }
+    } else {
+      for(int i = 1; i < argLen; i++) {
+        path = argument[i];
+        dir = FileTree.traverseToEnd(path);
+        if(dir == null) {
+          contents += "The given path is invalid";
+        }
+        else {
+          type = (dir instanceof Directory)? "Directory":"File";
+          contents += printContents(path, (Directory) dir, type);
+          contents += "\n";
+        }
+      }
+      return contents;
+    }
+  }
+
+  /**
+   * Print all the contents in a given directory or file
+   *
+   * @param path
+   * @param currentDir
+   * @return a string containing all the contents in a given directory or file
+   */
+  public static String printContents(String path, Directory currentDir, String type) {
+    // Initialize an empty string called result
+    String result = "";
+    // Append the path into result (for formatting)
+    result += path;
+    if (type == "Directory") {
+      // Append a colon into result (for formatting)
+      result += ":\n";
+      // Get the number of contents in the current directory
+      int numOfDirChildren = currentDir.getNumOfDirectoryChildren();
+      int numOfFileChildren = currentDir.getNumOfFileChildren();
+      // Get all the contents in the current directory
+      LinkedList<Directory> dirChildren = currentDir.getDirectoryChildren();
+      LinkedList<File> fileChildren = currentDir.getFileChildren();
+      // Iterate through all the contents
+      for (int i = 0; i < numOfDirChildren; i++) {
+        // Append the name of each content to the string result
+        result += dirChildren.get(i).getName();
+        result += "\n";
+      }
+      for(int i = 0; i < numOfFileChildren; i++) {
+        result += fileChildren.get(i).getName();
+        result += "\n";
+      }
+    }
+    //TODO Make ls work when multiple paths are given
+
+
+    // Return the string containing all the contents
+    return result;
+  }
+
+  @Override
+  public String toString() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+}

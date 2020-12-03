@@ -1,0 +1,56 @@
+package test;
+
+import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
+import commands.ChangeDirectory;
+import fileSystem.Directory;
+import fileSystem.FileTree;
+
+public class ChangeDirectoryTest {
+
+  private ChangeDirectory cd;
+  private FileTree fileTree;
+  
+  @Before
+  public void setUp(){
+    cd = new ChangeDirectory();
+    
+    fileTree = FileTree.getFileTree();
+    fileTree.setCurrent(fileTree.getRoot());
+  }
+
+  @Test
+  public void testChangeToRelativePath() {
+    Directory a = new Directory(fileTree.getRoot(), "a");
+    fileTree.getRoot().addDirectoryChild(a);
+    
+    cd.execute(new String[] {"cd", "a"}, fileTree);
+    assertEquals("a", fileTree.getCurrent().getName());
+  }
+  
+  @Test
+  public void testChangeToFullPath() {
+    Directory a = new Directory(fileTree.getRoot(), "a");
+    fileTree.getRoot().addDirectoryChild(a);
+    
+    Directory achild1 = new Directory(a, "achild1");
+    a.addDirectoryChild(achild1);
+    
+    fileTree.setCurrent(achild1);
+    
+    cd.execute(new String[] {"cd", "/a"}, fileTree);
+    assertEquals("a", fileTree.getCurrent().getName());
+  }
+  
+  @Test
+  public void testChangeToParentDirectory() {
+    Directory a = new Directory(fileTree.getRoot(), "a");
+    fileTree.getRoot().addDirectoryChild(a);
+    fileTree.setCurrent(a);
+    
+    cd.execute(new String[] {"cd", ".."}, fileTree);
+    assertEquals("/", fileTree.getCurrent().getName());
+  }
+
+}

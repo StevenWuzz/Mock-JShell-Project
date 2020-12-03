@@ -1,0 +1,78 @@
+package commands;
+
+import fileSystem.*;
+
+public class List extends Command{ // TODO: extends Command later
+
+	/**
+	 * Execute the Ls command
+	 * 
+	 * @param parameter
+	 */
+	public void execute(String[] parameter)
+	{
+		//need the StandardInput implemented first
+		return;
+	}
+	
+	/**
+	 * Check whether an object is a directory or a file
+	 * 
+	 * @param object
+	 * @return a string specifying whether the path is a directory or a file
+	 */
+	public String checkDirOrFile(String object) {
+	  return null;
+	}
+	
+	
+	/**
+	 * Iteratively traverse the given path and determine if it leads to a directory or a file
+	 * 
+	 * @param path
+	 */
+	public static Object traverseToEnd(String path, Directory root, Directory current) {
+	    String[] p = path.split("/");
+	    Directory dir = (p[0].equals("")) ? root : current;
+	    int i = (p[0].equals("")) ? 1 : 0;
+	    for(; i < p.length; i++) {
+	      Directory dirChild = dir.findSubDir(p[i]);
+	      if(dirChild == null) {
+	        if(i < p.length - 1) {
+	          return null;
+	        }
+	        else {
+	          File fileChild = dir.findFile(p[i]);
+	          if(fileChild != null) {
+	            return fileChild;
+	          }
+	          
+	        }
+	      }
+	      else {
+	        dir = dirChild;
+	      }
+	  }
+      return dir;
+	}
+	
+	/**
+	 * Print all the contents in a given directory
+	 */
+	public void printContentsInDirectory() {
+	  
+	  //Assuming we already get to the directory
+	  /*Directory dir; // = ....
+	  int numOfChildren = dir.getNumOfDirectoryChildren();
+	  for(int i = 0; i < numOfChildren; i++) {
+	    // Need access to dirChildren
+	    // Print each children
+	  }*/
+	}
+
+  @Override
+  public String toString() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+}

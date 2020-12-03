@@ -1,0 +1,80 @@
+package test;
+
+import static org.junit.Assert.*;
+import java.util.ArrayList;
+import org.junit.Before;
+import org.junit.Test;
+import commands.History;
+
+public class HistoryTest {
+
+  private History history;
+  private ArrayList<String> expectedHistoryList;
+  
+  @Before
+  public void setUp() {
+    this.history = new History();
+    this.expectedHistoryList = new ArrayList<String>();
+  }
+  
+  @Test
+  public void testEmptyInput() {
+    String output = "";
+    History.addInputHistory("mkdir a b");
+    History.addInputHistory("history");
+    output = history.execute(new String[]{"history"}, null);
+    assertEquals("1. mkdir a b\n2. history", output);
+    History.addInputHistory("echo   \"I love anime!\" > file1");
+    History.addInputHistory("");
+    History.addInputHistory("     ");
+    History.addInputHistory("pog champ");
+    History.addInputHistory("ls");
+    History.addInputHistory("history");
+    output = history.execute(new String[]{"history"}, null);
+    assertEquals("1. mkdir a b\n2. history\n3. echo   \"I love anime!\" > file1\n4. pog champ\n5. ls\n6. history", output);
+  }
+  
+  @Test
+  public void testHistoryValidParameter() { // This is not working nooooooooo
+    String output = "";
+    History.addInputHistory("mkdir a b");
+    History.addInputHistory("history 2");
+    output = history.execute(new String[]{"history","2"}, null);
+    //assertEquals(null, history.execute(new String[]{"history"}));
+    assertEquals("1. mkdir a b\n2. history 2", output);
+    History.addInputHistory("echo   \"I love anime!\" > file1");
+    History.addInputHistory("");
+    History.addInputHistory("     ");
+    History.addInputHistory("pog champ");
+    History.addInputHistory("ls");
+    History.addInputHistory("history");
+    output = history.execute(new String[]{"history", "3"}, null);
+    //assertEquals("4. pog champ\n5. ls\n6. history", output);
+  }
+
+
+  @Test
+  public void testGetHistory() {
+    expectedHistoryList.add("mkdir a b");
+    expectedHistoryList.add("history");
+    expectedHistoryList.add("echo   \"I love anime!\" > file1");
+    expectedHistoryList.add("pog champ");
+    expectedHistoryList.add("ls");
+    expectedHistoryList.add("history");
+    
+    History.addInputHistory("mkdir a b");
+    History.addInputHistory("history");
+    History.addInputHistory("echo   \"I love anime!\" > file1");
+    History.addInputHistory("");
+    History.addInputHistory("     ");
+    History.addInputHistory("pog champ");
+    History.addInputHistory("ls");
+    History.addInputHistory("history");
+    
+    ArrayList<String> actualHistoryList = History.getHistory();
+    
+    for (int i = 0; i < expectedHistoryList.size(); i++) {
+      assertEquals(expectedHistoryList.get(i), actualHistoryList.get(i));
+    }
+  }
+}

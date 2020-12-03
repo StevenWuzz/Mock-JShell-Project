@@ -1,0 +1,12 @@
+Class name: PushDirectory
+Parent class (if any): Command
+Subclasses (if any): None 
+
+Responsibilities:
+* Saves current directory and pushes it onto a stack of directories
+* Changes directory to specified directory
+
+Collaborators:
+* File
+* FileTree
+* Directory

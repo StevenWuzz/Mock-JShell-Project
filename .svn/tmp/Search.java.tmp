@@ -1,0 +1,90 @@
+package commands;
+
+import fileSystem.Directory;
+import fileSystem.File;
+import fileSystem.FileTree;
+import inputOutput.Error;
+import inputOutput.StandardOutput;
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.LinkedList;
+
+public class Search extends Command {
+
+
+  private String searchFile(Directory dir, String name) {
+    File f;
+    Iterator<File>  fileChildren= dir.getFileChildren();
+    while(fileChildren.hasNext()) {
+      f = fileChildren.next();
+      if (f.getName().equals(name)) {
+        return PrintWorkingDirectory.printFullPath(f.getParent()) + f.getName();
+      }
+    }
+    return "";
+  }
+
+  private String searchDir(Directory dir, String name) {
+    Directory f;
+    Iterator<Directory>  dirChildren= dir.getDirectoryChildren();
+    while(dirChildren.hasNext()) {
+      f = dirChildren.next();
+      if (f.getName().equals(name)) {
+        return PrintWorkingDirectory.printFullPath(f);
+      }
+    }
+    return "";
+  }
+
+  private String search(Directory dir, String name, boolean file) {
+    String output;
+    if (file) {
+      output = searchFile(dir, name);
+    } else {
+      output = searchDir(dir, name);
+    }
+    Directory f;
+    String temp;
+    Iterator<Directory>  dirChildren= dir.getDirectoryChildren();
+    while(dirChildren.hasNext()) {
+      f = dirChildren.next();
+      temp=search(f, name, file);
+      if (!temp.equals("")) {
+        output += "\n" + temp;
+      }
+    }
+    return output;
+  }
+
+
+  @Override
+  public String execute(String[] args) {
+    boolean file = args[args.length - 3].equals("f");
+    FileTree fileTree = FileTree.getFileTree();
+    String name = args[args.length - 1];
+    name = name.substring(1, name.length() - 1);
+    String output = "";
+    Directory dir;
+    args = Arrays.copyOfRange(args, 1, args.length - 4);
+    for (String path : args) {
+      if (!Error.isValidPath(path)) {
+        StandardOutput.perror(path + " is not a valid path");
+        return output;
+      }
+      dir = (Directory) fileTree.traverseToEnd(path);
+      if (dir == null) {
+        StandardOutput.perror(path + " is not a directory");
+        return output;
+      }
+      output += path + ":\n" + search(dir, name, file);
+    }
+
+    return output;
+  }
+
+  @Override
+  public String toString() {
+    return null;
+  }
+}

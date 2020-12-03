@@ -1,0 +1,13 @@
+What did I work on in the last three days?
+	- Started and finished Directory class that turns any file into a folder/directory
+	- Started File class and implemented basic functionality to store and get file name and parent
+	- Started and finished implementation of Mkdir class
+	- Started and finished implementation of Pwd class
+
+What do I plan to work in the next three days?
+	- Java docs headers, param, and return for Directory class, Mkdir class, and Pwd class
+	- Add comments to Directory class, Mkdir class, and Pwd class
+	- Decide how to handle errors in Mkdir and Pwd class and test 
+
+Am I blocked on anything?
+    - No

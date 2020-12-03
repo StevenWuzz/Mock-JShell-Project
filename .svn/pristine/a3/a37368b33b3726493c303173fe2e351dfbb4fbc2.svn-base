@@ -1,0 +1,41 @@
+package commands;
+
+import fileSystem.Directory;
+import fileSystem.File;
+import fileSystem.FileTree;
+import java.io.StringBufferInputStream;
+
+public class MakeFile {
+
+  private static File addFile(Directory parent, String name) {
+    File file = new File(parent, name);
+    parent.addFileChild(file);
+    return file;
+  }
+
+  public static File makeFile(String path) {
+    String parentPath;
+    Directory parent;
+    File file;
+    int p = path.lastIndexOf("/");
+    if (p == -1) {
+      parentPath = FileTree.getCurrentPath();
+    } else if (p == 0) {
+      parentPath = "/";
+    } else {
+      parentPath = path.substring(0, p);
+    }
+    parent = (Directory) FileTree.traverseToEnd(parentPath);
+    if (parent == null) {
+      return null;
+    }
+    if (parent.findSubDir(path.substring(p + 1)) != null) {
+      return null;
+    }
+    file = parent.findFile(path.substring(p + 1));
+    if (file == null) {
+      file = addFile(parent, path.substring(p + 1));
+    }
+    return file;
+  }
+}

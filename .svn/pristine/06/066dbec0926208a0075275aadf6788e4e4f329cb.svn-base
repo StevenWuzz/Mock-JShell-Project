@@ -1,0 +1,63 @@
+package commands;
+
+import fileSystem.Directory;
+import fileSystem.File;
+import fileSystem.FileTree;
+
+public class PrintWorkingDirectory extends Command {
+
+  /**
+   * Creates the absolute path of the given directory as a string
+   * 
+   * @param a directory
+   * @return path of the given directory as a string
+   */
+  public static String printFullPath(Directory d) {
+
+    // directory is empty
+    if (d == null) {
+      return null;
+    }
+
+    // initial path string
+    String path = "/"+d.getName();
+
+    // get parent of given directory
+    Directory parent = d.getParent();
+
+    // iterate over directory parents until head is reached
+    while (parent != null && parent!= FileTree.getRoot()) {
+
+      // append directory to front of path
+      path = "/" + parent.getName() + path;
+
+      // get next parent
+      parent = parent.getParent();
+    }
+
+    return path;
+  }
+
+  @Override
+  protected String execute(String[] args) {
+    // TODO Auto-generated method stub
+
+    // get current directory from FileTree
+    Directory p = FileTree.getCurrent();
+
+    // create absolute path of current directory
+    String path = printFullPath(p);
+
+    return path;
+  }
+
+  @Override
+  public String toString() {
+    // TODO Auto-generated method stub
+
+    // create man page for pwd command
+    String info = "pwd\n\n" + "\tPrint the current working directory (including the whole path).\n";
+
+    return info;
+  }
+}

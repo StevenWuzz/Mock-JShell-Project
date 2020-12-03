@@ -1,0 +1,8 @@
+Class name: Print
+Parent class (if any): None
+Subclasses (if any): None
+Responsibilities:
+* displays text to shell
+
+Collaborators:
+* None

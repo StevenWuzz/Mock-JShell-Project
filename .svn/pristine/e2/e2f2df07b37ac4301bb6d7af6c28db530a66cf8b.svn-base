@@ -1,0 +1,7 @@
+Class name: Commands
+Parent class (if any): None
+Subclasses (if any): Copy, Move, Exit, Get, PrintWorkingDirectory, Concatenate, ChangeDirectory, Echo, List, MakeDirectory, Pushd, Popd, History, Manual
+Responsibilities:
+*Execute commands
+
+Collaborators:

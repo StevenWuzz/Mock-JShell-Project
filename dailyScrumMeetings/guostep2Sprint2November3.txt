@@ -1,0 +1,20 @@
+What did I work on in the last three days?
+    - Finished Concatenate
+    - Finished popd and pushd 
+    - Added manual entries for cat, popd, pushd, and history
+    - Finished error class
+    - Implemented traversal for cat
+    - Added some comments to classes I've worked on
+    
+
+What do I plan to work in the next three days?
+    - Find and fix bugs
+    - Add comments for classes I've worked on
+    - Add Javadoc for classes I've worked on
+    - Make sure other files are formatted correctly
+    - Make sure the output of the shell is formatted correctly
+    - Revamp CRC cards
+    - Clean up code, add helper functions if needed.
+
+Am I blocked on anything?
+    - No

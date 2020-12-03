@@ -1,0 +1,88 @@
+package test;
+
+import static org.junit.Assert.*;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import org.junit.Before;
+import org.junit.Test;
+import commands.Curl;
+import fileSystem.File;
+import fileSystem.FileTree;
+
+public class CurlTest {
+
+  Curl curl;
+  int numOfRootChildrenBefore;
+  private ByteArrayOutputStream outContent;
+  
+  private String invalidURL1;
+  private String invalidURL2;
+  private String validURLTXT;
+  private String validURLHTML;
+  private String expectedStringTXT;
+  private String expectedStringHTML;
+  private String fileNameTXT;
+  private String fileNameHTML;
+  private static FileTree fileTree;
+  
+  @Before
+  public void setUp(){
+    curl = new Curl();
+    invalidURL1 = "abcdef";
+    invalidURL2 = "htt://www.w3.org/TR/PNG/iso_8859-1.txt";
+    validURLTXT = "https://www.w3.org/TR/PNG/iso_8859-1.txt";
+    validURLHTML = "http://www.htmlandcssbook.com/code-samples/chapter-01/example.html";
+    fileNameTXT = "iso_8859-1.txt";
+    fileNameHTML = "example.html";
+    expectedStringTXT = "The following are the graphical (non-control) characters defined by\n"
+        + "ISO 8859-1 (1987).  Descriptions in words aren't all that helpful,\n"
+        + "but they're the best we can do in text.  A graphics file illustrating\n"
+        + "the character set should be available from the same archive as this\n"
+        + "file.";
+    expectedStringHTML = "<html>\n";
+    fileTree = FileTree.getFileTree();   
+  }
+  
+
+  @Test
+  public void testInvalidURL() {
+    outContent = new ByteArrayOutputStream();
+    System.setOut(new PrintStream(outContent));
+    curl.execute(new String[]{"curl", invalidURL1});
+    assertEquals("The URL " + invalidURL1 + " is malformed", outContent.toString().trim());
+    
+    outContent = new ByteArrayOutputStream();
+    System.setOut(new PrintStream(outContent));
+    curl.execute(new String[]{"curl", invalidURL2});
+    assertEquals("The URL " + invalidURL2 + " is malformed", outContent.toString().trim());
+  }
+  
+  @Test
+  public void testValidURL() {
+    outContent = new ByteArrayOutputStream();
+    System.setOut(new PrintStream(outContent));
+    curl.execute(new String[]{"curl", validURLTXT});
+    assertEquals("", outContent.toString().trim());
+    
+    outContent = new ByteArrayOutputStream();
+    System.setOut(new PrintStream(outContent));
+    curl.execute(new String[]{"curl", validURLHTML});
+    assertEquals("", outContent.toString().trim());
+  }
+  
+  @Test
+  public void testRetrieveHTMLFile() {
+    curl.execute(new String[]{"curl", validURLHTML});
+    File file = fileTree.traverseToEnd(fileNameHTML);
+    assertEquals(fileNameHTML,file.getName());
+    assertEquals(expectedStringHTML, file.getContent().substring(0, expectedStringHTML.length()));
+  }
+  
+  @Test
+  public void testRetrieveTXTFile() {
+    curl.execute(new String[]{"curl", validURLTXT});
+    File file = fileTree.traverseToEnd(fileNameTXT);
+    assertEquals(fileNameTXT,file.getName());
+    assertEquals(expectedStringTXT, file.getContent().substring(0, expectedStringTXT.length()));
+  }
+}

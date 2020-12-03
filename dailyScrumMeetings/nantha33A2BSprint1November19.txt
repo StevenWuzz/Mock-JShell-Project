@@ -1,0 +1,15 @@
+What did I work on in the last three days?
+	- Changed Mkdir capacity to allow for any number of arguments
+	- Updated Mkdir Man page
+    - Finished CRC Cards for Tree, Move, and Remove
+    - Started and finished implementation of Tree and Man page for Tree
+    - Finished Man pages for Move and Remove
+    - Finished recursive deletion algorithm for Remove
+
+What do I plan to work in the next three days?
+    - Add implementation to check if Remove path interferes with current directory path
+    - Use Copy and Remove to implement Move
+
+Am I blocked on anything?
+    - Waiting for Copy to be finished so it can be used in Move
+    - Need to finish Remove to use it in Move

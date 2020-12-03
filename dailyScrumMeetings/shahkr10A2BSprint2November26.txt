@@ -1,0 +1,10 @@
+What did I work on in the last three days?
+	- bug fixing
+	- implementing exceptions
+	- implimetin iterators
+
+What do I plan to work in the next three days?
+    - j unit testing
+
+Am I blocked on anything?
+    - no

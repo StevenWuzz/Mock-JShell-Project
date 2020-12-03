@@ -1,0 +1,103 @@
+package test;
+
+import static org.junit.Assert.*;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.lang.reflect.Field;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import commands.MakeDirectory;
+import fileSystem.FileTree;
+
+public class MakeDirectoryTest {
+
+  /*
+   * instance of MakeDirectory for unit testing
+   */
+  private MakeDirectory mkdir;
+
+  /*
+   * instance of FileTree to print paths
+   */
+  private FileTree fileT;
+
+  /*
+   * instances to read print output stream
+   */
+  private ByteArrayOutputStream standardOuput;
+  private PrintStream pError;
+
+  @Before
+  public void setUp() {
+    fileT = FileTree.getFileTree();
+    fileT.setCurrent(fileT.getRoot());
+
+    mkdir = new MakeDirectory();
+
+    //standardOuput = new ByteArrayOutputStream();
+    //pError = System.out;
+    //System.setOut(new PrintStream(standardOuput));
+  }
+
+  @Test
+  public void testMakeDirectoriesFromRoot() {
+    mkdir.execute(new String[] {"mkdir", "a", "b", "a/c", "d"}, fileT);
+
+    assertEquals("a", fileT.getRoot().findSubDir("a").getName());
+    assertEquals("b", fileT.getRoot().findSubDir("b").getName());
+    assertEquals("c", fileT.getRoot().findSubDir("a").findSubDir("c").getName());
+    assertEquals("d", fileT.getRoot().findSubDir("d").getName());
+  }
+
+  @Test
+  public void testMakeDirectoriesDifferentBranches() {
+
+    MockMultipleDirectoryBranch dir = MockMultipleDirectoryBranch.newMockDir(fileT.getRoot());
+
+    fileT.setCurrent(dir);
+
+    mkdir.execute(new String[] {"mkdir", "/a/d", "/a/c/b/c"}, fileT);
+
+    assertEquals("d", fileT.getRoot().findSubDir("a").findSubDir("d").getName());
+    assertEquals("c",
+        fileT.getRoot().findSubDir("a").findSubDir("c").findSubDir("b").findSubDir("c").getName());
+  }
+  
+  @Test
+  public void testDuplicateDirectoryNames() {
+    
+    MockSingleDirectoryBranch dir = MockSingleDirectoryBranch.newMockDir(fileT.getRoot());
+
+    System.out.println("ihfsfdsgd");
+    
+    mkdir.execute(new String[] {"mkdir", "a"}, fileT);
+    assertEquals("a Already Exists\n", standardOuput.toString());
+    mkdir.execute(new String[] {"mkdir", "a/b"}, fileT);
+    assertEquals("a/b Already Exists", standardOuput.toString());
+    mkdir.execute(new String[] {"mkdir", "a/b/b"}, fileT);
+    
+    System.out.println("ihgd");
+    
+
+    
+    assertEquals("a/b/b Already Exists", standardOuput.toString());
+
+    //assertEquals("a", fileT.getRoot().findSubDir("a").getName());
+    //assertEquals("b", fileT.getRoot().findSubDir("b").getName());
+    //assertEquals("c", fileT.getRoot().findSubDir("a").findSubDir("c").getName());
+    //assertEquals("d", fileT.getRoot().findSubDir("d").getName());
+  }
+
+  @After
+  public void tearDown() throws Exception {
+    Field field = (fileT.getClass()).getDeclaredField("filetree");
+    field.setAccessible(true);
+
+    // setting the filetree parameter to null to create new instance next construction
+    field.set(null, null);
+
+    //System.setErr(pError);
+  }
+
+}

@@ -1,0 +1,88 @@
+package commands;
+
+import fileSystem.Directory;
+import fileSystem.FileTree;
+
+/** This class has all of the methods needed to run Move */
+public class Move extends Command {
+
+  @Override
+  /**
+   * Execute the mv command
+   * 
+   * @param a string array of arguments for the mv command
+   * @return a string containing the output of mv command
+   */
+  public String execute(String[] args) {
+    // TODO Auto-generated method stub
+
+    FileTree fileTree = FileTree.getFileTree();
+
+    Directory removeDir;
+
+    // get current directory as parent for OLDPATH
+    if (args[1].lastIndexOf("/") == -1) {
+      removeDir = fileTree.getCurrent();
+
+      // get parent of current directory as parent for OLDPATH
+    } else if (args[1].lastIndexOf("/") == 0) {
+      removeDir = fileTree.getRoot();
+
+      // traverse to start of path and get parent for OLDPATH
+    } else {
+      removeDir =
+          (Directory) fileTree.traverseToEnd(args[1].substring(0, args[1].lastIndexOf("/")));
+
+      // path cannot be traversed
+      if (removeDir == null) {
+        return "Invalid OLDPATH";
+      }
+    }
+
+    // get path of current directory
+    String currentPath = PrintWorkingDirectory.printFullPath(fileTree.getCurrent());
+
+    // get path of directory to remove
+    String removePath = PrintWorkingDirectory.printFullPath(removeDir);
+
+    // directory to remove is in current directory path
+    if (currentPath.contains(removePath)) {
+      return "Cannot move directory in current path";
+    }
+
+    Copy move = new Copy();
+
+    // copy OLDPATH to NEWPATH
+    String copied = move.execute(args);
+
+    // check if OLDPATH copied succesfully
+    if (copied != "") {
+      return copied;
+    }
+
+    // delete OLDPATH directory and its contents
+    Remove.deleteDir(removeDir);
+
+    return "";
+  }
+
+
+
+  @Override
+  /**
+   * returns the manual entry for mv
+   * 
+   * @return manual entry for mv
+   */
+  public String toString() {
+
+    // create man page for mv command
+    String info = "mv OLDPATH NEWPATHn\n"
+        + "\tMove item OLDPATH to NEWPATH. Both OLD- PATH and NEWPATH may be relative to the\n"
+        + "\tcurrent directory or may be full paths. If NEWPATH is a directory, move the item\n"
+        + "\tinto the directory.\n";
+
+    return info;
+  }
+
+}

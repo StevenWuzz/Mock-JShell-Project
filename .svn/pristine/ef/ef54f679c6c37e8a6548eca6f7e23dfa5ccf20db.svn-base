@@ -1,0 +1,10 @@
+Class name: Get
+Parent class (if any): None
+Subclasses (if any): None
+Responsibilities:
+* downloads file from URL
+* saves it to current working directory
+
+Collaborators:
+* None
+

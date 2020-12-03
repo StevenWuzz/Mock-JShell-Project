@@ -1,0 +1,126 @@
+package commands;
+
+import java.util.LinkedList;
+import fileSystem.*;
+
+public class List extends Command{
+  
+    protected static Directory root;
+    protected static Directory current;
+
+	/**
+	 * Execute the Ls command
+	 * 
+	 * @param parameter
+	 */
+	public String execute(String[] argument)
+	{
+	    // Extract the given path
+	    String path = argument[1]; 
+	    // Check whether the path leads to directory or file
+		String type = checkDirOrFile(path);
+		// If the path leads to directory
+		if(type == "Directory") {
+		  // Then print the contents inside 
+		  return printContentsInDirectory(path, (Directory) traverseToEnd(path));
+		}
+		return "";
+	}
+	
+	/**
+	 * Check whether a path leads to a directory or a file
+	 * 
+	 * @param path
+	 * @return a string containing either "Directory" or "File"
+	 */
+	public static String checkDirOrFile(String path) {
+	  
+	  // Take the last destination
+	  Object dirOrFile = traverseToEnd(path);
+	  // If it is a directory
+	  if(dirOrFile instanceof Directory) {
+	    return "Directory";
+	  }
+	  // If it is not a directory
+	  else { 
+	    return "File";
+	  }
+	}
+	
+	/**
+	 * Iteratively traverse the given path and return the directory or file
+	 * 
+	 * @param path
+	 * @param root
+	 * @param current
+	 * @return the file or directory object
+	 */
+	public static File traverseToEnd(String path) {
+	    // Split the entire path into individual directories or files
+	    String[] p = path.split("/");
+	    // Decide whether the path is absolute or relative
+	    Directory dir = (p[0].equals("")) ? root : current;
+	    int i = (p[0].equals("")) ? 1 : 0;
+	    // Iterate through all the individual directories or files
+	    for(; i < p.length; i++) {
+	      // Find the corresponding sub-directory
+	      Directory dirChild = dir.findSubDir(p[i]);
+	      // If the sub-directory is not found
+	      if(dirChild == null) {
+	        // If it is not the last destination, then the path is invalid
+	        if(i < p.length - 1) {
+	          return null;
+	        }
+	        else {
+	          // Otherwise, the last component might be a file instead
+	          File fileChild = dir.findFile(p[i]);
+	          // If it is found, then return the file
+	          if(fileChild != null) {
+	            return fileChild;
+	          }
+	          
+	        }
+	      }
+	      else {
+	        // If the sub-directory is found, then go to that sub-directory
+	        dir = dirChild;
+	      }
+	  }
+	  // The last component must be a directory, so return that directory
+      return dir;
+	}
+	
+	/**
+	 * Print all the contents in a given directory
+	 * @param path
+	 * @param currentDir
+	 * @return a string containing all the contents in a given directory
+	 */
+	public static String printContentsInDirectory(String path, Directory currentDir) {
+	  // Initialize an empty string called result
+	  String result = "";
+	  // Append the path into result (for formatting)
+	  result += path;
+	  // Append a colon into result (for formatting)
+	  result += ": ";
+	  // Get the number of contents in the current directory
+	  int numOfChildren = currentDir.getNumOfDirectoryChildren();
+	  // Get all the contents in the current directory
+	  LinkedList<Directory> dirChildren = currentDir.getDirectoryChildren();
+	  // Iterate through all the contents
+	  for(int i = 0; i < numOfChildren; i++) {
+	    // Append the name of each content to the string result
+	    result += dirChildren.get(i).getName();
+	    result += " ";
+	    }
+	  // Return the string containing all the contents
+	  return result;
+	  }
+	
+
+  @Override
+  public String toString() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+}

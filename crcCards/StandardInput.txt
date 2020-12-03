@@ -1,0 +1,12 @@
+Class name: StandardInput
+Parent class (if any): None
+Subclasses (if any): None 
+
+Responsibilities:
+* Parses user input
+* Checks if input is validated
+* Sends input to Commands if input is valid
+
+Collaborators:
+* Command
+* History

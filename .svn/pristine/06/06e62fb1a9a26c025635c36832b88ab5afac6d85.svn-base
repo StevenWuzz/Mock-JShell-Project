@@ -1,0 +1,24 @@
+package Commands;
+
+import FileSystem.Directory;
+
+public class Pwd {
+
+  public String printWorkingDirectory(Directory d) {
+    if (d == null) {
+      return null;
+    }
+
+    String path = "/";
+
+    Directory parent = d.getParent();
+
+    while (parent != null) {
+      path = parent.getName() + path;
+
+      parent = parent.getParent();
+    }
+
+    return path;
+  }
+}

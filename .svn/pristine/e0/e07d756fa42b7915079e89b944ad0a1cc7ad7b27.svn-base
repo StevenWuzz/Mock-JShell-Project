@@ -1,0 +1,102 @@
+package fileSystem;
+
+public class File {
+
+  // parent directory of file
+  protected Directory parent;
+  
+  // name of file
+  protected String name;
+  
+  // content of file
+  private String content;
+
+  /**
+   * Constructor for File class that constructs file object with parent and name
+   * 
+   * @param parent directory of currently constructing file
+   * @param name of currently constructing file
+   */
+  public File(Directory p, String n) {
+    
+    // set parent and name
+    this.parent = p;
+    this.name = n;
+  }
+
+  /**
+   * Gets the parent directory of the current file
+   * 
+   * @return parent directory of the current file
+   */
+  public Directory getParent() {
+    return this.parent;
+  }
+
+  /**
+   * Sets the number of directory children for the current directory
+   * 
+   * @param parent directory for the current file
+   */
+  public void setParent(Directory p) {
+    
+    // set parent
+    this.parent = p;
+  }
+
+  /**
+   * Gets the name of the current file
+   * 
+   * @return name of the current file
+   */
+  public String getName() {
+    return this.name;
+  }
+
+  /**
+   * Sets the name of the current file
+   * 
+   * @param name for the current file
+   */
+  public void setName(String n) {
+    
+    // set name
+    this.name = n;
+  }
+
+  /**
+   * Gets the string content of the current file
+   * 
+   * @return string content of the current file
+   */
+  public String getContent() {
+    return content;
+  }
+
+  /**
+   * Overwrites the content of the current file with new string content
+   * 
+   * @param string content for the current file
+   */
+  public void setContent(String content) {
+    
+    // set content
+    this.content = content;
+  }
+
+  /**
+   * Appends given string content to the file
+   * 
+   * @param string content
+   */
+  public void appendContent(String content) {
+    
+    // append new string to the end of file contents
+    this.content += content;
+  }
+
+  @Override
+  public String toString() {
+    return content;
+  }
+}

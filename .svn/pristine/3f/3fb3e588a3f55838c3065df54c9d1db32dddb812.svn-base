@@ -1,0 +1,64 @@
+//Sprint 1 Backlog.
+November 16 to November 22
+
+User Stories from Product Backlog that we will address in this sprint:
+As a user, I would like to remove a directory from the shell and all its children
+As a user, I want to be able to make an infinite amount of directories
+As a user, I want to print all the contents of my current directory and recursively list all subdirectories if needed
+As a user, I would like to move and rename a file or folder
+As a user, I would like to copy and rename a file or folder
+As a user, I would like to retrieve a file from a URL and add it to the current working directory
+As a user, I would only like to print the manual for one command
+As a user, I would like to save the state of the JShell to a file on my computer
+As a user, I would like to load the state of the JShell from a file on my computer
+As a user, I would like to search for an exact string for files or directories in my computer.
+As a user, I would like to print the entire filesystem as a tree diagram
+As a user, I would like to print the path, along with the contents al any files listed
+As a user, I would like to redirect the output of any command to a file
+
+
+General Task: 
+Revamp CRC cards
+
+
+Tasks:
+a - 1 Change mkdir capacity to allow for any number of arguments
+a - 2 Change man to only allow one argument
+a - 3 Change cat to print file paths along with file contents
+
+b - 1 Create class to copy file from one path to another
+b - 2 Create class to delete implementation file
+
+c - 1 Create command for saveJShell
+c - 2 Create command for loadJShell
+c - 3 Create a class that can read and write from and to the computer’s file system
+
+d - 1 Create a method to recursively list all subdirectories for ls
+d - 2 Update formatting for ls
+d - 3 Create a curl class
+d - 4 Create a method to enable access to a specific URL
+d - 5 Create a method to retrieve a file at a specific URL
+
+e - 1 Implement a method to turn fileTree into a string recursively 
+e - 2 Create a command to iterate through fileTree roots using DFS
+e - 3 Print each fileTree level with a string offset
+
+g - 1 implement search command
+
+h - 1 implement redirection for all commands
+
+
+These tasks are assigned as follows:
+
+User: Stephen Guo
+Tasks: a - 2, a - 3, b - 1
+
+User: Steven Hans Limantoro  
+Tasks: d - 1, d - 2, d - 3, d - 4, d - 5
+
+User: Vignesh Nanthakumar
+Tasks: a - 1, b - 2, e - 1, e - 2, e - 3
+
+User: Krutik Tejalkumar Shah
+Tasks: c - 1, c - 2, c - 3, g - 1, i - 1
+

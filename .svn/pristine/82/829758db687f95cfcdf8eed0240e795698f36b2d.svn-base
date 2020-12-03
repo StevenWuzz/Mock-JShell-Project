@@ -1,0 +1,13 @@
+Class name: Move
+Parent class (if any): Command
+Subclasses (if any): None
+
+Responsibilities:
+* Moves a file from old path to a new path and deletes the file from old path
+
+Collaborators:
+* Directory
+* File
+* FileTree
+* Copy
+* Remove

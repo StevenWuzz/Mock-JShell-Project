@@ -1,0 +1,10 @@
+Class name: List
+Parent class (if any): None
+Subclasses (if any): None
+Responsibilities: 
+* Lists and prints all files in current directory
+* Lists and prints all directories in current directory
+
+Collaborators:
+* Print
+

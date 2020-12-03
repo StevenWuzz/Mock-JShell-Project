@@ -1,0 +1,145 @@
+package test;
+
+import static org.junit.Assert.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import fileSystem.*;
+import commands.PrintWorkingDirectory;
+import java.lang.reflect.Field;
+
+public class PrintWorkingDirectoryTest {
+
+  /*
+   * instance of PrintWorkingDirectory for unit testing
+   */
+  private PrintWorkingDirectory pwd;
+
+  /*
+   * instance of FileTree to print paths
+   */
+  private FileTree fileT;
+
+  @Before
+  public void setUp() {
+    fileT = FileTree.getFileTree();
+    fileT.setCurrent(fileT.getRoot());
+
+    pwd = new PrintWorkingDirectory();
+  }
+
+  @Test
+  /*
+   * Test if correct full path is printed for root
+   */
+  public void testRoot() {
+    assertEquals("/", pwd.execute(new String[] {"pwd"}, fileT));
+  }
+
+  @Test
+  /*
+   * Test if an empty directory is still printed in path
+   */
+  public void testEmptyDirectory() {
+    Directory a = new Directory(fileT.getRoot(), "a");
+    fileT.getRoot().addDirectoryChild(a);
+
+    fileT.setCurrent(a);
+
+    assertEquals("/a", pwd.execute(new String[] {"pwd"}, fileT));
+  }
+
+  @Test
+  /*
+   * Test if implementation can handle duplicate directory names in full path
+   */
+  public void testDuplicateDirectoryNames() {
+    Directory a = new Directory(fileT.getRoot(), "a");
+    fileT.getRoot().addDirectoryChild(a);
+
+    Directory b1 = new Directory(a, "b");
+    a.addDirectoryChild(b1);
+
+    Directory b2 = new Directory(b1, "b");
+    b1.addDirectoryChild(b2);
+
+    Directory c = new Directory(b2, "c");
+    b2.addDirectoryChild(c);
+
+    fileT.setCurrent(c);
+
+    assertEquals("/a/b/b/c", pwd.execute(new String[] {"pwd"}, fileT));
+  }
+
+  @Test
+  /*
+   * Test full path of directory tree with multiple branches
+   */
+  public void testMultipleDirectoryBranches() {
+    Directory a = new Directory(fileT.getRoot(), "a");
+    fileT.getRoot().addDirectoryChild(a);
+
+    Directory b1 = new Directory(a, "b");
+    a.addDirectoryChild(b1);
+
+    Directory c1 = new Directory(a, "c");
+    a.addDirectoryChild(c1);
+
+    Directory b2 = new Directory(c1, "b");
+    c1.addDirectoryChild(b2);
+
+    Directory c2 = new Directory(b1, "c");
+    b1.addDirectoryChild(c2);
+
+    fileT.setCurrent(b2);
+
+    assertEquals("/a/c/b", pwd.execute(new String[] {"pwd"}, fileT));
+  }
+
+  @Test
+  /*
+   * Test direct full path printing of root
+   */
+  public void testPrintEmptyPath() {
+    assertEquals("/", PrintWorkingDirectory.printFullPath(fileT.getCurrent()));
+  }
+
+  @Test
+  /*
+   * Test direct full path printing of a directory branch
+   */
+  public void testPrintFullPath() {
+    Directory a = new Directory(fileT.getRoot(), "a");
+    fileT.getRoot().addDirectoryChild(a);
+
+    Directory b1 = new Directory(a, "b");
+    a.addDirectoryChild(b1);
+
+    Directory c1 = new Directory(a, "c");
+    a.addDirectoryChild(c1);
+
+    Directory b2 = new Directory(c1, "b");
+    c1.addDirectoryChild(b2);
+
+    Directory c2 = new Directory(b1, "c");
+    b1.addDirectoryChild(c2);
+
+    Directory d1 = new Directory(c2, "d1");
+    c2.addDirectoryChild(d1);
+
+    Directory d2 = new Directory(c2, "d2");
+    c2.addDirectoryChild(d2);
+
+    assertEquals("/a/b/c/d2", PrintWorkingDirectory.printFullPath(d2));
+  }
+
+  @After
+  public void tearDown() throws Exception {
+    Field field = (fileT.getClass()).getDeclaredField("filetree");
+    field.setAccessible(true);
+
+    // setting the filetree parameter to null to create new instance next construction
+    field.set(null, null);
+  }
+
+}

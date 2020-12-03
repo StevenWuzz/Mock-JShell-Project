@@ -1,0 +1,34 @@
+package inputOutput;
+
+import commands.Command;
+import commands.Exit;
+
+public class StandardInput {
+  public static void parse (String input) {
+    // Splits input into commands and arguments
+    String arguments[] = input.trim().split("\\s+");
+    
+    /* Debug, remove later ************************************************************************/
+    System.out.println("Command: " + arguments[0]);
+    for (int i = 1; i < arguments.length; i++) {
+      System.out.println("Argument " + i + ": " + arguments[i]);
+    }
+    System.out.println();
+    /* Debug, remove later ************************************************************************/
+    
+    // Validating input
+    // * Validate input here!
+    
+    // Executes command if validated
+    // Command.execute(arguments);
+    
+    /* Junk code, remove later ********************************************************************/
+    if (arguments[0].equals("exit")) {
+      Exit.execute();
+    }
+    /* Junk code, remove later ********************************************************************/
+    
+  }
+  
+  
+}

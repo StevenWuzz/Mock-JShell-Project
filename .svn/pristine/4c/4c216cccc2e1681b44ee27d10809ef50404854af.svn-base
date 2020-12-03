@@ -1,0 +1,61 @@
+package test;
+
+import static org.junit.Assert.*;
+import java.lang.reflect.Field;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import fileSystem.Directory;
+import fileSystem.File;
+import fileSystem.FileTree;
+import commands.Move;
+
+public class MoveTest{
+
+  private Move move;
+  private FileTree fileTree;
+  
+  @Before
+  public void setUp() throws Exception {
+    move = new Move();
+    
+    fileTree = FileTree.getFileTree();
+    fileTree.setCurrent(fileTree.getRoot());
+  }
+
+  @Test
+  public void testMoveFileToDirectory() {
+    Directory a = new Directory(fileTree.getRoot(), "a");
+    fileTree.getRoot().addDirectoryChild(a);
+    File file1 = new File(a, "file1");
+    fileTree.getRoot().addFileChild(file1);
+    
+    move.execute(new String[] {"mv", "file1", "a"}, fileTree);
+    assertEquals("file1", fileTree.traverseToEnd("/a/file1").getName());
+  }
+  
+  @Test
+  public void testMoveDirectorytoAnotherDirectory() {
+    Directory a = new Directory(fileTree.getRoot(), "a");
+    fileTree.getRoot().addDirectoryChild(a);
+    Directory b = new Directory(fileTree.getRoot(), "b");
+    fileTree.getRoot().addDirectoryChild(b);
+    Directory c = new Directory(b, "c");
+    b.addDirectoryChild(c);
+    File file1 = new File(b, "file1");
+    b.addFileChild(file1);
+    
+    move.execute(new String[] {"mv","b", "a"}, fileTree);
+    assertEquals("b", fileTree.traverseToEnd("/a/b").getName());
+    //assertEquals("file1", fileTree.traverseToEnd("/a/file1").getName());
+  }
+  
+  @After
+  public void tearDown() throws Exception {
+    Field field = (fileTree.getClass()).getDeclaredField("filetree");
+    field.setAccessible(true);
+
+    // setting the fileTree parameter to null to create new instance next construction
+    field.set(null, null);
+  }
+}
